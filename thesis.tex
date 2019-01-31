@@ -4,6 +4,7 @@
 \usepackage[T1]{fontenc}
 \PassOptionsToPackage{defaults=hu-min}{magyar.ldf}
 \usepackage[magyar]{babel}
+\usepackage[utf8]{inputenc}
 \usepackage{listingsutf8,xcolor,caption,graphicx,amsmath,amssymb,amsthm, url, hulipsum}
 \footnotestyle{rule=fourth}
 
@@ -45,6 +46,12 @@ A szakdolgozatomban androidos telepítő  fájlok forrás fájlokká való vissz
 
 Olyan szerverre volt szükségem, ami nem túl költséges, de mégis megfelelően testreszabható és gyors tárhelyet biztosít. A választásom a Digitial Ocean felhő szolgáltatására esett. Az oldal felületén lehetőségünk van több, úgynevezett \emph{droplet}-et létrehozni, amik nem mások mint virtuális szerverek. Megadhatjuk milyen disztribúciót szeretnénk telepíteni, jelen esetben én egy Ubuntu Linux 18.10-es verziót telepítettem. A telepítés után a droplet IP címét hozzárendeltem egy előre létrehozott subdomain-hez, ezzel biztosítottam, hogy név alapján is elérhető legyen a szerver.
 
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=15cm]{kepek/digitalocean}
+	\caption{Digital Ocean admin felület.}
+	\label{digitalocean}
+\end{figure}
 
 \begin{thebibliography}{1}
 \bibitem{statista} \textsc{ONLINE}: Number of mobile phone users worldwide from 2015 to 2020, \url{https://www.statista.com/statistics/274774/forecast-of-mobile-phone-users-worldwide}
