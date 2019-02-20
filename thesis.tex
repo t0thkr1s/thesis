@@ -22,7 +22,7 @@
 \begin{document}
 \logo{\includegraphics[width=8cm]{eke-logo.pdf}}
 \institute{Matematikai és Informatikai Intézet}
-\title{Mobil alkalmazás fejlesztés\\Android platformon}
+\title{Kliens-szerver kommunikáció\\Android platformon}
 \author{Balajti-Tóth Kristóf\\Programtervező Informatikus Bsc}
 \supervisor{Tajti Tibor\\Egyetemi adjunktus}
 \city{Eger}
@@ -32,30 +32,53 @@
 
 \chapter*{Bevezetés}
 \markboth{Bevezetés}{Bevezetés}
-Az szoftver fejlesztés egy nagyon komplex folyamat és rengeteg részletre oda kell figyleni. Az elkészült programnak hatékonynak, hibamentesnek és gyorsnak kell lennie. Természetesen, mindezt határidőn belül kell teljesíteni. Sajnos a biztonság nem egy első számú szempont egy megrendelő szemében,csak akkor ha már valami baj történt. Inkább a gyorsaságon és a folyamatok automatizálásán van a hangsúly, ezért nem  meglepő, hogy a fejlesztés életciklusának tervezési szakaszában kevés figyelem fordul a szoftver biztonságossá tételére.
+Az szoftver fejlesztés egy nagyon komplex folyamat és rengeteg részletre oda kell figyleni.
+Az elkészült programnak hatékonynak, hibamentesnek és gyorsnak kell lennie. Természetesen, mindezt határidőn belül kell teljesíteni.
+Sajnos a biztonság nem egy első számú szempont egy megrendelő szemében,csak akkor ha már valami baj történt.
+Inkább a gyorsaságon és a folyamatok automatizálásán van a hangsúly, ezért nem  meglepő, hogy a fejlesztés életciklusának tervezési szakaszában kevés figyelem fordul a szoftver biztonságossá tételére.
 
-A statista.com \cite{statista} kutatása szerint 2020-ra több mint 4.78 billió telefon lesz használatban. Ezzel a cégek is tisztában vannak és tudják, hogy ha még több emberhez szeretnék eljuttatni a szolgáltatásukat, akkor rendelkezniük kell saját mobilos alkalmazással.
+A statista.com \cite{statista} kutatása szerint 2020-ra több mint 4.78 billió telefon lesz használatban.
+Ezzel a cégek is tisztában vannak és tudják, hogy ha még több emberhez szeretnék eljuttatni a szolgáltatásukat, akkor rendelkezniük kell saját mobilos alkalmazással.
 
-A mobilos eszközöket célzó támadások száma hatalmas ütemben nő. Mindez azért lehetséges, mert figyelmen kívül marad a ,,secure coding''-nak nevezett gyakorlat. Egy alkalmazásnak a sebezhetőségét különböző támadási vektoron is ki lehet aknázni. Az elején, bennem egy kérdés merült fel. Honnann tudhatom, hogy egy adott alkalmazás sebezhető-e vagy sem. A leghatékonyabb módszer ha visszafejtjük a fájl forráskódra. Ezt angolul ,,reverse engineering''-nek nevezik. A visszaállított fájlok olvashatósága nem lesz tökéletes, főleg ha obfuszkált \footnote{Az obfuszkáció célja röviden, hogy megnehezítse a visszafejtett kód olvashatóságát.} kóddal állunk szemben, de egy tapasztalt szem így is kitudja szúrni a gyakori hibákat.
+A mobilos eszközöket célzó támadások száma hatalmas ütemben nő. Mindez azért lehetséges, mert figyelmen kívül marad a ,,secure coding''-nak nevezett gyakorlat.
+Egy alkalmazásnak a sebezhetőségét különböző támadási vektoron is ki lehet aknázni.
+Az elején, bennem többek között az a kérdés merült fel, hogy honnan tudható hogy ez alkalmazás ebezhető-e vagy sem.egy kérdés merült fel. Honnann tudhatom, hogy egy adott alkalmazás sebezhető-e vagy sem. A leghatékonyabb módszer ha visszafejtjük a fájl forráskódra. Ezt angolul ,,reverse engineering''-nek nevezik. A visszaállított fájlok olvashatósága nem lesz tökéletes, főleg ha obfuszkált \footnote{Az obfuszkáció célja röviden, hogy megnehezítse a visszafejtett kód olvashatóságát.} kóddal állunk szemben, de egy tapasztalt szem így is kitudja szúrni a gyakori hibákat.
 
-A szakdolgozatomban androidos telepítő  fájlok forrás fájlokká való visszaállításáról írok, valamint bemutatom hogyan valósítható meg a kliens-szerver kommunikáció egy REST API és egy androidos alkalmazás segítségével. A project fantázia neve ,,Reverse Droid''.
+A szakdolgozatomban Android platformra készült telepítő fájlok forrás fájlokká való visszaállításáról írok, valamint bemutatom hogyan valósítható meg a kliens-szerver kommunikáció egy REST~API és egy Androidos alkalmazás segítségével.
+A projectet ,,Reverse Droid''-nak neveztem el.
 
 \chapter{Platformok}\label{platformok}
 
-\section{Szerver}
+\section{ A szerver kiválasztása és felépítése}
 
-Olyan szerverre volt szükségem, ami nem túl költséges, de mégis megfelelően testreszabható és gyors tárhelyet biztosít. A választásom a Digitial Ocean felhő szolgáltatására esett. Az oldal felületén lehetőségünk van több, úgynevezett \emph{droplet}-et létrehozni, amik nem mások mint virtuális szerverek. Megadhatjuk milyen disztribúciót szeretnénk telepíteni, jelen esetben én egy Ubuntu Linux 18.10-es verziót telepítettem. A telepítés után a droplet IP címét hozzárendeltem egy előre létrehozott subdomain-hez, ezzel biztosítottam, hogy név alapján is elérhető legyen a szerver.
+Olyan szerverre volt szükségem, ami nem túl költséges, de mégis megfelelően testreszabható és gyors tárhelyet biztosít.
+A választásom a Digitial Ocean felhő szolgáltatására esett. Az oldal felületén lehetőségünk van több, úgynevezett \emph{droplet}-et létrehozni, amik nem mások mint virtuális szerverek. 
+Megadhatjuk milyen disztribúciót szeretnénk telepíteni, jelen esetben én az Ubuntu Linux 18.10-es verzióját telepítettem.
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=15cm]{kepek/digitalocean}
-	\caption{Digital Ocean admin felület.}
+	\caption{Droplet a Digital Ocean admin felületén.}
 	\label{digitalocean}
 \end{figure}
 
-\section{Mobil}
+A projecthez készítettem egy subdomain-t és telepítés után a droplet IP címét hozzárendeltem ehhez a subdomain-hez.
+Ezzel biztosítottam, hogy domain név alapján is elérhető legyen a szerver. Ez a \ref{namecheap} képen jól látható.
 
-A mobilos operációs rendszerek közül az Androidot választottam. Már régebben is sikerül megismerkednem az Android nyújtotta lehetőségekkel és előnyökkel.
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=15cm]{kepek/namecheap}
+	\caption{DNS rekordok a domain beállításaiban.}
+	\label{namecheap}
+\end{figure}
+
+\section{Mobil platform választása}
+
+A mobilos operációs rendszerek közül az Androidot választottam. Már korábban sikerült megismerkednem az Android nyújtotta lehetőségekkel és előnyökkel.
+A többi mobilos operációs rendszerrel ellentétben az Android nyílt forráskódú és a piac több mint felét uralja.
+Ez annak is köszönhető, hogy 2005-ben a Google felvásárolta az Android projectet és azóta ők tartják karban.
+A fejlesztő környezete elérhető mind a három fő operációs rendszerre (Linux, macOS, Windows).
+Számomra ezek voltak a legnyomósabb érvek a rendszer kiválasztásában.
 
 \chapter{Felhasznált technológiák}\label{technologiak}
 
