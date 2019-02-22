@@ -47,9 +47,21 @@ Az elején, bennem többek között az a kérdés merült fel, hogy honnan tudha
 A szakdolgozatomban Android platformra készült telepítő fájlok forrás fájlokká való visszaállításáról írok, valamint bemutatom hogyan valósítható meg a kliens-szerver kommunikáció egy REST~API és egy Androidos alkalmazás segítségével.
 A projectet ,,Reverse Droid''-nak neveztem el.
 
+\chapter{Fejlesztői eszközök}\label{eszkozok}
+
+\section{Fejlesztői környezetek}
+
+\subsection{Android Studio}
+
+Az Android Studio jelenleg az egyetlen jól támogatott és minőségi fejlesztői környezet Android fejlesztéshez.
+
+\subsection{Pycharm Professional Edition}
+
+\section{Postman}
+
 \chapter{Platformok}\label{platformok}
 
-\section{ A szerver kiválasztása és felépítése}
+\section{A szerver kiválasztása és felépítése}
 
 Olyan szerverre volt szükségem, ami nem túl költséges, de mégis megfelelően testreszabható és gyors tárhelyet biztosít.
 A választásom a Digitial Ocean felhő szolgáltatására esett. Az oldal felületén lehetőségünk van több, úgynevezett \emph{droplet}-et létrehozni, amik nem mások mint virtuális szerverek. 
@@ -82,9 +94,61 @@ Számomra ezek voltak a legnyomósabb érvek a rendszer kiválasztásában.
 
 \chapter{Felhasznált technológiák}\label{technologiak}
 
+\section{Folyamatos integrálás}
+
+A folyamatos integrálás egy extrém programozási gyakorlat.
+A folyamatos integrálás arról szól, hogy ha egy feladat elkészült akkor azt egyből beintegráljuk a rendszerbe.
+A beintegrálás után természetesen minden egység tesztnek sikeresen le kell futnia.
+Több nagy cég is a \emph{CircleCi}-t használja a folyamatos integráláshoz.
+Ilyen például a \emph{Facebook}, \emph{Spotify}, \emph{Kickstarter} és a \emph{GoPro}.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=15cm]{kepek/circle_ci}
+	\caption{Sikeres project buildek a CircleCi felületén.}
+	\label{circleci}
+\end{figure}
+
+
+\section{Verzió kezelés}
+
+Már a project kezdetekor készítettem egy privát Github repository-t, hogy nyomon tudjam követni a változtatásaimat és esetleges hiba esetén visszaállítani egy korábbi verzióra.
+
+
 \section{Szerveren használt technológiák}
 
+\subsection{Flask}
+
+\subsection{SQLite}
+
+\subsection{Docker}
+
+A szerverhez készítettem egy Dockerfile-t és csatoltam a project Github-os repository-ját.
+Ezzel elérve, hogy minden egyes változatásnál a Docker Hub újra buildelje a képfájlt.
+A folyamat nagyon hasonlít a folyamatos integrálásra.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=15cm]{kepek/docker_hub}
+	\caption{A szerver Docker Hub-on is elérhető.}
+	\label{dockerhub}
+\end{figure}
+
+\subsection{Tmux}
+
 \section{Androidon használt technológiák}
+
+\subsection{OkHttp3}
+
+\subsection{Pusher}
+
+\subsection{Room}
+
+\subsection{CodeView}
+
+\subsection{Material Design 2.0}
+
+
 
 \begin{thebibliography}{1}
 \bibitem{statista} \textsc{ONLINE}: Number of mobile phone users worldwide from 2015 to 2020, \url{https://www.statista.com/statistics/274774/forecast-of-mobile-phone-users-worldwide}
