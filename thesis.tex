@@ -5,7 +5,7 @@
 \PassOptionsToPackage{defaults=hu-min}{magyar.ldf}
 \usepackage[magyar]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage{listingsutf8,xcolor,caption,graphicx,amsmath,amssymb,amsthm, url, hulipsum}
+\usepackage{listingsutf8,xcolor,caption,graphicx,amsmath,amssymb,amsthm, url, hulipsum, hyperref}
 \footnotestyle{rule=fourth}
 
 \graphicspath{{./kepek/}}
@@ -84,6 +84,10 @@ Ezzel biztosítottam, hogy domain név alapján is elérhető legyen a szerver. 
 	\label{namecheap}
 \end{figure}
 
+A kész projectben nem ezt a folyamatot választottam, hanem a Digital Ocean által nyújtott ,,one-click apps'' menüben egyszerűen kiválasztottam a Docker alkalmazást és az elkészült képfájlt ezen futattam. 
+Így automatizálva a szerver telepítésének folyamatát és megspórolva magának a Docker-nek a telepítését és konfigurálását.
+Erről még a Szerveren használt technológiák fejezet \nameref{docker} alfejezetében bővebben írok.
+
 \section{Mobil platform választása}
 
 A mobilos operációs rendszerek közül az Androidot választottam. Már korábban sikerült megismerkednem az Android nyújtotta lehetőségekkel és előnyökkel.
@@ -121,7 +125,7 @@ Már a project kezdetekor készítettem egy privát Github repository-t, hogy ny
 
 \subsection{SQLite}
 
-\subsection{Docker}
+\subsection{Docker}\label{docker}
 
 A szerverhez készítettem egy Dockerfile-t és csatoltam a project Github-os repository-ját.
 Ezzel elérve, hogy minden egyes változatásnál a Docker Hub újra buildelje a képfájlt.
