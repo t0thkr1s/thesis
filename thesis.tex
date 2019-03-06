@@ -127,18 +127,27 @@ Már a project kezdetekor készítettem egy privát Github repository-t, hogy ny
 
 \section{Szerveren használt technológiák}
 
-\subsection{Flask}
+\subsection*{Flask}
 
 A szervert a Flask webes mikro keretrendszer felhasználásával készítettem el.
 A \emph{LinkedIn} és \emph{Pinteres} is említésre méltó alkalmazások, amik felhasználták ezt a keretrendszert.
 
-\subsection{SQLite}
+\subsection*{SQLite}
 
 Az SQLite a legtöbbet használt adatbázis motor a világon. 
 Számtalan alkalmazás használja és Android-on is ez az alapértelmezett adatbázis.
 Az SQLite nyílt forráskódú, így mindenki nyugodtan használhatja.
 
-\subsection{Docker}\label{docker}
+\subsection*{Pusher Beams}
+
+A szerverről való értesítés küldéshez a Pusher Beams SDK-ját használtam.
+A Beams SDK lehetővé teszi, hogy egyszerűen küldjünk push értesítést ,,érdeklődési'' körök alapján és platformtól függetlenül.
+Ingyenesen és korlátlanul küldhetjük ezeket az értesítéseket.
+A szerver és kliens is oldal implementációja is nagyon egyszerű és jól dokumentált, de ha mégis problémánk támadna a support is  végtelenül segítőkész.
+
+% forrás https://docs.pusher.com/beams/reference/server-sdk-python
+
+\subsection*{Docker}\label{docker}
 
 A szerverhez készítettem egy Dockerfile-t és csatoltam a project Github-os repository-ját.
 Ezzel elérve, hogy minden egyes változatásnál a Docker Hub újra buildelje a képfájlt.
@@ -151,7 +160,7 @@ A folyamat nagyon hasonlít a folyamatos integrálásra.
 	\label{dockerhub}
 \end{figure}
 
-\subsection{Tmux}
+\subsection*{Tmux}
 
 A Tmux vagy másnéven terminál multiplexer használatával több shell-t lehet futtatni.
 Ez még nem is lenne túl nagy segítség, viszont ezt a folyamatot le lehet csatolni majd vissza anélkül, hogy elveszne a tartalom.
@@ -161,7 +170,7 @@ A Tmux nagy segítségemre volt, mivel lehetőséget adott hogy keressek a kér�
 
 \subsection{jd-cmd}
 
-Szükségem volt egy parancs sorból használható Java Decompiler-re is. 
+Szükségem volt egy parancssorból használható Java Decompiler-re is. 
 
 \url{https://github.com/kwart/jd-cmd}
 
@@ -171,10 +180,13 @@ Szükségem volt egy parancs sorból használható Java Decompiler-re is.
 
 \subsection{dex2jar}
 
+Android .dex és .class fájlokkal való dolgozáskor kulcs szerepet játszott a \emph{dex2jar}. Jelen esetben nem csak egy programról beszélünk, mert valójában több eszközt foglal magába.
+Az Android telepítő fájl kitömörítése után, az alkalmazás forráskódja egy \emph{classses.dex} fájlban található meg.
+Ez a fájl byte kódot tartalmaz az ART számára és ezt kellett átalakítani .jar formátumba, amivel már a decompiler dolgozni tud.
+
 \url{https://bitbucket.org/pxb1988/dex2jar}
 
 \subsection{JSON}
-
 
 
 \section{Androidon használt technológiák}
@@ -183,11 +195,19 @@ Szükségem volt egy parancs sorból használható Java Decompiler-re is.
 
 \subsection{Okio}
 
-\subsection{Pusher}
+\subsection{Pusher Beams}
+
+% forrás https://docs.pusher.com/beams/reference/android
+
 
 \subsection{Firebase Messaging}
 
 \subsection{Room}
+
+A Room egy absztrakciós réteget nyújt az SQLite adatbázishoz, ezzel lehetővé téve az egyszerűbb és hatékonyabb adatbázis elérést.
+A Room segítségével sokkal egyszerbben tudtam kezelni az SQLite adatbázist, mert nem kellett adatbázist leíró osztályt és hosszú lekérdezéseket írnom.
+Ami külön tetszett benne, hogy az SQL utasításokat fordítási időben ellenőrzi.
+Annotációk segítségével tudjuk összekötni a Java POJO osztályokat az SQLite adatbázissal.
 
 \subsection{CodeView}
 
