@@ -223,13 +223,42 @@ A következő lista tartalmazza a teszteléshez felhasznált szándékosan sér�
 
 \chapter{Megvalósított funkciók}\label{funkciok}
 
+\section{Bejelentezés}
+
+\section{Regisztráció}
+
+\section{Kijelentkezés}
+
+\section{Adatok törlése}
+
+\section{Fájl feltöltés}
+
+\section{Fájl letöltés}
+
+\section{Navigáció a fájlrendszerben}
+
+A letöltött és kitömörített projektek az alkalmazás mappájában kerülnek.
+Ezzel alapvetően nincs is semmi probléma, csak ha megszeretnénk nézni a fájlokat, akkor elkellene hagynunk az alkalmazást.
+Ez pedig rossz felhasználói élményhez vezetett volna.
+Ennek megoldására megvalósítottam egy nagyon egyszerű fájl rendszer navigációt, de ezt csak az alkalmazás mappájában tettem lehetővé.
+Így kitömörítés után egyszerűen és gyorsan elérhetővé válik a project a felhasználó számára.
+Részleteit tekintve csak a fájl nevét, módosítás dátumát és a fájl méretét jelenítettem meg.
+
+\section{Értesítések}
+
+Az értesítések küldése és fogadása szintén egy kulcs fontosságú része az alkalmazásnak.
+A fájlok letöltése és kitömörítése mérettől, valamint hálózati kapcsolattól függően időt vesz igénybe.
+
+A szerveren történő visszafejtés az a folyamat, ami jelentős időtartamot igényel.
+
 \chapter{Továbbfejlesztési lehetőségek}\label{lehetosegek}
 
 Úgy gondolom, hogy sokkal nagyobb piaci érték rejlik ebben az alkalmazásban.
 A jövőben is szeretném folytatni a fejlesztést.
-Szeretnék több figyelmet fordítani az biztonságra és hatékonyságra.
+Szeretnék több figyelmet fordítani a biztonságra és hatékonyságra.
 Gondolok itt a biztonságos kommunikációra TLS-es keresztül és a harmadik féltől származó könyvtárak csökkentésére.
 A kód visszafejtése végén egy összegző report is hasznos lehet a felhasználó számára, ami tartalmazhatja a feldolgozott fájlok számát.
+Egy esetleges forrás kód elemző 
 
 \chapter{Tapasztalatok}\label{tapasztalatok}
 
