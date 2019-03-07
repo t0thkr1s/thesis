@@ -45,7 +45,7 @@ Egy alkalmazásnak a sebezhetőségét különböző támadási vektoron is ki l
 Az elején, bennem többek között az a kérdés merült fel, hogy honnan tudható hogy ez alkalmazás ebezhető-e vagy sem.egy kérdés merült fel. Honnann tudhatom, hogy egy adott alkalmazás sebezhető-e vagy sem. A leghatékonyabb módszer ha visszafejtjük a fájl forráskódra. Ezt angolul ,,reverse engineering''-nek nevezik. A visszaállított fájlok olvashatósága nem lesz tökéletes, főleg ha obfuszkált \footnote{Az obfuszkáció célja röviden, hogy megnehezítse a visszafejtett kód olvashatóságát.} kóddal állunk szemben, de egy tapasztalt szem így is kitudja szúrni a gyakori hibákat.
 
 A szakdolgozatomban Android platformra készült telepítő fájlok forrás fájlokká való visszaállításáról írok, valamint bemutatom hogyan valósítható meg a kliens-szerver kommunikáció egy REST~API és egy Androidos alkalmazás segítségével.
-A projectet ,,Reverse Droid''-nak neveztem el.
+A projektet ,,Reverse Droid''-nak neveztem el.
 
 \chapter{Fejlesztői eszközök}\label{eszkozok}
 
@@ -62,6 +62,8 @@ Ez különösen hasznos, ha megakarunk találni egy memória szivárgást vagy e
 Említésre méltó még a flexibilis build rendszere is, a Gradle. Használatával megtehetjük, hogy külön build típusokat hozzunk létre a különböző eszközökre. \cite{androidstudio}
 
 \subsection{Pycharm Professional Edition}
+
+% https://www.jetbrains.com/pycharm/features/
 
 \section{Postman}
 
@@ -190,6 +192,22 @@ Ez a fájl byte kódot tartalmaz az ART számára és ezt kellett átalakítani 
 
 
 \section{Androidon használt technológiák}
+
+\subsection{AndroidX}
+
+Az AndroidX egy nyílt forrsákódú projekt, amit az Android fejlesztői csapata használ library-k fejlesztéshez, teszteléséhez és kiadásához a Jetpack-en belül.
+Az eredeti support library-hez képest az AndroidX egy jelentős fejlődés. Ahogy a support library-t is, az AndroidX-et is az Android operációs rendszertől függetlenül tudjuk használni és biztosítja a visszafelé kompatibilitást.
+Az AndroidX teljesen felváltja a support library-t azáltal, hogy azonos funkciókat biztosít és új könytárakat.
+Ezen felül az AndroidX a következő funkciókat tartalmazza:
+
+\begin{enumerate}
+	\item Minden csomag egy konzisztens névtérben van, ami ,,androidx''-el kezdődik.
+	\item A support library-vel ellentétben az AndroidX csomagok külön vannak karbantartva és frissítve.
+	\item Az összes új support library fejlesztés az AndroidX könyvtárban fog történni. Ez magába foglalja az eredeti support library fenntartását és az új Jetpack komponensek bevezetését.
+\end{enumerate}
+
+
+% forrás https://developer.android.com/jetpack/androidx
 
 \subsection{OkHttp3}
 
