@@ -38,34 +38,58 @@ Sajnos a biztonság nem egy első számú szempont egy megrendelő szemében,csa
 Inkább a gyorsaságon és a folyamatok automatizálásán van a hangsúly, ezért nem  meglepő, hogy a fejlesztés életciklusának tervezési szakaszában kevés figyelem fordul a szoftver biztonságossá tételére.
 
 A statista.com \cite{statista} kutatása szerint 2020-ra több mint 4.78 billió telefon lesz használatban.
-Ezzel a cégek is tisztában vannak és tudják, hogy ha még több emberhez szeretnék eljuttatni a szolgáltatásukat, akkor rendelkezniük kell saját mobilos alkalmazással.
+Ezzel a cégek is tisztában vannak és tudják, hogy ha még több emberhez szeretnék eljuttatni a szolgáltatásukat, akkor rendelkezniük kell saját mobilos app~-al.
 
 A mobilos eszközöket célzó támadások száma hatalmas ütemben nő. Mindez azért lehetséges, mert figyelmen kívül marad a ,,secure coding''-nak nevezett gyakorlat.
 Egy alkalmazásnak a sebezhetőségét különböző támadási vektoron is ki lehet aknázni.
-Az elején, bennem többek között az a kérdés merült fel, hogy honnan tudható hogy ez alkalmazás ebezhető-e vagy sem.egy kérdés merült fel. Honnann tudhatom, hogy egy adott alkalmazás sebezhető-e vagy sem. A leghatékonyabb módszer ha visszafejtjük a fájl forráskódra. Ezt angolul ,,reverse engineering''-nek nevezik. A visszaállított fájlok olvashatósága nem lesz tökéletes, főleg ha obfuszkált \footnote{Az obfuszkáció célja röviden, hogy megnehezítse a visszafejtett kód olvashatóságát.} kóddal állunk szemben, de egy tapasztalt szem így is kitudja szúrni a gyakori hibákat.
+Az elején, bennem többek között az a kérdés merült fel, hogy honnan tudható hogy ez alkalmazás ebezhető-e vagy sem.egy kérdés merült fel.
+Honnann tudhatom, hogy egy adott alkalmazás sebezhető-e vagy sem és ha igen milyen súlyos a hiba.
+A leghatékonyabb módszer ha visszafejtjük az alkalmazást forráskódra.
+Ezt angolul ,,reverse engineering''-nek nevezik.
+A visszaállított fájlok olvashatósága nem lesz tökéletes, főleg ha obfuszkált \footnote{Az obfuszkáció célja röviden, hogy megnehezítse a visszafejtett kód olvashatóságát.} kóddal állunk szemben, de egy tapasztalt szem így is kitudja szúrni a gyakori hibákat.
 
-A szakdolgozatomban Android platformra készült telepítő fájlok forrás fájlokká való visszaállításáról írok, valamint bemutatom hogyan valósítható meg a kliens-szerver kommunikáció egy REST~API és egy Androidos alkalmazás segítségével.
+A szakdolgozatomban Android platformra készült alkalmazások forrás fájlokká való visszaállításáról írok, valamint bemutatom hogyan valósítható meg a kliens-szerver kommunikáció egy REST API és egy Android platforma készült kliens segítségével.
+A felhasználó egy egyszerű autentikáció után képes lesz \emph{.apk} fájlok feltöltésére, letöltésére és az elkészült projekteben való navigálásra.
+Hosszabb ideig tartó folyamatok állapotáról és elkészültéről értesítést kap és lehetősége lesz a forrás kód alkalmazáson belüli megtekintésére és megosztására.
 A projektet ,,Reverse Droid''-nak neveztem el.
 
-\chapter{Fejlesztői eszközök}\label{eszkozok}
+\chapter{Fejlesztői környezetek}\label{kornyezetek}
 
-\section{Fejlesztői környezetek}
-
-\subsection{Android Studio}
+\section{Android Studio}
 
 Az Android Studio jelenleg az egyetlen jól támogatott és minőségi fejlesztői környezet Android fejlesztéshez.
 Régebben sok panaszt hallottam az emulátorára, hogy nagyon lassú és körülményes a használata.
 Mára már egy pillanat alatt lehet futtatni a programunk és abszolút kényelmes lett a használata.
+Az emulátor állapota menthető, ezáltal indításkor ott folytathatjuk ahol abba hagytuk. Azon kívül, hogy használatával több különböző eszközön tesztelhetjük az alkalmazásunk, lehetőséget ad a szenzorok, hálózati és GPS kacsolat szimulálására. 
 Rendelkezik APK elemzővel, vizuális felhasználó felület szerkesztővel és intelligens kód szerkesztővel is.
 Az egyik kedvenc funkcióm a valós idejű profilozó, ami segítségével megtudjuk nézni valós időben, milyen erőforrásokat használ az alkalmazásuk.
 Ez különösen hasznos, ha megakarunk találni egy memória szivárgást vagy egy olyan részt, ami a kelleténél jobban meríti az akkumulátorunk.
-Említésre méltó még a flexibilis build rendszere is, a Gradle. Használatával megtehetjük, hogy külön build típusokat hozzunk létre a különböző eszközökre. \cite{androidstudio}
+Említésre méltó még a flexibilis build rendszere is, a Gradle. Használatával megtehetjük, hogy külön build típusokat hozzunk létre a különböző eszközökre.
+Az \emph{instant run} funkció segítségével egyből tudjuk futtatni a kódban véghez vitt kisebb változtatásokat, anélkül hogy újraindítanánk az Activity~-t vagy újra buildelnénk az egész projektet és új APK~-t telepítenénk.
+\cite{androidstudio}
 
-\subsection{Pycharm Professional Edition}
+% https://developer.android.com/studio/features.html
+
+\section{Pycharm Professional Edition}
+
+A PyCharm is egy IDE \footnote{Integrated Development Environment (integrált fejlesztői környezet)}, mint az Android Studio.
+Ha alapvetően Python nyelven szeretnénk programozni, a PyCharm egy .
+Én a \emph{PyCharm Professional Edition}-t használtam, amihez a diákok ingyenesen hozzájuthatnak.
+Mivel adatbázissal is dolgoznok, ezért a \emph{Community Edition} nem lett volna megfelelő.
+Nem csak az adatbázis támogatást nyújt, hanem webes keretrendzser támogatást és profilozót is.
+A távoli fejlesztés funkció is rendkívűl praktikus. A fejlesztés közben egyszerűen tudtam feltölteni a szerverre a változtatásaimat.
+A verzió kezelőknek is egyesített felületet nyújt, amivel jelentős időt spórolhatunk meg.
+Ez a lehetőség mindkettő fejlesztői környezetben elérhető.\cite{pycharm}
 
 % https://www.jetbrains.com/pycharm/features/
 
 \section{Postman}
+
+A Postman kollekciók futtatható leírásai egy API-nak\footnote{Application Programming Interface} és sarok kövei a Postman beépített ezközeinek.
+Ezeknek a beépített eszközöknek köszönhetően futtathatunk hálózati kéréseket, teszteket, debuggolhatunk és csinálhatunk mock szervereket is.
+Ráadásul automatizáltan futtathatjuk a teszteket és egyszerűen elkészíthetjük és publikálhatjuk az API dokumentációját.
+
+% https://www.getpostman.com/products
 
 \chapter{Platformok}\label{platformok}
 
@@ -308,5 +332,6 @@ Természetesen nem volt minden magától értetődő és jó pár nehézséggel 
 \begin{thebibliography}{1}
 \bibitem{statista} \textsc{ONLINE}: Number of mobile phone users worldwide from 2015 to 2020, \url{https://www.statista.com/statistics/274774/forecast-of-mobile-phone-users-worldwide}
 \bibitem{androidstudio} \textsc{ONLINE}: Everything you need to build on Android \url{https://developer.android.com/studio/features.html}
+\bibitem{pycharm} \textsc{ONLINE}: PyCharm Features \url{https://www.jetbrains.com/pycharm/features/}
 \end{thebibliography}
 \end{document}
