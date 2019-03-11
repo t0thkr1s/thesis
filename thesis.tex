@@ -8,7 +8,25 @@
 \usepackage{listingsutf8,xcolor,caption,graphicx,amsmath,amssymb,amsthm, url, hulipsum, hyperref}
 \footnotestyle{rule=fourth}
 
-\graphicspath{{./kepek/}}
+\lstset{ 
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{green},    % comment style
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{gray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\graphicspath{{./pictures/}}
 
 \newtheorem{tetel}{Tétel}[chapter]
 \newtheorem{lemma}[tetel]{Lemma}
@@ -98,7 +116,7 @@ Attól függően, hogy helyes-e a felhasználó név és jelszó páros a szerve
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=15cm]{kepek/postman}
+	\includegraphics[width=15cm]{pictures/postman}
 	\caption{Egy GET kérés és válasz a Postman alkalmazásban.}
 	\label{postman}
 \end{figure}
@@ -116,7 +134,7 @@ Megadhatjuk milyen disztribúciót szeretnénk telepíteni, jelen esetben én az
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=15cm]{kepek/digitalocean}
+	\includegraphics[width=15cm]{pictures/digitalocean}
 	\caption{Droplet a Digital Ocean admin felületén.}
 	\label{digitalocean}
 \end{figure}
@@ -126,7 +144,7 @@ Ezzel biztosítottam, hogy domain név alapján is elérhető legyen a szerver. 
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=15cm]{kepek/namecheap}
+	\includegraphics[width=15cm]{pictures/namecheap}
 	\caption{DNS rekordok a domain beállításaiban.}
 	\label{namecheap}
 \end{figure}
@@ -150,6 +168,8 @@ Számomra ezek voltak a legnyomósabb érvek a rendszer kiválasztásában.
 Verzió kezelésre a Git-et használtam, ami széleskörben elterjedt a fejlesztők között.
 A Git egy ingyenes és nyílt-forrsákódú elosztott verzió kezelő rendszer. Úgy készült, hogy gyorsan és hatákonyan tudjon kezelni kis és nagy projekteket is egyaránt.
 Már a project kezdetekor készítettem egy privát Github repository-t, hogy nyomon tudjam követni a változtatásaimat és esetleges hiba esetén visszaállítani egy korábbi verzióra.
+
+
 A Github nem összetévesztendő a Git-el, mert a Git a forráskód változtatásainak kezelésére szolgál lokálisan, a Github pedig egy tárhelyet nyúlt a repository-k tárolására.
 A projekt fejlesztése alatt több gépről dolgoztam és Github a segítségével biztosítani tudtam, hogy mindenhol elérjen a változtatásaimat.
 Lényegében egy központi szerverként szolgált számomra.
@@ -174,7 +194,7 @@ Az eredményről minden egyes alkalommal értesítést kapunk, így egyből tudh
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=15cm]{kepek/circle_ci}
+	\includegraphics[width=15cm]{pictures/circle_ci}
 	\caption{Sikeres project buildek a CircleCi felületén.}
 	\label{circleci}
 \end{figure}
@@ -211,7 +231,7 @@ A folyamat nagyon hasonlít a folyamatos integrálásra.
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=15cm]{kepek/docker_hub}
+	\includegraphics[width=15cm]{pictures/docker_hub}
 	\caption{A szerver Docker Hub-on is elérhető.}
 	\label{dockerhub}
 \end{figure}
@@ -244,6 +264,14 @@ Ez a fájl byte kódot tartalmaz az ART számára és ezt kellett átalakítani 
 
 \subsection{JSON}
 
+A JSON\footnote{JavaScript Object Notation} egy könnyű, szöveg alapú szabvány vagyis emberek is egyszerűen tudják írni és olvasni.
+A JavaScript szkriptnyelvből alakult ki egyszerű adatstruktúrák és tömbök reprezentálására. 
+A JavaScripttel való kapcsolata ellenére nyelvfüggetlen, több nyelvhez is van értelmezője. 
+Ezt a szabványt általában szerver és klien kommunikációra/adatátvitelre használják.
+Véleményem szerint sokkal átláthatóbb és egyszerűbb, mint például az XML\footnote{Extensible Markup Language}.
+Általánosságban strukturált adatok tárolására, továbbítására szolgál. \cite{json}
+
+% https://hu.wikipedia.org/wiki/JSON
 
 \section{Androidon használt technológiák}
 
@@ -288,12 +316,36 @@ Több megfelelő forrás kód megjelenítő könyvtárat találtam, így funkci�
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=15cm]{kepek/code_view}
+	\includegraphics[width=15cm]{pictures/code_view}
 	\caption{A vissza fejtett forrás kód megjelenítése.}
 	\label{dockerhub}
 \end{figure}
 
 \subsection{Espresso}
+
+Az Android Studio rendelkezik jó pár funkcióval, amikről már tettem említést.
+Amit szándékosan kihagytam, az a UI\footnote{User Interface} tesztek felvétele.
+Az Espresso Test Recorder funkció által megtehetjük, hogy nem kézzel írjuk a teszteket, hanem felvesszük őket.
+Feltudjuk venni az interakcióinkat az alkamazással és ellenőrizni tudjuk az elemeket a felhasználói felületen, valamint biztosítani tudjuk az adott pillantkép helyességét.
+Az Espresso Test Recorder veszi az elmentett teszt felvételt és automatikusan generál egy hozzátartozó UI tesztet, amit aztán futatni tudunk az alkalmazásunk tesztelése érdekében.
+
+Espresso Test Recorder az Espresso Testing keretrendszer alapján írja a teszteket, ami egy API az AndroidX Test-ben.
+Segít megbízható és tömör UI teszteket írni a felhasználói interakcióra alapozva.
+Állíhatunk elvárásokat és interakciókat anélkül, hogy hozzáférnénk az alkalmazás nézeteihez és activity-jeihez.
+Ez a struktúra optimizálja a tesztek futási idejét. \cite{espresso}
+
+A projektem esetében nem volt ilyen egyszerű a helyzet.
+Mindenképpen segített, hogy feltudtam venni a teszteket, de vegyük a következő helyzetet.
+Tegyünk fel, hogy a bejelentkezés folyamatára már készen van a teszt.
+Amikor Espresso-val tesztet veszünk fel, az alkalmazás tiszta állapotról indul.
+Ez az jelenti, hogy ha bármilyen bejelentkezés utáni interakciót szeretnénk felvenni, akkor a teszt a bejelentkezéssel együtt kezdődik.
+Az ilyen problémákat manuálisan kell kikerülni.
+A \ref{espressotest} kódrészletben megfigyelhető, hogy egy \emph{@Before} annotációval\footnote{Az annotációk a programkód elemeihez rendelhetők (csomagokhoz, típusokhoz, metódusokhoz, attribútumokhoz, konstruktorokhoz, lokális változókhoz), plusz információt hordoznak a Java fordító ill. speciális eszközök számára.\cite{annotaciok}} ellátot metódusban elmentettem egy teszt felhasználó nevet és jelszót.
+Ezután pedig egyszerűen egy Intent segítségével elindítottam az Activity-t.
+Mindez nem volt elegendő ahhoz, hogy sikeresen tovább mehessek ugyanis bejelentkezés után történik a különböző engedélyek ellenőrzése.
+Az Espresso arra is nyújt megoldást, hogy ezeket az engedély kéréseket automatikusan elfogadjuk a tesztekben a \emph{GrantPermissionRule} osztály segítségével.
+
+\lstinputlisting[language=Java, label={espressotest}, caption=Espresso UI teszt az adatok törléséhez.]{./codes/test.java}
 
 \subsection{Material Design 2.0}
 
@@ -362,6 +414,9 @@ Természetesen nem volt minden magától értetődő és jó pár nehézséggel 
 \begin{thebibliography}{1}
 \bibitem{statista} \textsc{ONLINE}: Number of mobile phone users worldwide from 2015 to 2020, \url{https://www.statista.com/statistics/274774/forecast-of-mobile-phone-users-worldwide}
 \bibitem{androidstudio} \textsc{ONLINE}: Everything you need to build on Android \url{https://developer.android.com/studio/features.html}
+\bibitem{espresso} \textsc{ONLINE}: Create UI tests with Espresso Test Recorder \url{https://developer.android.com/studio/test/espresso-test-recorder}
 \bibitem{pycharm} \textsc{ONLINE}: PyCharm Features \url{https://www.jetbrains.com/pycharm/features/}
+\bibitem{json} \textsc{ONLINE}: JSON \url{https://hu.wikipedia.org/wiki/JSON}
+\bibitem{annotaciok} \textsc{ONLINE}: Java annotációk \url{https://hu.wikipedia.org/wiki/Java_annot%C3%A1ci%C3%B3k}
 \end{thebibliography}
 \end{document}
