@@ -312,12 +312,23 @@ Annotációk segítségével tudjuk összekötni a Java POJO osztályokat az SQL
 \subsection{CodeView}
 
 A forrás kód megjelenítését nem lett volna célszerű nulláról felépíteni, ezért inkább kész megoldások után néztem.
+Kutatásaim során, nem találtam megfelelő natív Android komponenst, amivel kivitelezhető lett volna a forrás kód megjelenítése.
+Ezt úgy értem, hogy a kijelölést nem lehet megoldani egy egyszerő \emph{TextView} osztállyal.
+Mindenképpen kellett egy olyan könyvtár, ami megbízható és elegendő funkcionalitást és testreszabhatóságot nyújt.
+Jó pár könyvtárat végig kellett próbálnom, mire ráakadtam az igazira.
+Találkoztam olyannal, amelyik nem megfelelően töltötte be a kódot és nem is volt megbízható.
+Voltak olyanok is, amelyeket nagyon régóta nem voltak karban tartva és elavult kód bázissal rendelkeztek.
+Találtam aktív fejlesztés alatt lévőket is, de azok többnyire még kiforratlan állapotban voltak.
+
+A megvalósítást ezek a könytárak, úgy végezték el, hogy lényegében egy \emph{WebView} komponensbe töltötték be a forrás kódot, amit aztán különböző JavaScript keretrendszerek segítségével színeztek ki.
 Több megfelelő forrás kód megjelenítő könyvtárat találtam, így funkciók alapján kellett döntenem, hogy melyiket válasszam.
+
+% https://github.com/Thereisnospon/CodeView
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=15cm]{pictures/code_view}
-	\caption{A vissza fejtett forrás kód megjelenítése.}
+	\includegraphics[width=15cm]{pictures/codeview}
+	\caption{A visszafejtett forrás kód megjelenítése.}
 	\label{dockerhub}
 \end{figure}
 
