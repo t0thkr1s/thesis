@@ -17,13 +17,10 @@
   frame=single,	                   % adds a frame around the code
   keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
   keywordstyle=\color{blue},       % keyword style
-  language=Octave,                 % the language of the code
-  morekeywords={*,...},            % if you want to add more keywords to the set
   numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
-  numbersep=5pt,                   % how far the line-numbers are from the code
-  numberstyle=\tiny\color{gray}, % the style that is used for the line-numbers
-  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
-  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+  numbersep=10pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{darkgray}, % the style that is used for the line-numbers
+  rulecolor=\color{gray},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
 }
 
 \graphicspath{{./pictures/}}
@@ -307,7 +304,7 @@ Ezen felül az AndroidX a következő funkciókat tartalmazza:
 A Room egy absztrakciós réteget nyújt az SQLite adatbázishoz, ezzel lehetővé téve az egyszerűbb és hatékonyabb adatbázis elérést.
 A Room segítségével sokkal egyszerbben tudtam kezelni az SQLite adatbázist, mert nem kellett adatbázist leíró osztályt és hosszú lekérdezéseket írnom.
 Ami külön tetszett benne, hogy az SQL utasításokat fordítási időben ellenőrzi.
-Annotációk segítségével tudjuk összekötni a Java POJO osztályokat az SQLite adatbázissal.
+Annotációk segítségével tudjuk összekötni a Java POJO\footnote{Plain Old Java Object} osztályokat az SQLite adatbázissal.
 
 \subsection{CodeView}
 
@@ -318,18 +315,25 @@ Mindenképpen kellett egy olyan könyvtár, ami megbízható és elegendő funkc
 Jó pár könyvtárat végig kellett próbálnom, mire ráakadtam az igazira.
 Találkoztam olyannal, amelyik nem megfelelően töltötte be a kódot és nem is volt megbízható.
 Voltak olyanok is, amelyeket nagyon régóta nem voltak karban tartva és elavult kód bázissal rendelkeztek.
-Találtam aktív fejlesztés alatt lévőket is, de azok többnyire még kiforratlan állapotban voltak.
+Találtam aktív fejlesztés alatt lévőket is, de azok többnyire még kiforratlan állapotban voltak és nem rendelkezdtek elegendő funkcióval.
 
 A megvalósítást ezek a könytárak, úgy végezték el, hogy lényegében egy \emph{WebView} komponensbe töltötték be a forrás kódot, amit aztán különböző JavaScript keretrendszerek segítségével színeztek ki.
-Több megfelelő forrás kód megjelenítő könyvtárat találtam, így funkciók alapján kellett döntenem, hogy melyiket válasszam.
+A választásom egy olyan könyvtárra esett, ami a \emph{highlight.js} keretrendszert használja.
+Ez biztosít több különböző témát szintaktikai kijelölésre és amit még fontosabbnak tartok, hogy automatikusan felismeri a domináns programozási nyelveket, mint a \emph{Java}, \emph{Python} vagy \emph{Ruby}.
+Így sokkal kényemesebb a használata, mert nem kellett kiterjesztés alapján megadni az adott nyelvet.
+Néhány funkció hiányzott ugyan, mint például a két ujjal való nagyítás, kicsinyítés és a kezdő betű méret beállítása.
+Ezeknek a támogatását sikerült viszonylag egyszerűen megoldani, hiszen a \emph{CodeView} a \emph{WebView} osztályból származik és rendelkezik a megfelelő metódusokkal.
+A \ref{codeviewimplementation} kódrészletben a \emph{CodeView} megvalósítása és kiegészítése látható, alatta pedig a \ref{codeview} képen látható a forrás kód megjelenítése az alkalmazásban.
 
-% https://github.com/Thereisnospon/CodeView
+A választott könyvtár elérhető: \url{https://github.com/Thereisnospon/CodeView}
+
+\lstinputlisting[language=Java, label={codeviewimplementation}, caption=A CodeView könyvtár felhasználása és kiegésztése.]{./codes/codeview.java}
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=15cm]{pictures/codeview}
-	\caption{A visszafejtett forrás kód megjelenítése.}
-	\label{dockerhub}
+	\caption{A visszafejtett forrás kód megjelenítése szintaktikai kijelöléssel.}
+	\label{codeview}
 \end{figure}
 
 \subsection{Espresso}
