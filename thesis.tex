@@ -200,18 +200,18 @@ Az eredményről minden egyes alkalommal értesítést kapunk, így egyből tudh
 
 \section{Szerveren használt technológiák}
 
-\subsection*{Flask}
+\subsection{Flask}
 
 A szervert a Flask webes mikro keretrendszer felhasználásával készítettem el.
 A \emph{LinkedIn} és \emph{Pinteres} is említésre méltó alkalmazások, amik felhasználták ezt a keretrendszert.
 
-\subsection*{SQLite}
+\subsection{SQLite}
 
 Az SQLite a legtöbbet használt adatbázis motor a világon. 
 Számtalan alkalmazás használja és Android-on is ez az alapértelmezett adatbázis.
 Az SQLite nyílt forráskódú, így mindenki nyugodtan használhatja.
 
-\subsection*{Pusher Beams}
+\subsection{Pusher Beams}
 
 A szerverről való értesítés küldéshez a Pusher Beams SDK-ját használtam.
 A Beams SDK lehetővé teszi, hogy egyszerűen küldjünk push értesítést ,,érdeklődési'' körök alapján és platformtól függetlenül.
@@ -220,7 +220,7 @@ A szerver és kliens is oldal implementációja is nagyon egyszerű és jól dok
 
 % forrás https://docs.pusher.com/beams/reference/server-sdk-python
 
-\subsection*{Docker}\label{docker}
+\subsection{Docker}\label{docker}
 
 A szerverhez készítettem egy Dockerfile-t és csatoltam a project Github-os repository-ját.
 Ezzel elérve, hogy minden egyes változatásnál a Docker Hub újra buildelje a képfájlt.
@@ -233,7 +233,7 @@ A folyamat nagyon hasonlít a folyamatos integrálásra.
 	\label{dockerhub}
 \end{figure}
 
-\subsection*{Tmux}
+\subsection{Tmux}
 
 A Tmux vagy másnéven terminál multiplexer használatával több shell-t lehet futtatni.
 Ez még nem is lenne túl nagy segítség, viszont ezt a folyamatot le lehet csatolni majd vissza anélkül, hogy elveszne a tartalom.
