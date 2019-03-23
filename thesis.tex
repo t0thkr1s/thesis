@@ -390,17 +390,33 @@ A következő lista tartalmazza a teszteléshez felhasznált szándékosan sér�
 
 \chapter{Megvalósított funkciók}\label{funkciok}
 
-\section{Bejelentezés}
-
 \section{Regisztráció}
+
+A szolgáltatást nem akartam mindenki számára elérhetővé tenni, csak a regisztrált felhasználóknak.
+
+\section{Bejelentkezés}
+
+Természetesen regisztrálás után a felhasználónak be kell jelentkeznie, hogy hozzáférhessen azokhoz a végpontokhoz, amik bejelentkezéshez vannak kötve.
 
 \section{Kijelentkezés}
 
 \section{Adatok törlése}
 
+A kliens oldalon elég sok adat jelenik meg. 
+Ilyen például a feltöltések listája, értesítések és természetesen a letöltött fájlok is ide tartoznak.
+Az adatok törlése funkcióval biztosítottam, hogy a felhasználónak lehetősége legyen törölni minden adatot és előzményt.
+Jól jöhet ez a funkció akkor is ha a telefon esetleg nem rendelkezik elég tárhellyel vagy egyszerűen csak helyet szeretnénk felszabadítani.
+
 \section{Fájl feltöltés}
 
+Az alkalmazás egy meghatározó pontja, hogy az APK fájl feltölthető legyen.
+Ezt a funkciót próbáltam a legkézenfekvőbb helyre rakni, mert ezzel indul az egész folyamat.
+
 \section{Fájl letöltés}
+
+A fájl letöltés is egy roppant fontos funkció, ugyanis csak így jut el a felhasználóhoz az eredmény.
+A megvalósítását hozzákötöttem az értesítésekhez, mert a kliens abban kapja vissza a letöltendő fájl nevét.
+% A felület és a letöltési gombok jól láthatóak a \ref{ertesitesek} alfejezetben bemutatott \ref{} képen. 
 
 \section{Navigáció a fájlrendszerben}
 
@@ -411,7 +427,7 @@ Ennek megoldására megvalósítottam egy nagyon egyszerű fájl rendszer navig�
 Így kitömörítés után egyszerűen és gyorsan elérhetővé válik a project a felhasználó számára.
 Részleteit tekintve csak a fájl nevét, módosítás dátumát és a fájl méretét jelenítettem meg.
 
-\section{Értesítések}
+\section{Értesítések}\label{ertesitesek}
 
 Az értesítések küldése és fogadása szintén egy kulcs fontosságú része az alkalmazásnak.
 A fájlok letöltése és kitömörítése mérettől, valamint hálózati kapcsolattól függően időt vesz igénybe.
