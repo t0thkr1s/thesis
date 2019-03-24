@@ -288,14 +288,54 @@ Ezen felül az AndroidX a következő funkciókat tartalmazza:
 
 % forrás https://developer.android.com/jetpack/androidx
 
-\subsection{OkHttp3}
+\subsection{OkHttp}
+
+A modern alkalmazások a HTTP \footnote{HyperText Transfer Protocol} protokollal dolgoznak. 
+Segítségével adatokat tudunk küldeni és fogadni.
+Ha hatékonyan használjuk a HTTP protokolt, akkor gyorsabban tudjuk az adatokat betölteni és sávszélességet spórolhatunk meg. 
+
+Az OkHttp egy HTTP kliens, ami alapértelmezetten hatékony. Néhány tulajdonsága:
+
+\begin{enumerate}
+	\item Az átlátszó GZIP csökkenti a letöltés méretét.
+	\item A válaszokat cache-ben tárolja, ezért ismétlődő kéréseknél elkerülhető a hálózat használata.
+	
+\end{enumerate}
+
+Akkor sem omlik össze, ha problémás a hálózat, valamint csendben helyreáll a gyakori kapcsolati problémák esetében is.
+Ha a szolgáltatásunknak több IP címe lenne, akkor az alternatív IP címekkel próbálkozna kapcsolati hiba esetén.
+Ez szükséges IPv4+IPv6 használatakor és olyan szolgáltatások esetében, amik redundáns adat központokban vannak.
+Támogatja a modern TLS funkciókat, ami a biztoságot adatátvitelért felelős.
+
+Az OkHttp használata egyszerű. A kérés/válasz API-ja builder tervezési mintára épült, amit nagyon könnyű használni.
+
+Lehetőséget ad szinkronizált (egyidejű) blokkoló hívásokra és aszinkron hívásokra is ,,callback''-ek segítségével.
+A könyvtár támogatja az Android 5.0+ (API szint 21+) verziókat és támogatja a Java 8-at, valamint az attól felfelé lévő verziókat.
+
+% https://square.github.io/okhttp/
 
 \subsection{Okio}
 
 \subsection{Pusher Beams}
 
-% forrás https://docs.pusher.com/beams/reference/android
+A Beams megkönnyíti az éresítések küldését iOS és Android eszközökre.
+Bonyodalommentessé teszi az eszköz tokenek kezelését és az interakciót az Apple és a Google által biztosított üzenetküldő szolgáltatásokkal.
 
+A Pusher nagyon sokoldalú API-val és SDK-kal rendelkezik. 
+Ezek közül a Beam egy fejlesztő barát eszköz, aminek a segítségével értesítéseket küldhetünk.
+Számos mobil automatizálási eszköz javasolja a promóciós értesítések küldését, amiket nem mindig szeretnek a felhasználók és leiratkoznak.
+
+A Beam-mel egyenesen a programból indíthatjuk az értesítések küldését a valós alkalmazásban történő eseményekre alapozva. 
+Így a felhasználók kevésbé fogják megunni az értesítéseket is törölni esetlegesen az appot. 
+Íme néhány példa a felhasználást illetően:
+
+\begin{itemize}
+	\item Étel kiszállítással kapcsolatos folyamatos értesítések
+	\item Játékokban pontok alapján való értesítés küldés
+	\item Tranzakciós értesítések
+\end{itemize}
+
+% forrás https://docs.pusher.com/beams/reference/android
 
 \subsection{Firebase Messaging}
 
