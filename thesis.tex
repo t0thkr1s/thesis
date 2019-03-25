@@ -184,6 +184,20 @@ A mai napig úgy gondolom, hogy ebben a platformban van a legnagyobb potenciál 
 
 \section{Verzió kezelés}
 
+Egy verzó kezelő rendszer képes kezelni egy fájl vagy akár több fájl módosításait olyan módon, hogy lehetőségünk legyen időben ,,visszamenni'' és megnézni egy fájl bizonyos verzióját.
+A Linux kernel forráskódja óriási méretű és a Git verzió kezelőt használják a fejlesztéshez.
+Ez azért érdekes, mert nagyon sok ember dolgozik nagyon nagy kódbázissal és a Git mégis képes hatékonyan kezelni a változásokat.
+Itt van, hogy miért bíznak meg benne egy ilyen nehéz feladat esetében és hogyan teljesíti a Git minden elvárásukat:
+
+\begin{itemize}
+	\item Atomosság
+	\item Teljesítmény
+	\item Biztonság
+\end{itemize}
+
+
+\cite{git}
+
 Verzió kezelést tekintve a Git mellett döntöttem, ami széleskörben elterjedt a szoftver fejlesztők között.
 A Git egy ingyenes és nyílt-forrsákódú elosztott verzió kezelő rendszer. Úgy készült, hogy gyorsan és hatákonyan tudjon kezelni kis és nagy projekteket is egyaránt.
 Már a project kezdetekor készítettem egy privát Github repository-t, hogy nyomon tudjam követni a változtatásaimat és esetleges hiba esetén visszaállítani egy korábbi verzióra.
@@ -550,6 +564,7 @@ Még a problémáival együtt is úgy gondolom, hogy sikerült egy olyan szoftve
 \bibitem{statista} \textsc{ONLINE}: Number of mobile phone users worldwide from 2015 to 2020, \url{https://www.statista.com/statistics/274774/forecast-of-mobile-phone-users-worldwide}
 \bibitem{androidstudio} \textsc{ONLINE}: Everything you need to build on Android \url{https://developer.android.com/studio/features.html}
 \bibitem{espresso} \textsc{ONLINE}: Create UI tests with Espresso Test Recorder \url{https://developer.android.com/studio/test/espresso-test-recorder}
+\bibitem{git} \textsc{Somasundaram R.} Git: Version control for everyone. Packt Publishing Ltd; 2013.
 \bibitem{pycharm} \textsc{ONLINE}: PyCharm Features \url{https://www.jetbrains.com/pycharm/features/}
 \bibitem{json} \textsc{ONLINE}: JSON \url{https://hu.wikipedia.org/wiki/JSON}
 \bibitem{annotaciok} \textsc{ONLINE}: Java annotációk \url{https://hu.wikipedia.org/wiki/Java_annot%C3%A1ci%C3%B3k}
