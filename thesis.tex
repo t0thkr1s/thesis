@@ -148,21 +148,43 @@ Ezzel biztosítottam, hogy domain név alapján is elérhető legyen a szerver. 
 
 A kész projectben nem ezt a folyamatot választottam, hanem a Digital Ocean által nyújtott ,,one-click apps'' menüben egyszerűen kiválasztottam a Docker alkalmazást és az elkészült képfájlt ezen futattam. 
 Így automatizálva a szerver telepítésének folyamatát és megspórolva magának a Docker-nek a telepítését és konfigurálását.
-Erről még a Szerveren használt technológiák fejezet \nameref{docker} alfejezetében bővebben írok.
+Erről még a \nameref{szerveren_hasznalt_technologiak} fejezet \nameref{docker} alfejezetében bővebben írok.
 
 \section{Mobil platform választása}
 
-A mobilos operációs rendszerek közül az Androidot választottam. Már korábban sikerült megismerkednem az Android nyújtotta lehetőségekkel és előnyökkel.
-A többi mobilos operációs rendszerrel ellentétben az Android nyílt forráskódú és a piac több mint felét uralja.
-Ez annak is köszönhető, hogy 2005-ben a Google felvásárolta az Android projectet és azóta ők tartják karban.
-A fejlesztő környezete elérhető mind a három fő operációs rendszerre (Linux, macOS, Windows).
+A mobilos operációs rendszerek közül az Androidot választottam. Bevallom őszintén, nem volt nehéz a döntés. 
+Android platform rengeteg olyan lehetőséget biztosít, amivel a többi platform nem szállhat versenybe.
+Itt gondolok az egyszeri és nem megújuló fizetésre a fejlesztői fiókért, valamint az iOS-el ellentétben a fejlesztői környezete elérhető mind a három fő operációs rendszerre (Linux, macOS, Windows).
+Számomra ezek elég nyomós érvek voltak, ezért döntöttem úgy, hogy Android platformra fog először elkészülni a program.
+A Windows Phone a Microsoft cégnek volt egy próbálkozása, ami végül kudarcba fulladt, ezért ez az opció nem jöhetett szóba.
+
+A többi mobilos operációs rendszerrel ellentétben az Android nyílt forráskódú és a piac jelentős részét uralja.
+Engem különösen megfogott az általa nyújtott szabadság és testreszabhatóság.
+Az iOS ezzel ellentétben arról híres, hogy egyszerű és megbízható a használata.
+Viszont jelen vannak olyan megkötések, amik mind a végfelhasználókat és mind a fejlesztőkket limitálják.
+Gondolok itt a minimális testreszabhatóságra és a nagy részt zárt forráskódra.
+Itt most nyilván nem szeretném részletezni, hogy melyik operációs rendszer a jobb vagy éppen rosszab, mert mindegyik rendszernek megvan az előnye, illetve a hátránya.
+Inkább csak a személyem érveimet és tapasztalataimat sorakoztatom fel, amik alapján platformot választottam.
+
+
+Fontos megemlíteni, hogy az Android rendszer nem csak mobil telefonok terjedt el.
+Jelen van az okos televíziókban (Android TV), autókban (Android Auto), okos órákban (Wear OS) és IoT\footnote{Internet of Things}-ben is (Android Things).
+Ezek az Android által úgymond eredmények annak is köszönhetőek, hogy a Google felvásárolta az Android céget és azóta ők tartják karban.
+
+Természetesen nem csak jó tulajdonságokkal rendelkezik, hanem bizony van néhány hátránya is.
+Ide tartozik például a gyártóktól függő frissítések. Tegyünk fel, hogy új biztonsági rést fedeztek fel az Android operációs rendszerben.
+A Google általában ezekre meglehetősen gyorsan reagál és néhány napon belül frissítést ad ki az eszközeire (Nexus, Pixel).
+Azoknak a gyártóknak akiknek saját testreszabott rendszerük van, jóval tovább tart orvosolni a hibát.
+Ez az időtartam a mai napig hónapokban mérhető, de persze ez függ az adott cégtől és a hiba súlyosságától. 
+
 Számomra ezek voltak a legnyomósabb érvek a rendszer kiválasztásában.
+A mai napig úgy gondolom, hogy ebben a platformban van a legnagyobb potenciál a fejlesztők és felhasználók számára egyaránt.
 
 \chapter{Felhasznált technológiák}\label{technologiak}
 
 \section{Verzió kezelés}
 
-Verzió kezelésre a Git-et használtam, ami széleskörben elterjedt a fejlesztők között.
+Verzió kezelést tekintve a Git mellett döntöttem, ami széleskörben elterjedt a szoftver fejlesztők között.
 A Git egy ingyenes és nyílt-forrsákódú elosztott verzió kezelő rendszer. Úgy készült, hogy gyorsan és hatákonyan tudjon kezelni kis és nagy projekteket is egyaránt.
 Már a project kezdetekor készítettem egy privát Github repository-t, hogy nyomon tudjam követni a változtatásaimat és esetleges hiba esetén visszaállítani egy korábbi verzióra.
 
@@ -198,7 +220,7 @@ Az eredményről minden egyes alkalommal értesítést kapunk, így egyből tudh
 
 \newpage
 
-\section{Szerveren használt technológiák}
+\section{Szerveren használt technológiák}\label{szerveren_hasznalt_technologiak}
 
 \subsection{Flask}
 
@@ -404,11 +426,14 @@ Az Espresso arra is nyújt megoldást, hogy ezeket az engedély kéréseket auto
 
 \subsection{Material Design 2.0}
 
-Az alkalmazás elkészítésekor figyelembe vettem a felhasználói interfésszel kapcsolatban támasztott elvárásokat.
-Tapasztalatból mondhatom, hogy néha egy felhasználónak az app megjelenése legalább olyab fontos, mint a funkcionalitása.
-A Google 2014-ben kezdte el a Material Design fejlesztését és lényegében teljesen megreformálta az Android platform felületét.
-A Material Design 2 nem hozott túl nagy eltéréseket elődjéhez képest, inkább csak jobban figyelembe vette a felhasználót.
-
+Az alkalmazás elkészítésekor próbáltam figyelembe venni a felhasználói interfésszel kapcsolatban támasztott ki nem mondott elvárásokat.
+Korábbi Play Store-ban publikált alkalmazásaim alapján mondhatom, hogy a felhasználónak az app megjelenése legalább olyab fontos, mint a funkcionalitása.
+A Google már korábban, az Android 5.0 (API verzó 21) verzióval hozta be az akkoriban még újnak számító Material Design-t és teljesen megreformálta az Android platform felületét.
+Sok embernek tetszettek az élénk színek és a vetett árnyákok, amik meghatározó részei voltak a komponenseknek. Persze, ez nem volt tökéletes.
+A nevéből is ered, hogy az anyagokból kiindulva és azok egymásra pakolásával született meg a dizájn. 
+Kicsit pontosabban fogalmazva a Material Design irányelveket foglal össze, amiket nem fontos követni, de ajánlott. 
+A Material Design 2 nem hozott hatalmas eltéréseket elődjéhez képest, inkább csak letisztultabb lett, ami szimplán jobb vizuális élményt nyújt.
+Az Android platformot tekintve új komponensek érkeztek, ezek közé tartozik a \emph{BottomAppBar} és a \emph{Chip}.
 
 % https://material.io/develop/android/docs/getting-started/
 
