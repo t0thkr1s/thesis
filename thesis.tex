@@ -187,7 +187,7 @@ A mai napig úgy gondolom, hogy ebben a platformban van a legnagyobb potenciál 
 Egy verzó kezelő rendszer képes kezelni egy fájl vagy akár több fájl módosításait olyan módon, hogy lehetőségünk legyen időben ,,visszamenni'' és megnézni egy fájl bizonyos verzióját.
 A Linux kernel forráskódja óriási méretű és a Git verzió kezelőt használják a fejlesztéshez.
 Ez azért érdekes, mert nagyon sok ember dolgozik nagyon nagy kódbázissal és a Git mégis képes hatékonyan kezelni a változásokat.
-Itt van, hogy miért bíznak meg benne egy ilyen nehéz feladat esetében és hogyan teljesíti a Git minden elvárásukat:
+A alábbi listában látható, hogy miért bíznak meg benne egy ilyen nehéz feladat esetében és hogyan teljesíti a Git minden elvárásukat:
 
 \begin{itemize}
 	\item Atomosság
@@ -195,16 +195,16 @@ Itt van, hogy miért bíznak meg benne egy ilyen nehéz feladat esetében és ho
 	\item Biztonság
 \end{itemize}
 
+Az atomosság biztostja, hogy az adatok ne vesszenek el és ne történjen verzió eltérés részlegesen befejezett műveletek miatt.
+A gyorsasága mellett nem használ fel jelentős mennyiségű tárhelyet, ellentétben a többi verzió kezelő rendszerrel.
+Ha Git-et használunk biztosra mehetünk, hogy senki sem módosítja a fájlok tartalmát. Ez a SHA-1 kivonatolásnak köszönhető.\cite{git}
 
-\cite{git}
-
-Verzió kezelést tekintve a Git mellett döntöttem, ami széleskörben elterjedt a szoftver fejlesztők között.
+A fentiek fényében nyilvánvaló, hogy a Git mellett döntöttem, ami széleskörben elterjedt a szoftver fejlesztők között.
 A Git egy ingyenes és nyílt-forrsákódú elosztott verzió kezelő rendszer. Úgy készült, hogy gyorsan és hatákonyan tudjon kezelni kis és nagy projekteket is egyaránt.
 Már a project kezdetekor készítettem egy privát Github repository-t, hogy nyomon tudjam követni a változtatásaimat és esetleges hiba esetén visszaállítani egy korábbi verzióra.
 
-
-A Github nem összetévesztendő a Git-el, mert a Git a forráskód változtatásainak kezelésére szolgál lokálisan, a Github pedig egy tárhelyet nyúlt a repository-k tárolására.
-A projekt fejlesztése alatt több gépről dolgoztam és Github a segítségével biztosítani tudtam, hogy mindenhol elérjen a változtatásaimat.
+A Github nem összetévesztendő a Git-el, mert a Git a forráskód változtatásainak kezelésére szolgál lokálisan, a Github pedig egy tárhelyet nyúlt a verzió kezelt könyvtárak és fájlok tárolására.
+A projekt fejlesztése alatt több gépről dolgoztam és Github a segítségével biztosítani tudtam, hogy mindenhol elérjen a projektek legfrisseb változtatásait.
 Lényegében egy központi szerverként szolgált számomra.
 
 % https://hu.wikipedia.org/wiki/Git
@@ -214,11 +214,11 @@ Lényegében egy központi szerverként szolgált számomra.
 A folyamatos integrálás egy extrém programozási gyakorlat.
 A folyamatos integrálás arról szól, hogy ha egy feladat elkészült akkor azt egyből beintegráljuk a rendszerbe.
 A beintegrálás után természetesen minden egység tesztnek sikeresen le kell futnia.
-Több nagy cég is a \emph{CircleCi}-t használja a folyamatos integráláshoz.
+Több nagy cég is a CircleCi szolgáltatását használja a folyamatos integráláshoz.
 Ilyen például a \emph{Facebook}, \emph{Spotify}, \emph{Kickstarter} és a \emph{GoPro}.
 
-
-A CircleCi integrálható a Github-al, így kényelmesen lehet csatolni a projekt repository-ját.
+A CircleCi integrálható a Github-al, így kényelmesen tudjuk csatolni a projekteket.
+% Ezen kívül még létre kell hozni egyszerű
 A \ref{circleci} képen látható, hogy minden egyes változtatáskor lefutnak a tesztek.
 Ezek a tesztek minden alkalommal egy tiszta konténerben vagy virtuális gépen futnak.
 Az eredményről minden egyes alkalommal értesítést kapunk, így egyből tudhatjuk azt is, ha egy build nem futott le sikeresen.
@@ -227,8 +227,8 @@ Az eredményről minden egyes alkalommal értesítést kapunk, így egyből tudh
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=15cm]{pictures/circle_ci}
-	\caption{Sikeres project buildek a CircleCi felületén.}
+	\includegraphics[width=15cm]{pictures/circleci}
+	\caption{Project buildek követése a CircleCi felületén.}
 	\label{circleci}
 \end{figure}
 
