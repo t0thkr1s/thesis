@@ -305,14 +305,34 @@ Ez a fájl byte kódot tartalmaz az ART számára és ezt kellett átalakítani 
 
 \subsection{JSON}
 
-A JSON\footnote{JavaScript Object Notation} egy könnyű, szöveg alapú szabvány vagyis emberek is egyszerűen tudják írni és olvasni.
+A JSON\footnote{JavaScript Object Notation} egy platformok közzötti adatátvitelre szolgáló formátum.
+Az adatátviteli formátum egy olyan szöveges formátum, amit különböző platformok közötti adat cserére használnak.
+Egy másik széleskörben használt adatátviteli formátum az XML\footnote{Extensible Markup Language}.
+Ezek biztosítják a nagyon eltérő rendszerek közötti adatváltást.
+A JSON egy olyan formátum, amin megegyeztek ezek a rendszerek adat kommunikáció céljából.
+Íme néhány tulajdonsága:
+
+\begin{enumerate}
+	\item 
+	\begin{description}
+		\item[Programozási nyelv független] Ez azt jelenti, hogy több programozási nyelvben is tudjuk kezelni és használni.
+	\end{description}
+	\item 
+	\begin{description}
+		\item[Kulcs-érték párok] 
+	\end{description}
+
+\end{enumerate}
+
+Azért van szükségünk ilyen adatátviteli formátumokra, mert s
+könnyű, szöveg alapú szabvány vagyis emberek is egyszerűen tudják írni és olvasni.
+
 A JavaScript szkriptnyelvből alakult ki egyszerű adatstruktúrák és tömbök reprezentálására. 
 A JavaScripttel való kapcsolata ellenére nyelvfüggetlen, több nyelvhez is van értelmezője. 
 Ezt a szabványt általában szerver és klien kommunikációra/adatátvitelre használják.
 Véleményem szerint sokkal átláthatóbb és egyszerűbb, mint például az XML\footnote{Extensible Markup Language}.
 Általánosságban strukturált adatok tárolására, továbbítására szolgál. \cite{json}
 
-% https://hu.wikipedia.org/wiki/JSON
 
 \section{Androidon használt technológiák}
 
@@ -576,7 +596,7 @@ Még a problémáival együtt is úgy gondolom, hogy sikerült egy olyan szoftve
 \bibitem{git} \textsc{Somasundaram R.} Git: Version control for everyone. Packt Publishing Ltd; 2013.
 \bibitem{flask} \textsc{Grinberg M.} Flask web development: developing web applications with python. " O'Reilly Media, Inc."; 2018 Mar 5.
 \bibitem{pycharm} \textsc{ONLINE}: PyCharm Features \url{https://www.jetbrains.com/pycharm/features/}
-\bibitem{json} \textsc{ONLINE}: JSON \url{https://hu.wikipedia.org/wiki/JSON}
+\bibitem{json} \textsc{Bassett L.} Introduction to JavaScript Object Notation: A to-the-point Guide to JSON. " O'Reilly Media, Inc."; 2015 Aug 5.
 \bibitem{annotaciok} \textsc{ONLINE}: Java annotációk \url{https://hu.wikipedia.org/wiki/Java_annot%C3%A1ci%C3%B3k}
 \end{thebibliography}
 \end{document}
