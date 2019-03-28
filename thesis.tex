@@ -308,8 +308,20 @@ Ha többet szeretnénk megtudni róla, akkor azt megtehetjük a \url{https://www
 
 A szerverről való értesítés küldéshez a Pusher Beams SDK\footnote{Software Development Kit}-ját használtam.
 A Beams SDK lehetővé teszi, hogy egyszerűen küldjünk push értesítést ,,érdeklődési'' körök alapján és platformtól függetlenül.
-Ingyenesen és korlátlanul küldhetjük ezeket az értesítéseket.
-A szerver és kliens is oldal implementációja is nagyon egyszerű és jól dokumentált, de ha mégis problémánk támadna a support is  végtelenül segítőkész.
+Ingyenesen és korlátlanul küldhetjük ezeket az értesítéseket. Erről bővebben olvashatunk a \url{https://docs.pusher.com/beams} oldalon.
+Ha kimondottan a szerver oldali python  dokumentációt szeretnénk elolvasni, azt megtehetjük itt: \url{https://docs.pusher.com/beams/reference/server-sdk-python}
+A szerver és kliens is oldal implementációja is nagyon egyszerű és jól dokumentált, de ha mégis problémánk támadna az online ügyfélszolgálatuk is végtelenül segítőkész.
+
+Bevallom, amikor implementáltam a szerverről való üzenetküldést nem ment minden simán.
+Az volt a probléma, hogy csak azt az értesítést kaptam meg amelyik nem tartalmazott plussz adatot az értesítés címén és leírásán kívül.
+Fel kellett keresnem őket, mert hiába követtem a dokumentációkat nem értettem a hiba okát.
+Az üzenetemre kifejezetten gyorsan (egy napon belül) válaszoltak és kérték, hogy küldjek több információt.
+Hamar kiderült, hogy a problémát az FCM\footnote{Firebase Cloud Messaging} okozza, ami nem engedi, hogy egyszerre küldjünk értesítést és adatot.
+Itt kiegészítésként fontos megemlíteni, hogy a Pusher a Firebase Cloud Messaging által küldi az értesítéseket.
+Miután rávilágítottak a hiba okára, egyből megoldást ajánlottak és frissítették a dokumentációjukat.
+Úgy sikerült kikerülni ezt a limitációt, hogy kettő darab értesítést kell küldeni.
+Az első csak magát az értesítést tartalmazza, a második pedig csak az adatok küldéséért lesz felelős.
+Természetesen a második értesítésnek nem lesz vizális reprezentációja a kliens oldalon.
 
 % forrás https://docs.pusher.com/beams/reference/server-sdk-python
 
@@ -321,6 +333,7 @@ Célja még, hogy hordozhatóvá és könnyen buildelhetővé tegye az alkalmaz�
 Ösztönzi a szolgáltatás orientált architektúrát és azt ajánlja, hogy minden konténerben csak egy alkalmazás fusson.
 
 \subsubsection{Képfájlok}
+
 \subsubsection{Konténerek}
 
 
@@ -427,6 +440,7 @@ Az OkHttp használata egyszerű. A kérés/válasz API-ja builder tervezési min
 
 Lehetőséget ad szinkronizált (egyidejű) blokkoló hívásokra és aszinkron hívásokra is ,,callback''-ek segítségével.
 A könyvtár támogatja az Android 5.0+ (API szint 21+) verziókat és támogatja a Java 8-at, valamint az attól felfelé lévő verziókat.
+Hamar kiderült, hogy 
 
 % https://square.github.io/okhttp/
 
