@@ -330,14 +330,22 @@ Természetesen a második értesítésnek nem lesz vizális reprezentációja a 
 A Docker az egy nyílt forráskódú motor, ami automatizálja az alkalmazások üzembe helyezését konténereken belül.
 Úgy lett tervezve, hogy egy pehely súlyú és gyors környezetet nyújtson, amiben hatékonyan tudjuk futtatni a kódunk.
 Célja még, hogy hordozhatóvá és könnyen buildelhetővé tegye az alkalmazásunk.
-Ösztönzi a szolgáltatás orientált architektúrát és azt ajánlja, hogy minden konténerben csak egy alkalmazás fusson.
+Szolgáltatás orientált architektúrára ösztönöz és azt ajánlja, hogy minden konténerben csak egy alkalmazás fusson.\cite{docker}
 
 \subsubsection{Képfájlok}
 
 \subsubsection{Konténerek}
 
+\subsubsection{Dockerfile}
+A szakdolgozatom szempontjából fontos említést tenni a Dockerfile-ról.
+Ez egy szöveges dokumentum, ami tartalmazza azokat a parancsokat, amik egy képfájl felépítéséhez szükségesek.
+Segítségével bárki automatikusan készíthet egy docker képfájlt.
 
-A szerverhez készítettem egy Dockerfile-t és csatoltam a projekt Github-os repository-ját.
+\subsubsection{Docker Hub}
+
+A Docker Hub biztosítja azt a platformot, ahol bárki kereshet és megoszthat konténereket.
+
+A szerverhez készítettem egy Dockerfile-t, ami egy satoltam a projekt Github-os repository-ját.
 Ezzel elérve, hogy minden egyes változtatásnál a Docker Hub újra buildelje a képfájlt.
 
 \begin{figure}[!h]
@@ -660,6 +668,7 @@ Még a problémáival együtt is úgy gondolom, hogy sikerült egy olyan szoftve
 \bibitem{git} \textsc{Somasundaram R.} Git: Version control for everyone. Packt Publishing Ltd; 2013.
 \bibitem{flask} \textsc{Grinberg M.} Flask web development: developing web applications with python. " O'Reilly Media, Inc."; 2018 Mar 5.
 \bibitem{sqlite} \textsc{Kreibich J.} Using SQLite. " O'Reilly Media, Inc."; 2010 Aug 17.
+\bibitem{docker} \textsc{Turnbull J.} The Docker Book: Containerization is the new virtualization. James Turnbull; 2014 Jul 14
 \bibitem{pycharm} \textsc{ONLINE}: PyCharm Features \url{https://www.jetbrains.com/pycharm/features/}
 \bibitem{json1} \textsc{Bassett L.} Introduction to JavaScript Object Notation: A to-the-point Guide to JSON. " O'Reilly Media, Inc."; 2015 Aug 5.
 \bibitem{json2} \textsc{Crockford, Douglas} Introducing JSON. \url{json.org}, 2009 May 28.
