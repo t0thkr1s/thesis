@@ -304,7 +304,7 @@ Nem mellesleg ez a legtöbbet használt adatbázis motor a világon.
 Számtalan alkalmazás használja és Android platformon is ez az alapértelmezett adatbázis.
 Ha többet szeretnénk megtudni róla, akkor azt megtehetjük a \url{https://www.sqlite.org/index.html} oldalon.
 
-\subsection{Pusher Beams (Python Server SDK)}
+\subsection{Pusher Beams (Python Server SDK)}\label{pusher_server}
 
 A szerverről való értesítés küldéshez a Pusher Beams SDK\footnote{Software Development Kit}-ját használtam.
 A Beams SDK lehetővé teszi, hogy egyszerűen küldjünk push értesítést ,,érdeklődési'' körök alapján és platformtól függetlenül.
@@ -384,12 +384,6 @@ Ezzel hozzájárulva ahhoz, hogy minden egyes változtatásnál a Docker Hub új
 	\label{dockerhub}
 \end{figure}
 
-\subsection{jd-cmd}
-
-Szükségem volt egy parancssorból használható Java Decompiler-re is. 
-
-\url{https://github.com/kwart/jd-cmd}
-
 \subsection{Apktool}
 
 Az Apktool egy olyan eszköz, aminek a segítségével vissza tudjuk fejteni a harmadik féltől származó, zárt forrású, bináris Android alkalmazásokat.
@@ -397,15 +391,21 @@ Majdnem eredeti az állapotukba tudja dekódolni a forrásokat és újra builden
 
 Funkciók:
 
-\url{https://github.com/iBotPeaches/Apktool}
+\begin{itemize}
+	\item Források visszaállítása majdnem eredeti formájukba
+	\item Újra buildelése a dekódolt forrásoknak bináris APK/JAR fájlba
+	\item Smali kód debuggolás
+\end{itemize}
+
+Az eszköz letölhető a \url{https://github.com/iBotPeaches/Apktool} oldalról.
 
 \subsection{dex2jar}
 
-Android .dex és .class fájlokkal való dolgozáskor kulcs szerepet játszott a \emph{dex2jar}. Jelen esetben nem csak egy programról beszélünk, mert valójában több eszközt foglal magába.
+Android .dex és .class fájlokkal való dolgozáskor kulcs szerepet játszott a \emph{dex2jar}.
+Jelen esetben nem csak egy programról beszélünk, mert valójában több eszközt foglal magába.
 Az Android telepítő fájl kitömörítése után, az alkalmazás forráskódja egy \emph{classses.dex} fájlban található meg.
-Ez a fájl byte kódot tartalmaz az ART számára és ezt kellett átalakítani .jar formátumba, amivel már a decompiler dolgozni tud.
-
-\url{https://bitbucket.org/pxb1988/dex2jar}
+Ez a fájl byte kódot tartalmaz az ART\footnote{Android Runtime} számára és ezt kellett átalakítani .jar formátumba, amivel már a decompiler dolgozni tud.
+Az eszköz letölthető a \url{https://bitbucket.org/pxb1988/dex2jar} oldalról.
 
 \subsection{JSON}
 
@@ -451,7 +451,6 @@ Ezen felül az AndroidX a következő funkciókat tartalmazza:
 	\item Az összes új support library fejlesztés az AndroidX könyvtárban fog történni. Ez magába foglalja az eredeti support library fenntartását és az új Jetpack komponensek bevezetését.
 \end{enumerate}
 
-
 % forrás https://developer.android.com/jetpack/androidx
 
 \subsection{OkHttp}
@@ -477,13 +476,11 @@ Az OkHttp használata egyszerű. A kérés/válasz API-ja builder tervezési min
 
 Lehetőséget ad szinkronizált (egyidejű) blokkoló hívásokra és aszinkron hívásokra is ,,callback''-ek segítségével.
 A könyvtár támogatja az Android 5.0+ (API szint 21+) verziókat és támogatja a Java 8-at, valamint az attól felfelé lévő verziókat.
-Hamar kiderült, hogy 
-
-% https://square.github.io/okhttp/
+Az OkHttp hivatalos dokumentációja megtekinthatő a \url{https://square.github.io/okhttp/} oldalon.
 
 \subsection{Pusher Beams (Java Client SDK)}
 
-A Beams megkönnyíti az értesítések küldését iOS és Android eszközökre.
+A Pusher Beams SDK-járól már némi említést tettem a \nameref{pusher_server} alfejezetben, csak ott a szerver oldalon volt a lényeg.
 Bonyodalommentessé teszi az eszköz tokenek kezelését és az interakciót az Apple és a Google által biztosított üzenetküldő szolgáltatásokkal.
 
 A Pusher nagyon sokoldalú API-val és SDK-kal rendelkezik. 
@@ -500,16 +497,23 @@ A Beam-mel egyenesen a programból indíthatjuk az értesítések küldését a 
 	\item Tranzakciós értesítések
 \end{itemize}
 
-% forrás https://docs.pusher.com/beams/reference/android
-
-\subsection{Firebase Messaging}
+A felhasználásra nekem ezektől eltérő tervem volt, de alapvetően hasonló célra alkalmaztam.
+Én a felhasználókat az elkészült fájlokról értesítettem, ami kulcs szerepet játszik a programban.
+A szerverről érkező értesítésben adatokat is küldök, amik nélkül nem lehetne letölteni a fájlokat.
+Ebből is látszik, hogy nagy mértékben erre a szolgáltatásra épül a szoftver.
 
 \subsection{Room}
 
 A Room egy absztrakciós réteget nyújt az SQLite adatbázishoz, ezzel lehetővé téve az egyszerűbb és hatékonyabb adatbázis elérést.
 A Room segítségével sokkal egyszerűbben tudtam kezelni az SQLite adatbázist, mert nem kellett adatbázist leíró osztályt és hosszú lekérdezéseket írnom.
 Ami külön tetszett benne, hogy az SQL utasításokat fordítási időben ellenőrzi.
-Annotációk segítségével tudjuk összekötni a Java POJO\footnote{Plain Old Java Object} osztályokat az SQLite adatbázissal.
+A \ref{room} kódrészletben kiemeltem egy DAO\footnote{Data Access Object} interfészt.
+Ez a DAO nyújtja a hozzáférést az adatbázis réteghez.
+Jól látható, hogy itt is annotációkkal kell megjelölni a metódusokat.
+% Ahol, paraméterben SQL\footnote{Structured Query Language} utasítást látunk, az mind futási időben ellenőrizve van, így nem kell aggódni 
+% Annotációk segítségével tudjuk összekötni a Java POJO\footnote{Plain Old Java Object} osztályokat az SQLite adatbázissal.
+
+\lstinputlisting[language=Java, label={room}, caption=A NotificationDao interfész.]{./codes/NotificationDao.java}
 
 \subsection{CodeView}
 
