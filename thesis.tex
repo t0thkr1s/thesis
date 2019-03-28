@@ -334,7 +334,34 @@ Szolgáltatás orientált architektúrára ösztönöz és azt ajánlja, hogy mi
 
 \subsubsection{Képfájlok}
 
+A konténereinket képfájlokból futtatjuk.
+Rétegezett formátumuk van, ami lépésről-lépésre épülnek fel egy sorozat parancs alapján.
+Tulajdonságaikat tekintve hordozhatóak, megoszthatóak, tárolhatóak és frissíthetők.
+A következő paranccsal tudunk képfájlt készíteni (feltéve, hogy a Dockerfile az aktuális könyvtárban van):
+
+\begin{center}
+	\texttt{\$ docker build .}
+\end{center}
+
+Minden Docker képfájl rendelkezik egyedi azonosítóval.
+A példa kedvéért az én képfálom az ,,edd116d82f90''-es azonosítót kapta, de használatkor nem fontos az egészet kiírni.
+Megtehetjük azt is, hogy a 9898-as porton futú szolgáltatást a helyi 80-as portra publikáljuk és így futtatjuk.
+Ezt a következő paranccsal tehetjük meg:
+
+\begin{center}
+	\texttt{\$ docker run -p 80:9898 edd11}
+\end{center}
+
 \subsubsection{Konténerek}
+
+A konténerek lényegében a futó képfájlok példányai.
+Ha elíndítunk egy képfájt és megnyitunk egy új terminál ablakot, akkor az alábbi paranccsal megtekinthetjük a futó konténert.
+
+\begin{center}
+	\texttt{\$ docker container ls}
+\end{center}
+
+A parancs kiírja többek között a publikált portot, a konténerben futó őarancsot és a képfájl azonosítóját is.
 
 \subsubsection{Dockerfile}
 A szakdolgozatom szempontjából fontos említést tenni a Dockerfile-ról.
@@ -344,9 +371,11 @@ Segítségével bárki automatikusan készíthet egy docker képfájlt.
 \subsubsection{Docker Hub}
 
 A Docker Hub biztosítja azt a platformot, ahol bárki kereshet és megoszthat konténereket.
-
-A szerverhez készítettem egy Dockerfile-t, ami egy satoltam a projekt Github-os repository-ját.
-Ezzel elérve, hogy minden egyes változtatásnál a Docker Hub újra buildelje a képfájlt.
+Kézzel nagyon körülményes lett volna a képfájl verzióinak követése és publikálása, ezért igénybe vettem a Docker Hub szolgáltatását.
+Ez a szolgáltatás nem más, mint az automatikus buildek készítése.
+A Docker Hub képes külső forrás kódból képfájlt készíteni és azt publikálni.
+Összetudjuk csatolni a Github projektjeinket a Docker Hub-al. 
+Ezzel hozzájárulva ahhoz, hogy minden egyes változtatásnál a Docker Hub újra buildelje a képfájlt és publikálja a frissített verziót.
 
 \begin{figure}[!h]
 	\centering
