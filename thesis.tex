@@ -505,13 +505,45 @@ Ebből is látszik, hogy nagy mértékben erre a szolgáltatásra épül a szoft
 \subsection{Room}
 
 A Room egy absztrakciós réteget nyújt az SQLite adatbázishoz, ezzel lehetővé téve az egyszerűbb és hatékonyabb adatbázis elérést.
-A Room segítségével sokkal egyszerűbben tudtam kezelni az SQLite adatbázist, mert nem kellett adatbázist leíró osztályt és hosszú lekérdezéseket írnom.
-Ami külön tetszett benne, hogy az SQL utasításokat fordítási időben ellenőrzi.
+Segítségével sokkal egyszerűbben tudtam kezelni az SQLite adatbázist, mert nem kellett adatbázist leíró osztályt és hosszú lekérdezéseket írnom.
+Ami külön tetszett benne, hogy az SQL utasításokat fordítási időben ellenőrzi. 
+A Room használatakor annotációk segítségével tudjuk összekötni a Java POJO\footnote{Plain Old Java Object} osztályokat az SQLite adatbázist.
+
+3 fő komponense van:
+
+\begin{enumerate}
+	\item
+	\begin{description}
+		\item[Adatbázis] Az \emph{@Database} annotációval rendelkező osztálynak az alábbi feltételeket kell kielégítenie.
+	\end{description}
+	\begin{enumerate}
+		\item Absztrakt osztálynak kell lennie, ami a \emph{RoomDatabase} osztályból származik.
+		\item Tartalmaznia kell az adatbázishoz tartotó entitás listát az annotáción belül.
+		\item Rendelkezik egy olyan metódussal, aminek nincsen paramétere és visszatér egy \emph{@Dao}-val annotált osztállyal.
+	\end{enumerate}
+	\item
+	\begin{description}
+		\item[Entitás] Egy táblát reprezentál az adatbázisban.
+	\end{description}
+	\item
+	\begin{description}
+		\item[DAO] Az adatbázist elérő metódusokat tartalmazza..
+	\end{description}
+\end{enumerate}
+
+Az alkalmazás a Room adatbázist használja, hogy megkapja az adatbázishoz társított DAO-kat.
+Ezután az alkalmazás, ezeket a DAO-kat használja az entitások adatbázisból való eléréséhez.
+A megkapott entitásokat ért változtatásokat egyszerűen vissza tudjuk menteni az adatbázisba.
+Végül, az alkalmazás entitást használ, hogy lekérjen és beállítson értékeket a tábla megfelelő oszlopaiba az adatbázison belül.\cite{room}
+
 A \ref{room} kódrészletben kiemeltem egy DAO\footnote{Data Access Object} interfészt.
-Ez a DAO nyújtja a hozzáférést az adatbázis réteghez.
-Jól látható, hogy itt is annotációkkal kell megjelölni a metódusokat.
-% Ahol, paraméterben SQL\footnote{Structured Query Language} utasítást látunk, az mind futási időben ellenőrizve van, így nem kell aggódni 
-% Annotációk segítségével tudjuk összekötni a Java POJO\footnote{Plain Old Java Object} osztályokat az SQLite adatbázissal.
+Lényegében, ez a DAO nyújtja a hozzáférést az adatbázis réteghez.
+Jól látható, hogy annotációkkal kell megjelölni a metódusokat, annak függvényében, hogy milyen utasítást szeretnénk végrehajtani.
+Ahol paraméterben SQL\footnote{Structured Query Language} utasítást látunk, az mind fordítási időben ellenőrizve van.
+Ez azért nagy segítség, mert nem kell aggódnunk szintaktikai hibákon, illetve azon, hogy az adott tábla nem létezik.
+A \ref{room} kódrészletben látható egy \emph{listNotifications(String username)} metódus, aminek a paramétere szerepel az SQL utasításban is egy kettőspont után.
+A Room elvégzi ezeknek a paramétereknek az összehasonlítását és hibát dob, ha eltérést talál.
+Lehetőségünk van több paramétert is átadni, ezáltal robosztusabb lekérdezéseket valósíthatunk meg.
 
 \lstinputlisting[language=Java, label={room}, caption=A NotificationDao interfész.]{./codes/NotificationDao.java}
 
@@ -705,6 +737,7 @@ Még a problémáival együtt is úgy gondolom, hogy sikerült egy olyan szoftve
 \bibitem{pycharm} \textsc{ONLINE}: PyCharm Features \url{https://www.jetbrains.com/pycharm/features/}
 \bibitem{json1} \textsc{Bassett L.} Introduction to JavaScript Object Notation: A to-the-point Guide to JSON. " O'Reilly Media, Inc."; 2015 Aug 5.
 \bibitem{json2} \textsc{Crockford, Douglas} Introducing JSON. \url{json.org}, 2009 May 28.
+\bibitem{room} \textsc{ONLINE} Save data in a local database using Room \url{https://developer.android.com/training/data-storage/room/index.html}
 \bibitem{annotaciok} \textsc{ONLINE}: Java annotációk \url{https://hu.wikipedia.org/wiki/Java_annot%C3%A1ci%C3%B3k}
 \end{thebibliography}
 \end{document}
