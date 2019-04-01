@@ -547,7 +547,7 @@ Lehetőségünk van több paramétert is átadni, ezáltal robosztusabb lekérde
 
 \lstinputlisting[language=Java, label={room}, caption=A NotificationDao interfész.]{./codes/NotificationDao.java}
 
-\subsection{CodeView}
+\subsection{CodeView}\label{code_view}
 
 A forrás kód megjelenítését nem lett volna célszerű nulláról felépíteni, ezért inkább kész megoldások után néztem.
 Kutatásaim során, nem találtam megfelelő natív Android komponenst, amivel kivitelezhető lett volna a forrás kód megjelenítése.
@@ -679,15 +679,33 @@ A megvalósítását hozzákötöttem az értesítésekhez, mert a kliens abban 
 \section{Navigáció a fájlrendszerben}
 
 A letöltött és kitömörített projektek az alkalmazás mappájában kerülnek.
+Ennek a mappának a neve megegyezik az alkalmazás nevével és az elsődleges külső tárhelyen foglal helyet.
 Ezzel alapvetően nincs is semmi probléma, csak ha megszeretnénk nézni a fájlokat, akkor el kellene hagynunk az alkalmazást.
 Ez pedig rossz felhasználói élményhez vezetett volna.
 Ennek megoldására megvalósítottam egy nagyon egyszerű fájl rendszer navigációt, de ezt csak az alkalmazás mappájában tettem lehetővé.
-Így kitömörítés után egyszerűen és gyorsan elérhetővé válik a projekt a felhasználó számára.
-Részleteit tekintve csak a fájl nevét, módosítás dátumát és a fájl méretét jelenítettem meg.
+Szóval a felhasználó nem tud a fájlrendszerben feljebb navigálni, csak a ,,Reverse Droid'' gyökér mappáig.
+Ezzel a funkcióval kitömörítés után egyszerűen és gyorsan elérhetővé válik a projekt a felhasználó számára.
+A mappák esetében megjelenítettem a módosítás dátumát és hogy hány fájlt/mappát tartlmaz.
+A fájlok részleteit tekintve a fájl nevét, módosítás dátumát és a fájl méretét is megjelenítettem.
+
+Ezeken felül hozzáadtam egy olyan funkciót, hogy ha hosszan kattintunk egy mappán, akkor lehetőséget kapunk annak törlésére.
+Ha nem egy mappán kattintunk hosszan, hanem egy fájlon, akkor három opció közül is választhatunk.
+Az első triviális funkció itt is a fájl törlése volt, a második a fájl megosztása kompatibilis külső alkalmazással.
+Végül, de nem utolsó sorban a kód megtekintése menü pont kapott helyet.
+Ennek a működéséről és megvalósításáról már említést tettem a \nameref{code_view} alfejezetben, de nem említettem meg minden részletet.
+Kimaradt példul az, hogy csak bizonyos fájlkiterjesztéseket támogatok jelen helyzetben.
+Mivel a forrás kód tartalmazza az igazán érdekes dolgokat, ezért arra koncetráltam, hogy legalább az Android projektekre jellemző szöveges fájlkiterjesztéseket támogassam.
+A különböző képek és speciális fájlok megjelenítése egyenlőre nincsen támogatva, de ez is egy olyan funkció, amit megszeretnék valósítani a jövőre nézve.
+A támogatott kiterjesztéseket jelenleg az is befolyásolja, hogy maga a \emph{CodeView} miket támogat.
+
+A visszalépés megvalósítása okozott egy kisebb fejtörést.
+A vissza gomb megnyomására túlságosan is bonyodalmas lett volna megvalóstani a visszalépést, ezért úgy döntöttem, hogy egy külön elemmel fogom ezt kivitelezni.
+Ez az elem úgymond egy speciális lista elem, amit akkor jelenítek meg ha nem az alkalmazás mappájában tartózkodunk.
+Emlékeim szerint több fájl kezelő is használta már ezt a megoldást és elég hatékonynak tűnt ez a fajta visszalépési technika.
 
 \section{Értesítések}\label{ertesitesek}
 
-Az értesítések küldése és fogadása szintén egy kulcs fontosságú része az alkalmazásnak.
+Az értesítések küldése és fogadása szintén egy kulcs fontosságú része az alkalmazásnak, ezt már többször is hangsúlyoztam.
 A fájlok letöltése és kitömörítése mérettől, valamint hálózati kapcsolattól függően időt vesz igénybe.
 
 A szerveren történő visszafejtés az a folyamat, ami jelentős időtartamot igényel.
@@ -702,7 +720,7 @@ Gondolok itt a biztonságos kommunikációra TLS-es keresztül és a harmadik f�
 Azért lenne érdemes minimalizálni a harmadik féltől származó könyvtárakat, mert nem mindig tudjuk milyen kódot tartalmaznak és mennyire tartják karban a kód bázist.
 
 Jelenleg csak a forráskódok megjelentését támogatja az alkalmazás, de jó lenne ha különböző fájl típusokat is megtudna jeleníteni.
-Például a képek vagy adatbázisok megtekintése is kritikus lehet egy Android alkalmazás elemzésekor.s
+Például a képek vagy adatbázisok megtekintése is kritikus lehet egy Android alkalmazás elemzésekor.
 A kód visszafejtése végén egy összegző report is hasznos lehetne a felhasználó számára, ami tartalmazná a feldolgozott fájlok számát és egy gyors áttekintést nyújtana az adott alkalmazással kapcsolatban.
 
 Egy forrás kód elemző integrálása is jelentős előnnyel járhat a többi alkalmazással szemben. Hasonlóan a Google Play Protect-hez, jelezhetnénk a felhasználó számára, ha a feltöltött \emph{apk} malware.
