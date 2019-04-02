@@ -596,7 +596,7 @@ Tegyünk fel, hogy a bejelentkezés folyamatára már készen van a teszt.
 Amikor Espresso-val tesztet veszünk fel, az alkalmazás tiszta állapotról indul.
 Ez az jelenti, hogy ha bármilyen bejelentkezés utáni interakciót szeretnénk felvenni, akkor a teszt a bejelentkezéssel együtt kezdődik.
 Az ilyen problémákat manuálisan kell kikerülni.
-A \ref{espressotest} kódrészletben megfigyelhető, hogy egy \emph{@Before} annotációval\footnote{Az annotációk a programkód elemeihez rendelhetők (csomagokhoz, típusokhoz, metódusokhoz, attribútumokhoz, konstruktorokhoz, lokális változókhoz), plusz információt hordoznak a Java fordító ill. speciális eszközök számára.\cite{annotaciok}} ellátott metódusban elmentettem egy teszt felhasználó nevet és jelszót.
+A \ref{espressotest} kódrészletben megfigyelhető, hogy egy \emph{@Before} annotációval ellátott metódusban elmentettem egy teszt felhasználó nevet és jelszót.
 Ezután pedig egyszerűen egy Intent segítségével elindítottam az Activity-t.
 Mindez nem volt elegendő ahhoz, hogy sikeresen tovább mehessek ugyanis bejelentkezés után történik a különböző engedélyek ellenőrzése.
 Az Espresso arra is nyújt megoldást, hogy ezeket az engedély kéréseket automatikusan elfogadjuk a tesztekben a \emph{GrantPermissionRule} osztály segítségével.
@@ -637,6 +637,30 @@ A következő lista tartalmazza a teszteléshez felhasznált szándékosan sér�
 \section{Regisztráció}
 
 A szolgáltatást nem akartam mindenki számára elérhetővé tenni, csak a regisztrált felhasználóknak.
+A \ref{registration} ábrán látható a regisztrációs felület.
+Igazából semmi különösebb mezőt nem tartalmaz, csak a szokásos adatokat kell megadnia annak, aki igénybe szeretné venni a szolgáltatást.
+Ha a regisztráció sikeresen befejeződött, akkor vissza irányítom a felhasználót a bejelentkezési felületre.
+A folyamatot próbáltam minél egyszerűbbre és magától értetődőre tervezni.
+
+A mezőket tekintve \emph{TextInputLayout}-ba ágyazott \emph{TextInputEditText}-et használtam.
+A \emph{TextInputLayout} rendelkezik, olyan tulajdonságokkal, mint például a segítséget nyújtó szöveg és az animáció.
+Ez által még nyilvánvalóbb, hogy melyik mezőbe mit kell írni.
+
+Számításba vettem, hogy a felhasználó nem biztos, hogy álló helyzetben fogja tartani a telefonját, ezért külön layout fájlokat készítettem a fekvő nézethez.
+Szerencsére nem kellet minden felülethez külön fekvő nézetet késztenem, csak a regisztrációhoz és a bejelentkezéshez.
+
+\section{Bejelentkezés}
+
+Természetesen regisztrálás után a felhasználónak be kell jelentkeznie, hogy hozzáférhessen azokhoz a végpontokhoz, amik bejelentkezéshez vannak kötve.
+Lényegében az összes lényeges végpont bejelentkezéshez van kötve, ezért mondhatjuk, hogy a bejelentkezést kötelező megtenni.
+
+A felület itt csak két mezőt tartalmaz, a felhasználó nevet és a jelszót.
+Mivel ez egy folyamatban lévő fejlesztés nem tartottam prioritásnak a jelszó visszaállítás funkció implementálását, ebben a korai verzióban.
+A jelszó mezőben bekapcsoltam egy úgynevezett jelszó kapcsolót, ami a mező jobb szélén látható.
+Segítségével a felhasználók láthatóvá tehetik a beírt jelszójukat és ellenőrizhetik annak helyességét.
+
+Alapvetően a \emph{MainActivity} indul az alkalmazás futtatásakor és az \emph{AuthenticationActivity} csak akkor indul, ha nincsen mentett felhasználónév és jelszó páros.
+Az \emph{AuthenticationActivity} tartalmazza mind a bejelentkezési, mind a regisztrációs fragment komponenst.
 
 \begin{figure}[!h]
 	\centering
@@ -645,16 +669,27 @@ A szolgáltatást nem akartam mindenki számára elérhetővé tenni, csak a reg
 	\label{registration}
 \end{figure}
 
-\section{Bejelentkezés}
-
-Természetesen regisztrálás után a felhasználónak be kell jelentkeznie, hogy hozzáférhessen azokhoz a végpontokhoz, amik bejelentkezéshez vannak kötve.
-
 \section{Kijelentkezés}
+
+Szerver oldalon csak az \emph{Authorization Header} van ellenőrizve, ami azt jelenti, hogy minden egyes hálózati kérésben benne kell hogy legyen.
+Ennek a kezelését úgy oldottam meg, hogy sikeres bejentkezés után \emph{SharedPreferences} használatával eltároltam a felhasználónevet és a jelszót.
+Amíg nem történik kijelentkezés, addig ezek az adatok mentve maradnak.
+
+A \ref{saving_sharedpref} kódrészleten láthatjuk, hogyan történik az adatok mentése.
+A \emph{SharedPreferences} segítségével kulcs-érték párokat tárolhatunk biztonségos módon.
+A \emph{getSharedPreferences()} metódus 2 paramétert vár, az egyik a név, a másik a használni kívánt mód. 
+Névnek az alkalmazás csomag nevét választottam és privát módban hoztam létre, hogy csak az én alkalmazásom férhessen hozzá az adatokhoz.
+
+\lstinputlisting[language=Java, label={saving_sharedpref}, caption=Adatok mentése \emph{SharedPreferences} segítségével.]{./codes/saving_sharedpref.java}
+
+A \ref{deleting_sharedpref} kódrészletben láthatód metódus nem sok eltérést mutat, viszont elengedhetetlen volt ahhoz, hogy töröljem az összes mentett adatot.
+
+\lstinputlisting[language=Java, label={deleting_sharedpref}, caption=Az összes mentett adat törlése.]{./codes/deleting_sharedprefs.java}
 
 \section{Adatok törlése}
 
-A kliens oldalon elég sok adat jelenik meg. 
-Ilyen például a feltöltések listája, értesítések és természetesen a letöltött fájlok is ide tartoznak.
+A kliens oldalon elég sok adat jelenik meg, ami természetesen tárolva van.
+Ilyen például a feltöltések listája, értesítések és a letöltött fájlok is ide tartoznak.
 Az adatok törlése funkcióval biztosítottam, hogy a felhasználónak lehetősége legyen törölni minden adatot és előzményt.
 Jól jöhet ez a funkció akkor is ha a telefon esetleg nem rendelkezik elég tárhellyel vagy egyszerűen csak helyet szeretnénk felszabadítani.
 
@@ -662,19 +697,25 @@ Jól jöhet ez a funkció akkor is ha a telefon esetleg nem rendelkezik elég t�
 
 Az alkalmazás egy alapvető funkciója, hogy fel tudjuk tölteni az APK fájlokat.
 Ezt a funkciót próbáltam a legkézenfekvőbb helyen elhelyezni, mert ezzel indul az egész folyamat és magától értetődőnek kell lennie.
+Ezért lett a legeleső fragment a feltöltések listáját tartalmazó fragment.
+Ebben a feltöltési listában jelenítem meg a feltöltött APK fájlok neveit és a feltöltés dátumát.
+
+Az APK fájlok feltöltését háttér service komponensel készítettem el.
+
+\section{Fájl letöltés}
+
+A fájl letöltés is egy roppant fontos funkció, ugyanis csak így jut el a felhasználóhoz az elkészült projekt.
+A megvalósítását hozzákötöttem az értesítésekhez, mert a kliens abban kapja vissza a letöltendő fájl nevét.
+Megfigyelhetjük a \ref{uploads_notifications} ábra jobb oldali képernyőképén, hogy minden egyes értesítés kártyáján ott a letöltés gomb.
+Ha ezekre rákattintunk, akkor itt is minden egyes alkalommal egy újabb háttér service fog elindulni.
+Ez tartamazza a komplett értesítés küldést és biztosítja magának a fájlnak a letöltését.
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[height=15cm]{pictures/android_uploads_notifications}
 	\caption{A feltöltött APK fájlok és értesítések felülete.}
-	\label{login}
+	\label{uploads_notifications}
 \end{figure}
-
-\section{Fájl letöltés}
-
-A fájl letöltés is egy roppant fontos funkció, ugyanis csak így jut el a felhasználóhoz az eredmény.
-A megvalósítását hozzákötöttem az értesítésekhez, mert a kliens abban kapja vissza a letöltendő fájl nevét.
-% A felület és a letöltési gombok jól láthatóak a \ref{ertesitesek} alfejezetben bemutatott \ref{} képen. 
 
 \section{Navigáció a fájlrendszerben}
 
@@ -707,8 +748,34 @@ Emlékeim szerint több fájl kezelő is használta már ezt a megoldást és el
 
 Az értesítések küldése és fogadása szintén egy kulcs fontosságú része az alkalmazásnak, ezt már többször is hangsúlyoztam.
 A fájlok letöltése és kitömörítése mérettől, valamint hálózati kapcsolattól függően időt vesz igénybe.
+Az elején úgy gondoltam, hogy egy egyszerű \emph{Toast} üzenet is elég a feltöltés állapotának visszajelzésére.
+Aztán hamar rákellett jönnöm, hogy ez nem ad elég információt a felhasználó számára, ráadásul rossz felhasználói élményhez is vezet.
+Végül úgy döntöttem, hogy feltöltést is hasonlóan valósítom meg, mint a letöltést.
 
-A szerveren történő visszafejtés az a folyamat, ami jelentős időtartamot igényel.
+A \ref{notifications} ábrán láthatóak az alkalmazásban használt értesítések.
+Ez a három értesítés jól érzékelteti a három fő funkcióját az applikációnak.
+Ezeket össze is foglaltam a következő listában:
+
+\begin{enumerate}
+	\item Android telepítő fájl feltöltése
+	\item Értesítés a projekt készenlétéről
+	\item Az elkészült tömörített projekt letöltése
+\end{enumerate}
+
+A megvalósítást illetően az első és a harmadik funkció megvalósítása kliens oldalon történt teljes egészében.
+A harmadik természetesen a szerverről érkezik, ha befejeződött a fájl feldolgozása.
+Ezek mind az adott körülményektől függnek, ezért azzal is számolni kell, hogy jelentős időtartamot igényelnek.
+Azt is lehetővé szerettem volna tenni a felhasználó részére, hogy a műveletek között is elhagyhassa az applikációt.
+
+Itt is a háttér service volt az az applikáció komponens, amit ennek kivitelezésére felhasználtam.
+Segítségével hosszabb ideig tartó műveleteket tudunk végezni, anélkül hogy a felhasználó interakcióba lépnek az applikációval.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[height=10cm]{pictures/notifications}
+	\caption{Az alkalmazásban megjelenő értesítések.}
+	\label{notifications}
+\end{figure}
 
 \chapter{Továbbfejlesztési lehetőségek}\label{lehetosegek}
 
@@ -742,7 +809,6 @@ Szerencsére nem sokszor futottam bele, de amikor igen, akkor pár napig álltam
 
 Még a problémáival együtt is úgy gondolom, hogy sikerült egy olyan szoftvert készítenem, ami egyedi és megállja a helyét a piacon. 
 
-
 \begin{thebibliography}{1}
 \bibitem{statista} \textsc{ONLINE}: Number of mobile phone users worldwide from 2015 to 2020, \url{https://www.statista.com/statistics/274774/forecast-of-mobile-phone-users-worldwide}
 \bibitem{androidstudio} \textsc{ONLINE}: Everything you need to build on Android \url{https://developer.android.com/studio/features.html}
@@ -756,6 +822,5 @@ Még a problémáival együtt is úgy gondolom, hogy sikerült egy olyan szoftve
 \bibitem{json1} \textsc{Bassett L.} Introduction to JavaScript Object Notation: A to-the-point Guide to JSON. " O'Reilly Media, Inc."; 2015 Aug 5.
 \bibitem{json2} \textsc{Crockford, Douglas} Introducing JSON. \url{json.org}, 2009 May 28.
 \bibitem{room} \textsc{ONLINE} Save data in a local database using Room \url{https://developer.android.com/training/data-storage/room/index.html}
-\bibitem{annotaciok} \textsc{ONLINE}: Java annotációk \url{https://hu.wikipedia.org/wiki/Java_annot%C3%A1ci%C3%B3k}
 \end{thebibliography}
 \end{document}
