@@ -21,6 +21,7 @@
   numbersep=10pt,                   % how far the line-numbers are from the code
   numberstyle=\tiny\color{darkgray}, % the style that is used for the line-numbers
   rulecolor=\color{gray},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
 }
 
 \graphicspath{{./pictures/}}
@@ -700,7 +701,7 @@ Ezt a funkciót próbáltam a legkézenfekvőbb helyen elhelyezni, mert ezzel in
 Ezért lett a legeleső fragment a feltöltések listáját tartalmazó fragment.
 Ebben a feltöltési listában jelenítem meg a feltöltött APK fájlok neveit és a feltöltés dátumát.
 
-Az APK fájlok feltöltését háttér service komponensel készítettem el.
+Az APK fájlok feltöltését háttér service komponenssel készítettem el.
 
 \section{Fájl letöltés}
 
