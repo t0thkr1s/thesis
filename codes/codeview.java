@@ -5,8 +5,8 @@ codeView.getSettings().setDisplayZoomControls(false);
 codeView.getSettings().setTextZoom(50);
 codeView.setWebViewClient(new WebViewClient() {
     @Override
-    public void onPageStarted(WebView view, String url, Bitmap favicon) {
-        super.onPageStarted(view, url, favicon);
+    public void onPageStarted(WebView view, String url, Bitmap b) {
+        super.onPageStarted(view, url, b);
         Log.d(Constants.TAG, "onPageStarted: loading page");
     }
     

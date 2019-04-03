@@ -7,13 +7,15 @@ public class DeleteDataTest {
 
     @Rule
     public GrantPermissionRule mGrantPermissionRule =
-            GrantPermissionRule.grant(
-                    "android.permission.READ_EXTERNAL_STORAGE",
-                    "android.permission.WRITE_EXTERNAL_STORAGE");
+        GrantPermissionRule.grant(
+                "android.permission.READ_EXTERNAL_STORAGE",
+                "android.permission.WRITE_EXTERNAL_STORAGE");
 
     @Before
     public void setSharedPref() {
-        SharedPrefUtil.saveCredentials(getInstrumentation().getTargetContext(), "test", "test");
+        SharedPrefUtil.saveCredentials(
+                getInstrumentation().getTargetContext(), 
+                "test", "test");
         mActivityTestRule.launchActivity(new Intent());
     }
 
