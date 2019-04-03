@@ -5,7 +5,7 @@
 \PassOptionsToPackage{defaults=hu-min}{magyar.ldf}
 \usepackage[magyar]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage{listingsutf8,xcolor,caption,graphicx,amsmath,amssymb,amsthm, url, hulipsum, hyperref}
+\usepackage{listingsutf8,xcolor,caption,graphicx,amsmath,amssymb,amsthm, url, hulipsum, hyperref, minted}
 \footnotestyle{rule=fourth}
 
 \lstset{ 
@@ -40,15 +40,18 @@
 \institute{Matematikai és Informatikai Intézet}
 \title{Kliens-szerver kommunikáció\\Android platformon}
 \author{Balajti-Tóth Kristóf\\Programtervező Informatikus BSc}
-\supervisor{Tajti Tibor\\Egyetemi adjunktus}
+\supervisor{Tajti Tibor\\Tanársegéd}
 \city{Eger}
 \date{2019}
 \maketitle
 \tableofcontents
+\listoffigures
+\renewcommand\listoflistingscaption{Forráskódok jegyzéke}
+\listoflistings
 
 \chapter*{Bevezetés}
 \markboth{Bevezetés}{Bevezetés}
-Az szoftver fejlesztés egy nagyon komplex folyamat és rengeteg részletre oda kell figyleni.
+A szoftver fejlesztés egy nagyon komplex folyamat és rengeteg részletre oda kell figyleni.
 Az elkészült programnak hatékonynak, hibamentesnek és gyorsnak kell lennie. Természetesen, mindezt határidőn belül kell teljesíteni.
 Sajnos a biztonság nem egy első számú szempont egy megrendelő szemében, csak akkor ha már valami baj történt.
 Inkább a gyorsaságon és a folyamatok automatizálásán van a hangsúly, ezért nem  meglepő, hogy a fejlesztés életciklusának tervezési szakaszában kevés figyelem fordul a szoftver biztonságossá tételére.
@@ -66,7 +69,7 @@ A visszaállított fájlok olvashatósága nem lesz tökéletes, főleg ha obfus
 
 A szakdolgozatomban Android platformra készült alkalmazások forrás fájlokká való visszaállításáról írok, valamint bemutatom hogyan valósítható meg a kliens-szerver kommunikáció egy REST API és egy Android platforma készült kliens segítségével.
 A felhasználó egy egyszerű autentikáció után képes lesz \emph{.apk} fájlok feltöltésére, letöltésére és az elkészült projekteben való navigálásra.
-Hosszabb ideig tartó folyamatok állapotáról és elkészültéről értesítést kap és lehetősége lesz a forrás kód alkalmazáson belüli megtekintésére és megosztására.
+Hosszabb ideig tartó folyamatok állapotáról és elkészültéről értesítést kap és lehetősége lesz a forráskód alkalmazáson belüli megtekintésére és megosztására.
 A projektet ,,Reverse Droid''-nak neveztem el.
 
 \chapter{Fejlesztői környezetek}\label{kornyezetek}
@@ -295,7 +298,7 @@ Néhány meghatározó funkciója az SQLite adatbázisnak:
 	\end{description}
 	\item
 	\begin{description}
-		\item[Kifejezetten megbízható] A SQLite fejlesztői csapata nagyon komolyan veszi a forrás kód tesztelését.
+		\item[Kifejezetten megbízható] A SQLite fejlesztői csapata nagyon komolyan veszi a forráskód tesztelését.
 	\end{description}
 \end{enumerate}
 
@@ -340,29 +343,29 @@ Rétegezett formátumuk van, ami lépésről-lépésre épülnek fel egy sorozat
 Tulajdonságaikat tekintve hordozhatóak, megoszthatóak, tárolhatóak és frissíthetők.
 A következő paranccsal tudunk képfájlt készíteni (feltéve, hogy a Dockerfile az aktuális könyvtárban van):
 
-\begin{center}
-	\texttt{\$ docker build .}
-\end{center}
+\begin{minted}{bash}
+	$ docker build .
+\end{minted}
 
 Minden Docker képfájl rendelkezik egyedi azonosítóval.
 A példa kedvéért az én képfálom az ,,edd116d82f90''-es azonosítót kapta, de használatkor nem fontos az egészet kiírni.
 Megtehetjük azt is, hogy a 9898-as porton futú szolgáltatást a helyi 80-as portra publikáljuk és így futtatjuk.
 Ezt a következő paranccsal tehetjük meg:
 
-\begin{center}
-	\texttt{\$ docker run -p 80:9898 edd11}
-\end{center}
+\begin{minted}{bash}
+	$ docker run -p 80:9898 edd11
+\end{minted}
 
 \subsubsection{Konténerek}
 
 A konténerek lényegében a futó képfájlok példányai.
 Ha elíndítunk egy képfájt és megnyitunk egy új terminál ablakot, akkor az alábbi paranccsal megtekinthetjük a futó konténert.
 
-\begin{center}
-	\texttt{\$ docker container ls}
-\end{center}
+\begin{minted}{bash}
+	$ docker container ls
+\end{minted}
 
-A parancs kiírja többek között a publikált portot, a konténerben futó őarancsot és a képfájl azonosítóját is.
+A parancs kiírja többek között a publikált portot, a konténerben futó parancsot és a képfájl azonosítóját is.
 
 \subsubsection{Dockerfile}
 A szakdolgozatom szempontjából fontos említést tenni a Dockerfile-ról.
@@ -374,7 +377,7 @@ Segítségével bárki automatikusan készíthet egy docker képfájlt.
 A Docker Hub biztosítja azt a platformot, ahol bárki kereshet és megoszthat konténereket.
 Kézzel nagyon körülményes lett volna a képfájl verzióinak követése és publikálása, ezért igénybe vettem a Docker Hub szolgáltatását.
 Ez a szolgáltatás nem más, mint az automatikus buildek készítése.
-A Docker Hub képes külső forrás kódból képfájlt készíteni és azt publikálni.
+A Docker Hub képes külső forráskódból képfájlt készíteni és azt publikálni.
 Összetudjuk csatolni a Github projektjeinket a Docker Hub-al. 
 Ezzel hozzájárulva ahhoz, hogy minden egyes változtatásnál a Docker Hub újra buildelje a képfájlt és publikálja a frissített verziót.
 
@@ -431,7 +434,11 @@ Kettő struktúrára épül:
 Ezek olyan univerzális adatszerkezetek, amiket gyakorlatilag minden programozási nyelv támogat ilyen vagy olyan formában.
 Ésszerűnek tűnik tehát, hogy az az adatformátum, amelyet programozási nyelvek kommunikációjához kívánunk használni, szintén ezekre a szerkezetekre épüljön.\cite{json2}
 
-\lstinputlisting[language=Java, label={json_example}, caption=Egy nagyon egyszerű példa a szervertől érkező JSON válaszra.]{./codes/result.json}
+\begin{listing}[ht]
+	\inputminted[linenos=true]{json}{./codes/result.json}
+	\caption{Egy nagyon egyszerű példa a szervertől érkező JSON válaszra.}
+	\label{json_example}
+\end{listing}
 
 Emberek számára is könnyen olvasható és írható, ahogy ez a \ref{json_example} példán is látszik. 
 A szakdolgozatomban is fontos szerepet töltbe, ugyanis a klien-szerver kommunikáció teljes egészében erre alapul.
@@ -546,12 +553,16 @@ A \ref{room} kódrészletben látható egy \emph{listNotifications(String userna
 A Room elvégzi ezeknek a paramétereknek az összehasonlítását és hibát dob, ha eltérést talál.
 Lehetőségünk van több paramétert is átadni, ezáltal robosztusabb lekérdezéseket valósíthatunk meg.
 
-\lstinputlisting[language=Java, label={room}, caption=A NotificationDao interfész.]{./codes/NotificationDao.java}
+\begin{listing}[ht]
+	\inputminted[linenos=true]{java}{./codes/NotificationDao.java}
+	\caption{A NotificationDao interfész.}
+	\label{room}
+\end{listing}
 
 \subsection{CodeView}\label{code_view}
 
-A forrás kód megjelenítését nem lett volna célszerű nulláról felépíteni, ezért inkább kész megoldások után néztem.
-Kutatásaim során, nem találtam megfelelő natív Android komponenst, amivel kivitelezhető lett volna a forrás kód megjelenítése.
+A forráskód megjelenítését nem lett volna célszerű nulláról felépíteni, ezért inkább kész megoldások után néztem.
+Kutatásaim során, nem találtam megfelelő natív Android komponenst, amivel kivitelezhető lett volna a forráskód megjelenítése.
 Ezt úgy értem, hogy a kijelölést nem lehet megoldani egy egyszerű \emph{TextView} osztállyal.
 Mindenképpen kellett egy olyan könyvtár, ami megbízható és elegendő funkcionalitást és testreszabhatóságot nyújt.
 Jó pár könyvtárat végig kellett próbálnom, mire ráakadtam az igazira.
@@ -559,22 +570,26 @@ Találkoztam olyannal, amelyik nem megfelelően töltötte be a kódot és nem i
 Voltak olyanok is, amelyeket nagyon régóta nem voltak karban tartva és elavult kód bázissal rendelkeztek.
 Találtam aktív fejlesztés alatt lévőket is, de azok többnyire még kiforratlan állapotban voltak és nem rendelkezdtek elegendő funkcióval.
 
-A megvalósítást ezek a könyvtárak, úgy végezték el, hogy lényegében egy \emph{WebView} komponensbe töltötték be a forrás kódot, amit aztán különböző JavaScript keretrendszerek segítségével színeztek ki.
+A megvalósítást ezek a könyvtárak, úgy végezték el, hogy lényegében egy \emph{WebView} komponensbe töltötték be a forráskódot, amit aztán különböző JavaScript keretrendszerek segítségével színeztek ki.
 A választásom egy olyan könyvtárra esett, ami a \emph{highlight.js} keretrendszert használja.
 Ez biztosít több különböző témát szintaktikai kijelölésre és amit még fontosabbnak tartok, hogy automatikusan felismeri a domináns programozási nyelveket, mint a \emph{Java}, \emph{Python} vagy \emph{Ruby}.
 Így sokkal kényemesebb a használata, mert nem kellett kiterjesztés alapján megadni az adott nyelvet.
 Néhány funkció hiányzott ugyan, mint például a két ujjal való nagyítás, kicsinyítés és a kezdő betű méret beállítása.
 Ezeknek a támogatását sikerült viszonylag egyszerűen megoldani, hiszen a \emph{CodeView} a \emph{WebView} osztályból származik és rendelkezik a megfelelő metódusokkal.
-A \ref{codeviewimplementation} kódrészletben a \emph{CodeView} megvalósítása és kiegészítése látható, alatta pedig a \ref{codeview} képen látható a forrás kód megjelenítése az alkalmazásban.
+A \ref{codeviewimplementation} kódrészletben a \emph{CodeView} megvalósítása és kiegészítése látható, alatta pedig a \ref{codeview} képen látható a forráskód megjelenítése az alkalmazásban.
 
 A választott könyvtár elérhető: \url{https://github.com/Thereisnospon/CodeView}
 
-\lstinputlisting[language=Java, label={codeviewimplementation}, caption=A CodeView könyvtár felhasználása és kiegésztése.]{./codes/codeview.java}
+\begin{listing}[ht]
+	\inputminted[linenos=true, breaklines]{java}{./codes/codeview.java}
+	\caption{A CodeView könyvtár felhasználása és kiegésztése.}
+	\label{codeviewimplementation}
+\end{listing}
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=15cm]{pictures/codeview}
-	\caption{A visszafejtett forrás kód megjelenítése szintaktikai kijelöléssel.}
+	\caption{A visszafejtett forráskód megjelenítése szintaktikai kijelöléssel.}
 	\label{codeview}
 \end{figure}
 
@@ -602,7 +617,13 @@ Ezután pedig egyszerűen egy Intent segítségével elindítottam az Activity-t
 Mindez nem volt elegendő ahhoz, hogy sikeresen tovább mehessek ugyanis bejelentkezés után történik a különböző engedélyek ellenőrzése.
 Az Espresso arra is nyújt megoldást, hogy ezeket az engedély kéréseket automatikusan elfogadjuk a tesztekben a \emph{GrantPermissionRule} osztály segítségével.
 
-\lstinputlisting[language=Java, label={espressotest}, caption=Espresso UI teszt az adatok törléséhez.]{./codes/test.java}
+% \lstinputlisting[language=Java, label={espressotest}, caption=Espresso UI teszt az adatok törléséhez.]{./codes/test.java}
+
+\begin{listing}[ht]
+	\inputminted[linenos=true, breaklines]{java}{./codes/test.java}
+	\caption{Espresso UI teszt az adatok törléséhez.}
+	\label{espressotest}
+\end{listing}
 
 \subsection{Material Design 2.0}
 
@@ -617,20 +638,34 @@ Az Android platformot tekintve új komponensek érkeztek, ezek közé tartozik a
 
 % https://material.io/develop/android/docs/getting-started/
 
-\chapter{Teszteléshez felhasznált eszközök és források}\label{teszteles}
+\chapter{A visszafejtés teszteléséhez felhasznált programok}\label{teszteles}
 
 \section{Sérülékeny Android alkalmazások}
 
 A teszteléshez keresnem kellett olyan sérülékeny alkalmazásokat, amelyeken jól lehet demonstrálni a visszafejtést.
-Minden alkalmazás, amit itt megemlítek nyílt forrás kódú és kimondottan erre a célra készítették őket.
+Minden alkalmazás, amit itt megemlítek nyílt forráskódú és kimondottan erre a célra készítették őket.
 Ez azért is jó, mert a visszafejtett kódot össze lehet hasonlítani az eredetivel és megnézni mennyire volt hatékony a visszafejtési folyamat.
+A jogi következményei egy ilyen visszafejtésnek elég ködösek.
+Én azért is választottam nyílt forráskódú, szabadon elérhető alkalmazásokat teszteléshez, mert így tartottam a legbiztonságosnak.
 A következő lista tartalmazza a teszteléshez felhasznált szándékosan sérülékeny alkalmazásokat.
 
+\begin{enumerate}
+	\item
+	\begin{description}
+		\item[Damn Insecure and Vulnerable Application (Diva)] Megtalálható itt: \url{https://github.com/payatu/diva-android}.
+	\end{description}
+	\item
+	\begin{description}
+		\item [Frida] Ez egy általam fejlesztett alkalmazás, ami kimondottam ilyen tesztelésre készült. Megtalálható itt: \url{https://github.com/t0thkr1s/frida-demo}
+	\end{description}
+	\item
+	\begin{description}
+		\item [Purposefully Insecure and Vulnerable Android Application(Pivaa)] A Pivaa egy kicsit modernebb verziója a Diva alkamzasának. Rendkívül sok sérülékenységet tartalmaz, amiből sokat lehet tanulni. Megtalálható itt: \url{https://github.com/t0thkr1s/frida-demo}
+	\end{description}
+\end{enumerate}
+
 \begin{itemize}
-	\item \href{https://github.com/payatu/diva-android}{Diva}
 	\item \href{https://github.com/as0ler/Android-Examples}{Sieve}
-	\item \href{https://github.com/htbridge/pivaa}{Pivaa}
-	\item \href{https://github.com/t0thkr1s/frida-demo}{Frida}
 \end{itemize}
 
 \chapter{Megvalósított funkciók}\label{funkciok}
@@ -681,17 +716,33 @@ A \emph{SharedPreferences} segítségével kulcs-érték párokat tárolhatunk b
 A \emph{getSharedPreferences()} metódus 2 paramétert vár, az egyik a név, a másik a használni kívánt mód. 
 Névnek az alkalmazás csomag nevét választottam és privát módban hoztam létre, hogy csak az én alkalmazásom férhessen hozzá az adatokhoz.
 
-\lstinputlisting[language=Java, label={saving_sharedpref}, caption=Adatok mentése \emph{SharedPreferences} segítségével.]{./codes/saving_sharedpref.java}
+\begin{listing}[ht]
+	\inputminted[linenos=true, breaklines]{java}{./codes/saving_sharedpref.java}
+	\caption{Adatok mentése \emph{SharedPreferences} segítségével.}
+	\label{saving_sharedpref}
+\end{listing}
 
-A \ref{deleting_sharedpref} kódrészletben láthatód metódus nem sok eltérést mutat, viszont elengedhetetlen volt ahhoz, hogy töröljem az összes mentett adatot.
+% \lstinputlisting[language=Java, label={saving_sharedpref}, caption=]{./codes/saving_sharedpref.java}
 
-\lstinputlisting[language=Java, label={deleting_sharedpref}, caption=Az összes mentett adat törlése.]{./codes/deleting_sharedprefs.java}
+A \ref{deleting_sharedpref} kódrészletben láthatód metódus nem sok eltérést mutat, viszont elengedhetetlen volt ahhoz, hogy töröljem az összes \emph{SharedPreferences}-be mentett adatot.
+
+\begin{listing}[ht]
+	\inputminted[linenos=true, breaklines]{java}{./codes/deleting_sharedprefs.java}
+	\caption{Az összes \emph{SharedPreferences}-be mentett adat törlése.}
+	\label{deleting_sharedpref}
+\end{listing}
+
+% \lstinputlisting[language=Java, label={deleting_sharedpref}, caption=Az összes \emph{SharedPreferences}-be mentett adat törlése.]{./codes/deleting_sharedprefs.java}
 
 \section{Adatok törlése}
 
 A kliens oldalon elég sok adat jelenik meg, ami természetesen tárolva van.
 Ilyen például a feltöltések listája, értesítések és a letöltött fájlok is ide tartoznak.
 Az adatok törlése funkcióval biztosítottam, hogy a felhasználónak lehetősége legyen törölni minden adatot és előzményt.
+Ide tartozik a gyorsítótárba másolt feltöltött alkalmazások, amik egy idő után értékes tárhelyet foglalhatnak el.
+Nem beszélve arról, hogy az adatbázisban lévő összes tábla adatát ürítem.
+Lehetséges, hogy kényelmesebb lett volna, ha a felhasználó maga választja ki mit szeretne törölni.
+Sajnos ez a korai verzió csak az együttes törlést biztosítja.
 Jól jöhet ez a funkció akkor is ha a telefon esetleg nem rendelkezik elég tárhellyel vagy egyszerűen csak helyet szeretnénk felszabadítani.
 
 \section{Fájl feltöltés}
@@ -701,7 +752,26 @@ Ezt a funkciót próbáltam a legkézenfekvőbb helyen elhelyezni, mert ezzel in
 Ezért lett a legeleső fragment a feltöltések listáját tartalmazó fragment.
 Ebben a feltöltési listában jelenítem meg a feltöltött APK fájlok neveit és a feltöltés dátumát.
 
-Az APK fájlok feltöltését háttér service komponenssel készítettem el.
+A feltöltéshez a felhasználónak egy jól látható \emph{FloatingActionButton} komponensre kell kattintania.
+A tervezési szakaszban úgy gondoltam, hogy hasznos lenne egy saját fájl kiválasztó felületet készíteni.
+Aztán hamar rájöttem, hogy teljesen felesleges újra feltalálni a spanyol viaszt és nem kellene haszontalan felületekkel bonyolítani az applikációt.
+Biztos találkoztunk már olyan alkalmazással, ami elindított egy külső alkalmazást csak hogy elvégezzel valamilyen feladatot.
+Én is egy ilyen megoldást alkalmaztam.
+Nem csak \emph{Activity}-ket tudunk indítani \emph{Intent}-ek segítségével, hanem különböző műveleteket is elvégezhetünk.
+Az ilyen \emph{Intent}-eket \emph{Implicit Intent}-eknek nevezzük.
+Példának okáért, a fájl kiválasztás egy ilyen művelet.
+\emph{Implicit intent} használatával indítottam el a fájl kiválasztást, aminek többek között megadtam, hogy milyen típusú fájlokat szeretnék kiválasztani.
+Ez a típus természetesen a \emph{application/vnd.android.package-archive} volt, ami megfelel az Android telepítő fájloknak.
+Ebben az esetben nincs lehetőségünk más típusú fájlt kiválasztani csak a megadottat.
+
+A fájl kivlasztása után az \emph{onActivityResult} metódus \emph{Intent} típusú paraméterében kapjuk meg az URI\footnote{Uniform Resource Identifier}-t.
+Ezt az URI-t felhasználva elmentettem a fájlt az alkalmazás gyorsítótárába.
+Erre azért volt szükség, mert különben nem kaptam volna meg az abszolút elérési útvonalat.
+Eztán már csak service elindítása maradt hátra. 
+
+A \emph{startService(Intent service)} metódus egy \emph{Intent}-et vár, ami segítségével elindíthatjuk a háttér service-t.
+Fontos, hogy ez még így nem elég, hanem extraként hozzá kell adni a feltölteni kívánt fájlt.
+A \ref{uploads_notifications} ábra bal oldali képernyőképén látható a feltöltött fájlok listája.
 
 \section{Fájl letöltés}
 
@@ -709,7 +779,9 @@ A fájl letöltés is egy roppant fontos funkció, ugyanis csak így jut el a fe
 A megvalósítását hozzákötöttem az értesítésekhez, mert a kliens abban kapja vissza a letöltendő fájl nevét.
 Megfigyelhetjük a \ref{uploads_notifications} ábra jobb oldali képernyőképén, hogy minden egyes értesítés kártyáján ott a letöltés gomb.
 Ha ezekre rákattintunk, akkor itt is minden egyes alkalommal egy újabb háttér service fog elindulni.
-Ez tartamazza a komplett értesítés küldést és biztosítja magának a fájlnak a letöltését.
+Azt is megtehetjük, hogy akár többször is letöltjük ugyanazt a fájlt.
+Ha már lokálisan létezik egy ugyanolyan nevű projekt, mint amit éppen letöltünk akkor sem kell félnünk, hogy felül írjuk, mert egyedi nevet fog kapni.
+Ezt úgy valósítottam meg, hogy ha létezik már a projekt mappája, akkor hozzáfőzök egy számot és 0-tól kezdődően mindig növelem.
 
 \begin{figure}[!h]
 	\centering
@@ -736,7 +808,7 @@ Az első triviális funkció itt is a fájl törlése volt, a második a fájl m
 Végül, de nem utolsó sorban a kód megtekintése menü pont kapott helyet.
 Ennek a működéséről és megvalósításáról már említést tettem a \nameref{code_view} alfejezetben, de nem említettem meg minden részletet.
 Kimaradt példul az, hogy csak bizonyos fájlkiterjesztéseket támogatok jelen helyzetben.
-Mivel a forrás kód tartalmazza az igazán érdekes dolgokat, ezért arra koncetráltam, hogy legalább az Android projektekre jellemző szöveges fájlkiterjesztéseket támogassam.
+Mivel a forráskód tartalmazza az igazán érdekes dolgokat, ezért arra koncetráltam, hogy legalább az Android projektekre jellemző szöveges fájlkiterjesztéseket támogassam.
 A különböző képek és speciális fájlok megjelenítése egyenlőre nincsen támogatva, de ez is egy olyan funkció, amit megszeretnék valósítani a jövőre nézve.
 A támogatott kiterjesztéseket jelenleg az is befolyásolja, hogy maga a \emph{CodeView} miket támogat.
 
@@ -791,7 +863,7 @@ Jelenleg csak a forráskódok megjelentését támogatja az alkalmazás, de jó 
 Például a képek vagy adatbázisok megtekintése is kritikus lehet egy Android alkalmazás elemzésekor.
 A kód visszafejtése végén egy összegző report is hasznos lehetne a felhasználó számára, ami tartalmazná a feldolgozott fájlok számát és egy gyors áttekintést nyújtana az adott alkalmazással kapcsolatban.
 
-Egy forrás kód elemző integrálása is jelentős előnnyel járhat a többi alkalmazással szemben. Hasonlóan a Google Play Protect-hez, jelezhetnénk a felhasználó számára, ha a feltöltött \emph{apk} malware.
+Egy forráskód elemző integrálása is jelentős előnnyel járhat a többi alkalmazással szemben. Hasonlóan a Google Play Protect-hez, jelezhetnénk a felhasználó számára, ha a feltöltött \emph{apk} malware.
 Találkoztam több webes \emph{apk} analizálóval, ahol csak az Android komponenseket emelték ki, de az elemzést már a felhasználóra bízták.
 Nyilván nem lenne célszerű mindent egy algoritmusra bízni, de mindenesetre könnyebbséget látok egy átfogó analízisben, ami esetlegesen mestersége intelligenciára alapul.
 
