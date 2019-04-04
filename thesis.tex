@@ -8,22 +8,6 @@
 \usepackage{listingsutf8,xcolor,caption,graphicx,amsmath,amssymb,amsthm, url, hulipsum, hyperref, minted}
 \footnotestyle{rule=fourth}
 
-\lstset{ 
-  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
-  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
-  breaklines=true,                 % sets automatic line breaking
-  captionpos=b,                    % sets the caption-position to bottom
-  commentstyle=\color{green},    % comment style
-  frame=shadowbox,	                   % adds a frame around the code
-  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
-  keywordstyle=\color{blue},       % keyword style
-  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
-  numbersep=10pt,                   % how far the line-numbers are from the code
-  numberstyle=\tiny\color{darkgray}, % the style that is used for the line-numbers
-  rulecolor=\color{gray},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
-  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
-}
-
 \graphicspath{{./pictures/}}
 
 \newtheorem{tetel}{Tétel}[chapter]
@@ -63,12 +47,13 @@ A mobilos eszközöket célzó támadások száma hatalmas ütemben nő. Mindez 
 Egy alkalmazásnak a sebezhetőségét különböző támadási vektoron is ki lehet aknázni.
 Az elején, bennem többek között az a kérdés merült fel, hogy honnan tudható hogy ez alkalmazás ebezhető-e vagy sem.egy kérdés merült fel.
 Honnann tudhatom, hogy egy adott alkalmazás sebezhető-e vagy sem és ha igen milyen súlyos a hiba.
-A leghatékonyabb módszer ha visszafejtjük az alkalmazást forráskódra.
+A leghatékonyabb módszer ha megpróbáljuk visszafejteni az alkalmazást forráskódra.
 Ezt angolul ,,reverse engineering''-nek nevezik.
 A visszaállított fájlok olvashatósága nem lesz tökéletes, főleg ha obfuszkált \footnote{Az obfuszkáció célja röviden, hogy megnehezítse a visszafejtett kód olvashatóságát.} kóddal állunk szemben, de egy tapasztalt szem így is kitudja szúrni a gyakori hibákat.
 
 A szakdolgozatomban Android platformra készült alkalmazások forrás fájlokká való visszaállításáról írok, valamint bemutatom hogyan valósítható meg a kliens-szerver kommunikáció egy REST API és egy Android platforma készült kliens segítségével.
-A felhasználó egy egyszerű autentikáció után képes lesz \emph{.apk} fájlok feltöltésére, letöltésére és az elkészült projekteben való navigálásra.
+Szó lesz arról, hogy hogyan tudunk fájlokat feltölteni/letölteni és értesítésekkel operálni.
+A felhasználó egy egyszerű autentikáció után képes lesz \emph{.apk} fájlok feltöltésére, letöltésére és az elkészült projektben való navigálásra.
 Hosszabb ideig tartó folyamatok állapotáról és elkészültéről értesítést kap és lehetősége lesz a forráskód alkalmazáson belüli megtekintésére és megosztására.
 A projektet ,,Reverse Droid''-nak neveztem el.
 
@@ -122,36 +107,23 @@ Attól függően, hogy helyes-e a felhasználó név és jelszó páros a szerve
 	\label{postman}
 \end{figure}
 
-% https://www.getpostman.com/products
-
-
 \chapter{Platformok}\label{platformok}
 
 \section{A szerver kiválasztása és felépítése}
 
 Olyan szerverre volt szükségem, ami nem túl költséges, de mégis megfelelően testreszabható és gyors tárhelyet biztosít.
 A választásom a Digitial Ocean felhő szolgáltatására esett. Az oldal felületén lehetőségünk van több, úgynevezett \emph{droplet}-et létrehozni, amik nem mások mint virtuális szerverek. 
-Megadhatjuk milyen disztribúciót szeretnénk telepíteni, jelen esetben én az Ubuntu Linux 18.10-es verzióját telepítettem.
+Megadhatjuk milyen disztribúciót szeretnénk telepíteni, jelen esetben én az Ubuntu Linux 18.10-es verzióját választottam.
 
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=15cm]{pictures/digitalocean}
-	\caption{Droplet a Digital Ocean admin felületén.}
-	\label{digitalocean}
-\end{figure}
+Szerencsére nem kellett új domain nevet vásárolnom, mert már rendelkeztem egyel.
+A domain egyébként a \emph{Namecheap} oldalon van beregisztrálva.
+Annyi volt a dolgom, hogy egy új aldomaint kellett készítenem a projekt számára.
+Miután feltelepült a Droplet hozzárendeltem az IP\footnote{Internet Protocol} címét az előbb elkészített aldomainhez.
+Ezzel biztosítottam, hogy domain név alapján is elérhető legyen a szerver.
+Körülnéztem a konkurens cégek által nyújtott szolgáltatások között is, de én úgy láttam, hogy egyik se éri el azt az ár-érték arányt, amit a \emph{Namecheap} nyújt. 
 
-A projecthez készítettem egy subdomain-t és telepítés után a droplet IP címét hozzárendeltem ehhez a subdomain-hez.
-Ezzel biztosítottam, hogy domain név alapján is elérhető legyen a szerver. Ez a \ref{namecheap} képen jól látható.
-
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=15cm]{pictures/namecheap}
-	\caption{DNS rekordok a domain beállításaiban.}
-	\label{namecheap}
-\end{figure}
-
-A kész projektben nem ezt a folyamatot választottam, hanem a Digital Ocean által nyújtott ,,one-click apps'' menüben egyszerűen kiválasztottam a Docker alkalmazást és az elkészült képfájlt ezen futtattam. 
-Így automatizálva a szerver telepítésének folyamatát és megspórolva magának a Docker-nek a telepítését és konfigurálását.
+Habár nagyon egyszerű volt a folyamat, az elkészült projektben mégsem ezt a folyamatot választottam, hanem a Digital Ocean által nyújtott ,,one-click apps'' menüben egyszerűen kiválasztottam a Docker alkalmazást és az elkészült képfájlt ezen futtattam. 
+Így automatizálva a szerver telepítésének folyamatát és megspórolva a Docker telepítését és konfigurálását.
 Erről még a \nameref{szerveren_hasznalt_technologiak} fejezet \nameref{docker} alfejezetében bővebben írok.
 
 \section{Mobil platform választása}
@@ -171,7 +143,7 @@ Itt most nyilván nem szeretném részletezni, hogy melyik operációs rendszer 
 Inkább csak a személyem érveimet és tapasztalataimat sorakoztatom fel, amik alapján platformot választottam.
 
 
-Fontos megemlíteni, hogy az Android rendszer nem csak mobil telefonok terjedt el.
+Fontos megemlíteni, hogy az Android rendszer nem csak mobil telefonokban terjedt el.
 Jelen van az okos televíziókban (Android TV), autókban (Android Auto), okos órákban (Wear OS) és IoT\footnote{Internet of Things}-ben is (Android Things).
 Ezek az Android által úgymond eredmények annak is köszönhetőek, hogy a Google felvásárolta az Android céget és azóta ők tartják karban.
 
@@ -259,7 +231,7 @@ Nekem csak kettő kiegészítőre volt szükségem, mivel a többi funkcionalit�
 \subsubsection{Flask-Testing}
 
 Az egyik ilyen a ,,Flask-Testing'' csomag, amire az egység tesztek miatt volt szükségem.
-Segítségével rendkívül egyszerűen és hatékonyan tudjuk tesztelni az alkalmazás található végpontokat.
+Segítségével rendkívül egyszerűen és hatékonyan tudjuk tesztelni az alkalmazásban található végpontokat.
 
 \subsubsection{Flask-Bcrypt}
 
@@ -580,11 +552,8 @@ A \ref{codeviewimplementation} kódrészletben a \emph{CodeView} megvalósítás
 
 A választott könyvtár elérhető: \url{https://github.com/Thereisnospon/CodeView}
 
-\begin{listing}[ht]
-	\inputminted[linenos=true, breaklines]{java}{./codes/codeview.java}
-	\caption{A CodeView könyvtár felhasználása és kiegésztése.}
-	\label{codeviewimplementation}
-\end{listing}
+\inputminted[linenos=true, breaklines]{java}{./codes/codeview.java}
+\captionof{listing}{A CodeView könyvtár felhasználása és kiegésztése.\label{codeviewimplementation}}
 
 \begin{figure}[!h]
 	\centering
@@ -592,6 +561,8 @@ A választott könyvtár elérhető: \url{https://github.com/Thereisnospon/CodeV
 	\caption{A visszafejtett forráskód megjelenítése szintaktikai kijelöléssel.}
 	\label{codeview}
 \end{figure}
+
+\newpage
 
 \subsection{Espresso}
 
@@ -617,13 +588,8 @@ Ezután pedig egyszerűen egy Intent segítségével elindítottam az Activity-t
 Mindez nem volt elegendő ahhoz, hogy sikeresen tovább mehessek ugyanis bejelentkezés után történik a különböző engedélyek ellenőrzése.
 Az Espresso arra is nyújt megoldást, hogy ezeket az engedély kéréseket automatikusan elfogadjuk a tesztekben a \emph{GrantPermissionRule} osztály segítségével.
 
-% \lstinputlisting[language=Java, label={espressotest}, caption=Espresso UI teszt az adatok törléséhez.]{./codes/test.java}
-
-\begin{listing}[ht]
-	\inputminted[linenos=true, breaklines]{java}{./codes/test.java}
-	\caption{Espresso UI teszt az adatok törléséhez.}
-	\label{espressotest}
-\end{listing}
+\inputminted[linenos=true, breaklines]{java}{./codes/test.java}
+\captionof{listing}{Espresso UI teszt az adatok törléséhez.\label{espressotest}}
 
 \subsection{Material Design 2.0}
 
@@ -646,27 +612,26 @@ A teszteléshez keresnem kellett olyan sérülékeny alkalmazásokat, amelyeken 
 Minden alkalmazás, amit itt megemlítek nyílt forráskódú és kimondottan erre a célra készítették őket.
 Ez azért is jó, mert a visszafejtett kódot össze lehet hasonlítani az eredetivel és megnézni mennyire volt hatékony a visszafejtési folyamat.
 A jogi következményei egy ilyen visszafejtésnek elég ködösek.
-Én azért is választottam nyílt forráskódú, szabadon elérhető alkalmazásokat teszteléshez, mert így tartottam a legbiztonságosnak.
+Szerettem volna biztosra menni, ezért is választottam nyílt forráskódú, szabadon elérhető alkalmazásokat teszteléshez, mert így érezhetem magam a legnagyobb biztonságban.
 A következő lista tartalmazza a teszteléshez felhasznált szándékosan sérülékeny alkalmazásokat.
 
 \begin{enumerate}
 	\item
 	\begin{description}
-		\item[Damn Insecure and Vulnerable Application (Diva)] Talán kicsit régi, mert több mint 3 éve nem volt frissítve. Ettől függetlenül ezt találtam a leghasznosabbnak. Megtalálható itt: \url{https://github.com/payatu/diva-android}.
+		\item[Damn Insecure and Vulnerable Application (Diva)] Talán kicsit régi, mert több mint 3 éve nem volt frissítve. Ettől függetlenül ezzel értem el a legjobb eredményt és ezt találtam a leghasznosabbnak.\newline  Megtalálható itt: \url{https://github.com/payatu/diva-android}.
 	\end{description}
 	\item
 	\begin{description}
-		\item [Frida] Ez egy általam fejlesztett alkalmazás, ami kimondottam ilyen tesztelésre készült. Megtalálható itt: \url{https://github.com/t0thkr1s/frida-demo}
+		\item [Frida] Ez egy általam fejlesztett alkalmazás, ami kimondottam dinamikus intrumentáció tesztelésére és bemutatására készült.\newline Megtalálható itt: \url{https://github.com/t0thkr1s/frida-demo}
 	\end{description}
 	\item
 	\begin{description}
-		\item [Purposefully Insecure and Vulnerable Android Application(Pivaa)] A Pivaa egy kicsit modernebb verziója a Diva alkamzasának. Rendkívül sok sérülékenységet tartalmaz, amiből sokat lehet tanulni. Megtalálható itt: \url{https://github.com/t0thkr1s/frida-demo}
+		\item [Purposefully Insecure and Vulnerable Android Application(Pivaa)] A Pivaa egy kicsit modernebb verziója a Diva alkamzasának. Rendkívül sok sérülékenységet tartalmaz, amiből sokat lehet tanulni.\newline Megtalálható itt: \url{https://github.com/HTBridge/pivaa}
 	\end{description}
 \end{enumerate}
 
-\begin{itemize}
-	\item \href{https://github.com/as0ler/Android-Examples}{Sieve}
-\end{itemize}
+A többi alkalmazást a \url{https://github.com/as0ler/Android-Examples} repository-ból használtam fel, ami nem csak applikációkat tartalmaz, hanem játékokat is.
+A forráskód itt nem érhető el, viszont visszafejtés után betekintést nyerhetünk játékok felépítésébe is.
 
 \chapter{Megvalósított funkciók}\label{funkciok}
 
