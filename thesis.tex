@@ -200,8 +200,6 @@ Ezek a tesztek minden alkalommal egy tiszta konténerben vagy virtuális gépen 
 Jelen esetben az Android program egy Docker konténerben fut, aminek a neve \emph{circleci/android:api-28-alpha}.
 Az eredményről mindig értesítést kapunk, így egyből tudhatjuk azt is, ha egy build nem volt sikeres.
 
-% https://circleci.com/product/
-
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=15cm]{pictures/circleci}
@@ -232,6 +230,8 @@ Nekem csak kettő kiegészítőre volt szükségem, mivel a többi funkcionalit�
 
 Az egyik ilyen a ,,Flask-Testing'' csomag, amire az egység tesztek miatt volt szükségem.
 Segítségével rendkívül egyszerűen és hatékonyan tudjuk tesztelni az alkalmazásban található végpontokat.
+Használata számomra nagyon könnyű volt és a dokumentáció minden felhasználási esetre kitért és lehetővé tette, hogy kényelmesen teszteljem a JSON válaszokat.
+A dokumentáció azt ajánlja, hogy tegyünk minden tesztet egy nagy fájlba, mert így kényelmesen tudjuk egyszerre futtani őket.
 
 \subsubsection{Flask-Bcrypt}
 
