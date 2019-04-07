@@ -41,20 +41,24 @@ Sajnos a biztonság nem egy első számú szempont egy megrendelő szemében, cs
 Inkább a gyorsaságon és a folyamatok automatizálásán van a hangsúly, ezért nem  meglepő, hogy a fejlesztés életciklusának tervezési szakaszában kevés figyelem fordul a szoftver biztonságossá tételére.
 
 A statista.com \cite{statista} kutatása szerint 2020-ra több mint 4.78 billió telefon lesz használatban.
-Ezzel a cégek is tisztában vannak és tudják, hogy ha még több emberhez szeretnék eljuttatni a szolgáltatásukat, akkor rendelkezniük kell saját mobilos app~-al.
+Ezzel a cégek is tisztában vannak és tudják, hogy ha még több emberhez szeretnék eljuttatni a szolgáltatásukat, akkor rendelkezniük kell saját mobilos applikációval.
+A kérdés az, hogy ezt a hatalmas keresletet mennyire tudják a fejlesztők kielégíteni és még ha ki is tudják, milyen minőségű kódot tudnak előállítani.
+A fejlesztőkkel szemben nagyon sok elvárást támasztanak a megrendelők és ahogy előbb is említettem a biztonság csak ritkán elvárás.
+Véleményem szerint ha nem szentelnek elég figyelmet a behatolás tesztelésre és magára a biztonságra általánosságban, akkor annak elég súlyos következményei lehetnek.
 
 A mobilos eszközöket célzó támadások száma hatalmas ütemben nő. Mindez azért lehetséges, mert figyelmen kívül marad a ,,secure coding''-nak nevezett gyakorlat.
 Egy alkalmazásnak a sebezhetőségét különböző támadási vektoron is ki lehet aknázni.
-Az elején, bennem többek között az a kérdés merült fel, hogy honnan tudható hogy ez alkalmazás ebezhető-e vagy sem.egy kérdés merült fel.
+Az elején, bennem többek között az a kérdés merült fel, hogy honnan tudható hogy egy alkalmazás sebezhető-e vagy sem.
 Honnann tudhatom, hogy egy adott alkalmazás sebezhető-e vagy sem és ha igen milyen súlyos a hiba.
 A leghatékonyabb módszer ha megpróbáljuk visszafejteni az alkalmazást forráskódra.
 Ezt angolul ,,reverse engineering''-nek nevezik.
 A visszaállított fájlok olvashatósága nem lesz tökéletes, főleg ha obfuszkált \footnote{Az obfuszkáció célja röviden, hogy megnehezítse a visszafejtett kód olvashatóságát.} kóddal állunk szemben, de egy tapasztalt szem így is kitudja szúrni a gyakori hibákat.
 
-A szakdolgozatomban Android platformra készült alkalmazások forrás fájlokká való visszaállításáról írok, valamint bemutatom hogyan valósítható meg a kliens-szerver kommunikáció egy REST API és egy Android platforma készült kliens segítségével.
-Szó lesz arról, hogy hogyan tudunk fájlokat feltölteni/letölteni és értesítésekkel operálni.
+A szakdolgozatomban Android platformra készült alkalmazások forrás fájlokká való visszaállításáról írok, valamint bemutatom hogyan valósítható meg a kliens-szerver kommunikáció egy Python programozási nyelvben írt REST\footnote{Representational State Transfer} API és egy Android platforma készült kliens segítségével.
+Szó lesz arról, hogy hogyan tudunk fájlokat feltölteni, valamint letölteni a szerverről és értesítésekkel operálni.
 A felhasználó egy egyszerű autentikáció után képes lesz \emph{.apk} fájlok feltöltésére, letöltésére és az elkészült projektben való navigálásra.
-Hosszabb ideig tartó folyamatok állapotáról és elkészültéről értesítést kap és lehetősége lesz a forráskód alkalmazáson belüli megtekintésére és megosztására.
+Hosszabb ideig tartó folyamatok állapotáról és elkészültéről értesítést kap a felhasználó és lehetősége lesz a forráskód alkalmazáson belüli megtekintésére és megosztására.
+Ezzel egy hatékony és sokoldalú eszközt adva a tesztelők, kutatók és a terület után érdeklődők kezébe.
 A projektet ,,Reverse Droid''-nak neveztem el.
 
 \chapter{Fejlesztői környezetek}\label{kornyezetek}
@@ -72,8 +76,6 @@ Említésre méltó még a flexibilis build rendszere is, a Gradle. Használatá
 Az \emph{instant run} funkció segítségével egyből tudjuk futtatni a kódban véghez vitt kisebb változtatásokat, anélkül hogy újraindítanánk az Activity~-t vagy újra buildelnénk az egész projektet és új APK~-t telepítenénk.
 \cite{androidstudio}
 
-% https://developer.android.com/studio/features.html
-
 \section{Pycharm Professional Edition}
 
 A PyCharm is egy IDE \footnote{Integrated Development Environment (integrált fejlesztői környezet)}, mint az Android Studio.
@@ -84,11 +86,8 @@ Véleményem szerint ez sikerült is nekik. Az Android Studio-n és a Pycharm-on
 Mivel adatbázissal is dolgoznok, ezért a \emph{Community Edition} nem lett volna megfelelő.
 Nem csak az adatbázis támogatást nyújt, hanem webes keretrendszer támogatást és profilozót is.
 A távoli fejlesztés funkció is rendkívül praktikus. A fejlesztés közben egyszerűen tudtam feltölteni a szerverre a változtatásaimat.
-A verzió kezelőknek is egyesített felületet nyújt, amivel jelentős időt spórolhatunk meg.
-Ez a lehetőség mindkettő fejlesztői környezetben elérhető.\cite{pycharm}
-
-% https://www.jetbrains.com/pycharm/features/
-% https://www.jetbrains.com/company/
+A verzió kezelőknek is egyesített felületet nyújt, amivel jelentős időt spórolhatunk meg.\cite{pycharm}
+Ez a lehetőség mindkettő fejlesztői környezetben elérhető.
 
 \section{Postman}
 
@@ -96,16 +95,13 @@ Jelenleg a Postman a legnépszerűbb API\footnote{Application Programming Interf
 A Postman kollekciók futtatható leírásai egy API-nak és sarok kövei a Postman beépített eszközeinek.
 Ezeknek a beépített eszközöknek köszönhetően futtathatunk hálózati kéréseket, teszteket, debuggolhatunk és csinálhatunk mock szervereket is.
 Ráadásul automatizáltan futtathatjuk a teszteket és egyszerűen elkészíthetjük és publikálhatjuk az API dokumentációját.
-Én csak dokumentáció készítésre és a végpontok tesztelésére használtam. Ettől természetesen sokkal több lehetőség rejlik benne.
-A \ref{postman} képen látható egy kérés, ami tartalmaz egy \emph{Authorization Header}-t.
-Attól függően, hogy helyes-e a felhasználó név és jelszó páros a szerver visszaad egy választ JSON formátumban, amit a kép alján láthatunk.
-
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=15cm]{pictures/postman}
-	\caption{Egy GET kérés és válasz a Postman alkalmazásban.}
-	\label{postman}
-\end{figure}
+Én kizárólag dokumentáció készítésre és a végpontok tesztelésére használtam. Ettől természetesen sokkal több lehetőség rejlik benne.
+Segítségével egyszeren publikálhattam az API dokumentációját, így lehetővé téve a felhasználást mások számára is.
+A Postman a \url{https://documenter.getpostman.com/view/5052599/S11RKayE} oldalon található leírást készítette el számomra.
+Különösen hasznos, hogy nem csak a végpontokat mutatja be hanem a kéréshez szükséges fejléceket, paramétereket és még a törzs típusát is.
+A weboldalon ezeken felül kiválaszthatjuk, hogy milyen programozási nyelvben kívánjuk megírni a saját kliensünk.
+Miután ezt megtettük, az oldal jobb oldalán megjelennek a kérésekhez tartozó nyelv specifikus példák.
+Úgy gondolom, ez a funkció hatalmas segítséget nyújt a dokumentációt felhasználók számára.
 
 \chapter{Platformok}\label{platformok}
 
@@ -141,7 +137,6 @@ Viszont jelen vannak olyan megkötések, amik mind a végfelhasználókat és mi
 Gondolok itt a minimális testre szabhatóságra és a nagy részt zárt forráskódra.
 Itt most nyilván nem szeretném részletezni, hogy melyik operációs rendszer a jobb vagy éppen rosszabb, mert mindegyik rendszernek megvan az előnye, illetve a hátránya.
 Inkább csak a személyem érveimet és tapasztalataimat sorakoztatom fel, amik alapján platformot választottam.
-
 
 Fontos megemlíteni, hogy az Android rendszer nem csak mobil telefonokban terjedt el.
 Jelen van az okos televíziókban (Android TV), autókban (Android Auto), okos órákban (Wear OS) és IoT\footnote{Internet of Things}-ben is (Android Things).
@@ -296,7 +291,7 @@ Hamar kiderült, hogy a problémát az FCM\footnote{Firebase Cloud Messaging} ok
 Itt kiegészítésként fontos megemlíteni, hogy a Pusher a Firebase Cloud Messaging által küldi az értesítéseket.
 Miután rávilágítottak a hiba okára, egyből megoldást ajánlottak és frissítették a dokumentációjukat.
 Úgy sikerült kikerülni ezt a limitációt, hogy kettő darab értesítést kell küldeni.
-Az első csak magát az értesítést tartalmazza, a második pedig csak az adatok küldéséért lesz felelős.
+Az első csak magát az értesítést tartalmazza, a második pedig kizárólag az adatok küldéséért lesz felelős.
 Természetesen a második értesítésnek nem lesz vizális reprezentációja a kliens oldalon.
 
 % forrás https://docs.pusher.com/beams/reference/server-sdk-python
@@ -340,9 +335,11 @@ Ha elíndítunk egy képfájt és megnyitunk egy új terminál ablakot, akkor az
 A parancs kiírja többek között a publikált portot, a konténerben futó parancsot és a képfájl azonosítóját is.
 
 \subsubsection{Dockerfile}
-A szakdolgozatom szempontjából fontos említést tenni a Dockerfile-ról.
-Ez egy szöveges dokumentum, ami tartalmazza azokat a parancsokat, amik egy képfájl felépítéséhez szükségesek.
-Segítségével bárki automatikusan készíthet egy docker képfájlt.
+
+A szakdolgozatom szempontjából fontos említést tenni a Dockerfile-ról is.
+A Dockerfile egy DSL\footnote{Domain Specific Language} nyelvet használ útasításokkal, ami segítségével képfájlokat tudunk készíteni.
+Valójában ez a szöveges dokumentum tartalmazza azokat a parancsokat, amik egy képfájl felépítéséhez/elkészítéséhez szükségesek.
+Segítségével bárki automatikusan készíthet egy Docker képfájlt, amit aztán egyszerűen lehet futtatni.
 
 \subsubsection{Docker Hub}
 
@@ -352,20 +349,24 @@ Ez a szolgáltatás nem más, mint az automatikus buildek készítése.
 A Docker Hub képes külső forráskódból képfájlt készíteni és azt publikálni.
 Összetudjuk csatolni a Github projektjeinket a Docker Hub-al. 
 Ezzel hozzájárulva ahhoz, hogy minden egyes változtatásnál a Docker Hub újra buildelje a képfájlt és publikálja a frissített verziót.
+Az alkalmazás megtekinthető a \url{https://hub.docker.com/r/tothkris/reversedroid} oldalon.
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=15cm]{pictures/docker_hub}
-	\caption{Az applikáció Docker Hub-on is elérhető.}
+	\caption{A publikált applikáció Docker Hub-on.}
 	\label{dockerhub}
 \end{figure}
 
 \subsection{Apktool}
 
 Az Apktool egy olyan eszköz, aminek a segítségével vissza tudjuk fejteni a harmadik féltől származó, zárt forrású, bináris Android alkalmazásokat.
-Majdnem eredeti az állapotukba tudja dekódolni a forrásokat és újra buildeni őket néhány módosítással.
+Majdnem eredeti az állapotukba tudja dekódolni a forrásokat és akár újra is tudja buildelni az alkalmazást néhány módosítással.
+Ezek a tulajdonságok vonzák mind a jó és rossz szándékkal rendelkező személyeket.
+A rossz számdékkal rendelkezőket természetesen azért, mert ezt a technológiát lehet kalózkodásra és egyéb illegális tevékenységre használni.
+A jó számdékkal rendelkezőeket pedig azért, hogy analizálják és megakadályozzák az elterjedését ezeknek a kártékony és illegális szoftvereknek.
 
-Funkciók:
+Az alábbi tulajdonságokkal rendelkezik:
 
 \begin{itemize}
 	\item Források visszaállítása majdnem eredeti formájukba
@@ -377,15 +378,32 @@ Az eszköz letölhető a \url{https://github.com/iBotPeaches/Apktool} oldalról.
 
 \subsection{dex2jar}
 
-Android .dex és .class fájlokkal való dolgozáskor kulcs szerepet játszott a \emph{dex2jar}.
+A  szerver oldalon kulcs szerepet játszott a \emph{dex2jar} nevű eszköz.
+Ahogy a neve is sugallja, az Android .dex fájlokat konvertálja .class fájlokká.
+Tehát bináris formátumot alakít egy másik bináris formátumba.
 Jelen esetben nem csak egy programról beszélünk, mert valójában több eszközt foglal magába.
-Az Android telepítő fájl kitömörítése után, az alkalmazás forráskódja egy \emph{classses.dex} fájlban található meg.
+Az Android telepítő fájl kitömörítése után, az alkalmazás forráskódja egy \emph{classes.dex} fájlban található meg.
 Ez a fájl byte kódot tartalmaz az ART\footnote{Android Runtime} számára és ezt kellett átalakítani .jar formátumba, amivel már a decompiler dolgozni tud.
-Az eszköz letölthető a \url{https://bitbucket.org/pxb1988/dex2jar} oldalról.
+Szerencsére aktív fejlesztés alatt áll és letölthető a \url{https://bitbucket.org/pxb1988/dex2jar} oldalról
+
+\subsection{jd-cmd}
+
+A visszefejtéshez kötődik még a \emph{jd-cmd} elnevezésű program.
+Vannak olyan helyzetek, amikor nem mindig áll rendelkezésünkre GUI\footnote{Graphical User Interface (grafikus felhasználói felület)}.
+A szerveren például nincs lehetőségünk ilyet használni, ott csak a parancssorra hagyatkozhatunk.
+
+A \emph{jd-cmd} egy Java decompiler, ami .class fájlokat alakít vissza .java forrásfájlokká.
+Már ahogy a bevezetésben is leírtam, ezeknek a forrásoknak a visszaállítása nem mindig megfelelő.
+A visszaállítás sok tényezőtől függ, de ez itt most nem lényeges.
+
+A \url{https://github.com/kwart/jd-cmd} oldalon megtekinthetjük és letölthetjük a programot.
+A használatához szükségünk van a Java 6-os verziójára vagy attól újabbra.
+Viszonylag sok paramétert adhatunk át, amik segítségével testreszabhatjuk a kimenetet.
+Ilyenre példa a \emph{--displayLineNumbers}, ami a sorszámokat jeleníti meg a visszafejtett osztályokban.
 
 \subsection{JSON}
 
-A JSON\footnote{JavaScript Object Notation} egy platformok közötti adatátvitelre szolgáló formátum.
+A JSON egy platformok közötti adatátvitelre szolgáló formátum.
 Az adatátviteli formátum egy olyan szöveges formátum, amit különböző platformok közötti adat cserére használnak.
 Egy másik széles körben használt adatátviteli formátum az XML\footnote{Extensible Markup Language}.
 Ezek biztosítják a nagyon eltérő rendszerek közötti adatváltást.
@@ -602,7 +620,12 @@ Kicsit pontosabban fogalmazva a Material Design irányelveket foglal össze, ami
 A Material Design 2 nem hozott hatalmas eltéréseket elődjéhez képest, inkább csak letisztultabb lett, ami szimplán jobb vizuális élményt nyújt.
 Az Android platformot tekintve új komponensek érkeztek, ezek közé tartozik a \emph{BottomAppBar} és a \emph{Chip}.
 
-% https://material.io/develop/android/docs/getting-started/
+
+Miután az Android Studio-ban létrehozunk egy üres Android projektet az nem fogja támogatni a új Material Design 2.0 könyvtárat.
+Annak érdekében, hogy ezen a kisebb problémán túllépjek hozzá kellett adnom néhány függőséget a projekthez és át kellett refaktorálnom AndroidX kompatibilissá.
+Ezt nagyon egyszerűen megcsinálhatjuk, ugyanis az Android Studio fejlesztői környezet biztosít egy ilyen menü pontot.
+A Google csinált a lépésekről egy kiváló dokumentációt, ami elérhető a \mbox{\url{https://material.io/develop/android/docs/getting-started/}} oldalon.
+Ráadásul az oldalon találunk rengeteg hasznos információt a komponensekről és azok használatáról.
 
 \chapter{A visszafejtés teszteléséhez felhasznált programok}\label{teszteles}
 
@@ -622,7 +645,7 @@ A következő lista tartalmazza a teszteléshez felhasznált szándékosan sér�
 	\end{description}
 	\item
 	\begin{description}
-		\item [Frida] Ez egy általam fejlesztett alkalmazás, ami kimondottam dinamikus intrumentáció tesztelésére és bemutatására készült.\newline Megtalálható itt: \url{https://github.com/t0thkr1s/frida-demo}
+		\item [Frida] Ez egy általam fejlesztett alkalmazás, ami kimondottam dinamikus intrumentáció tesztelésére és bemutatására készítettem.\newline Megtalálható itt: \url{https://github.com/t0thkr1s/frida-demo}
 	\end{description}
 	\item
 	\begin{description}
@@ -632,6 +655,35 @@ A következő lista tartalmazza a teszteléshez felhasznált szándékosan sér�
 
 A többi alkalmazást a \url{https://github.com/as0ler/Android-Examples} repository-ból használtam fel, ami nem csak applikációkat tartalmaz, hanem játékokat is.
 A forráskód itt nem érhető el, viszont visszafejtés után betekintést nyerhetünk játékok felépítésébe is.
+
+\subsection{Célközönség}
+
+Ezek a sérülékeny alkalmazások több okból jönnek létre és általában a rossz fejlesztői gyakorlatokat mutatják be.
+Ilyen programok segítségével tesztelhetjük az elméletben elsajátított tudásunkat.
+Gyakran biztonsági tréningek vagy éppen CTF\footnote{Capture The Flag} játékok ürügyén készítenek ilyen szoftvereket.
+Kiváló tanulási eszköz lehet az Android alkalmazás fejlesztők, behatolás tesztelők és más érdekeltségi körrel rendelkező személy számára.
+
+\subsection{Sérülénységek}
+
+Kiszeretném emelni és egy picit jobban bemutatni a lista első elemét, vagyis a Diva applikációt.
+Ezáltal szó fog esni a különböző sérülékenységekről is, amik Android alkalmazásokat érintenek.
+Ezek mind statikus vizsgálattal felfedhetők, nem kell dinamikus analízist alkalmaznunk.
+A következő listába szedtem össze néhány fontosabb sérülékenységet.
+
+\begin{enumerate}
+	\item
+	\begin{description}
+		\item[Nem biztonságos logolás] Ez mondjuk pont egy olyan hiba, amit megfigyelhetünk az Android logoló rendszerében, ami a \emph{logcat} elnevezést kapta.
+	\end{description}
+	\item
+	\begin{description}
+		\item [Beégetett titkosítási/API kulcsok] Ezek több helyen is előfordulnak, angolul ,,hardcoded strings'-nek hívják. Elég súlyos hibának tekinthető, mivel egyszerűen kiolvasható a visszafejtett forráskódból.
+	\end{description}
+	\item
+	\begin{description}
+		\item [Input validálás] Számos helyen találkoztam SQL injektálással. Ez a típusú hiba webes alkalmazásoknál is gyakran előfordul és a nem megfelelő input validálásra alapul.
+	\end{description}
+\end{enumerate}
 
 \chapter{Megvalósított funkciók}\label{funkciok}
 
@@ -687,8 +739,6 @@ Névnek az alkalmazás csomag nevét választottam és privát módban hoztam l�
 	\label{saving_sharedpref}
 \end{listing}
 
-% \lstinputlisting[language=Java, label={saving_sharedpref}, caption=]{./codes/saving_sharedpref.java}
-
 A \ref{deleting_sharedpref} kódrészletben láthatód metódus nem sok eltérést mutat, viszont elengedhetetlen volt ahhoz, hogy töröljem az összes \emph{SharedPreferences}-be mentett adatot.
 
 \begin{listing}[ht]
@@ -696,8 +746,6 @@ A \ref{deleting_sharedpref} kódrészletben láthatód metódus nem sok eltéré
 	\caption{Az összes \emph{SharedPreferences}-be mentett adat törlése.}
 	\label{deleting_sharedpref}
 \end{listing}
-
-% \lstinputlisting[language=Java, label={deleting_sharedpref}, caption=Az összes \emph{SharedPreferences}-be mentett adat törlése.]{./codes/deleting_sharedprefs.java}
 
 \section{Adatok törlése}
 
