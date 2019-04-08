@@ -22,14 +22,11 @@ final Request request = new Request.Builder()
 okHttpClient.newCall(request).enqueue(new Callback() {
     @Override
     public void onFailure(final Call c, final IOException e) {
-        Log.e(Constants.TAG, "onFailure: " + e.getMessage(), e);
         // ... snip ...
     }
 
     @Override
     public void onResponse(Call c, final Response response) {
-        Log.d(Constants.TAG, "onResponse: " + response.headers());
-        // send local broadcast
         // ... snip ...
     }
 });

@@ -35,6 +35,7 @@
 
 \chapter*{Bevezetés}
 \markboth{Bevezetés}{Bevezetés}
+
 A szoftver fejlesztés egy nagyon komplex folyamat és rengeteg részletre oda kell figyleni.
 Az elkészült programnak hatékonynak, hibamentesnek és gyorsnak kell lennie. Természetesen, mindezt határidőn belül kell teljesíteni.
 Sajnos a biztonság nem egy első számú szempont egy megrendelő szemében, csak akkor ha már valami baj történt.
@@ -70,6 +71,7 @@ Régebben sok panaszt hallottam az emulátorára, hogy nagyon lassú és körül
 Mára már egy pillanat alatt lehet futtatni a programunk és abszolút kényelmes lett a használata.
 Az emulátor állapota menthető, ezáltal indításkor ott folytathatjuk ahol abba hagytuk. Azon kívül, hogy használatával több különböző eszközön tesztelhetjük az alkalmazásunk, lehetőséget ad a szenzorok, hálózati és GPS kapcsolat szimulálására. 
 Rendelkezik APK elemzővel, vizuális felhasználó felület szerkesztővel és intelligens kód szerkesztővel is.
+
 Az egyik kedvenc funkcióm a valós idejű profilozó, ami segítségével megtudjuk nézni valós időben, milyen erőforrásokat használ az alkalmazásuk.
 Ez különösen hasznos, ha megakarunk találni egy memória szivárgást vagy egy olyan részt, ami a kelleténél jobban meríti az akkumulátorunk.
 Említésre méltó még a flexibilis build rendszere is, a Gradle. Használatával megtehetjük, hogy külön build típusokat hozzunk létre a különböző eszközökre.
@@ -95,6 +97,7 @@ Jelenleg a Postman a legnépszerűbb API\footnote{Application Programming Interf
 A Postman kollekciók futtatható leírásai egy API-nak és sarok kövei a Postman beépített eszközeinek.
 Ezeknek a beépített eszközöknek köszönhetően futtathatunk hálózati kéréseket, teszteket, debuggolhatunk és csinálhatunk mock szervereket is.
 Ráadásul automatizáltan futtathatjuk a teszteket és egyszerűen elkészíthetjük és publikálhatjuk az API dokumentációját.
+
 Én kizárólag dokumentáció készítésre és a végpontok tesztelésére használtam. Ettől természetesen sokkal több lehetőség rejlik benne.
 Segítségével egyszeren publikálhattam az API dokumentációját, így lehetővé téve a felhasználást mások számára is.
 A Postman a \url{https://documenter.getpostman.com/view/5052599/S11RKayE} oldalon található leírást készítette el számomra.
@@ -190,7 +193,7 @@ Sok csapat úgy gondolja, hogy ez a megközelítés jelentősen kevesebb integr�
 Több nagy cég is a CircleCi szolgáltatását használja a folyamatos integráláshoz, ilyen például a \emph{Facebook}, \emph{Spotify} és a \emph{GoPro}.
 A CircleCi összeköthető a Github-al, így kényelmesen tudjuk csatolni az ott tárolt projektjeinkket.
 A konfigurációs fájl létrehozása pedig végtelenül egyszerű, ha követjük a dokumentációt.
-A \ref{circleci} képen látható, hogy minden egyes változtatáskor lefutnak a tesztek.
+\Aref{circleci}.~képen látható, hogy minden egyes változtatáskor lefutnak a tesztek.
 Ezek a tesztek minden alkalommal egy tiszta konténerben vagy virtuális gépen futnak.
 Jelen esetben az Android program egy Docker konténerben fut, aminek a neve \emph{circleci/android:api-28-alpha}.
 Az eredményről mindig értesítést kapunk, így egyből tudhatjuk azt is, ha egy build nem volt sikeres.
@@ -280,7 +283,7 @@ Ha többet szeretnénk megtudni róla, akkor azt megtehetjük a \url{https://www
 A szerverről való értesítés küldéshez a Pusher Beams SDK\footnote{Software Development Kit}-ját használtam.
 A Beams SDK lehetővé teszi, hogy egyszerűen küldjünk push értesítést ,,érdeklődési'' körök alapján és platformtól függetlenül.
 Ingyenesen és korlátlanul küldhetjük ezeket az értesítéseket. Erről bővebben olvashatunk a \url{https://docs.pusher.com/beams} oldalon.
-Ha kimondottan a szerver oldali python  dokumentációt szeretnénk elolvasni, azt megtehetjük itt: \url{https://docs.pusher.com/beams/reference/server-sdk-python}
+Ha kimondottan a szerver oldali python dokumentációt szeretnénk elolvasni, azt megtehetjük itt: \url{https://docs.pusher.com/beams/reference/server-sdk-python}
 A szerver és kliens is oldal implementációja is nagyon egyszerű és jól dokumentált, de ha mégis problémánk támadna az online ügyfélszolgálatuk is végtelenül segítőkész.
 
 Bevallom, amikor implementáltam a szerverről való üzenetküldést nem ment minden simán.
@@ -293,8 +296,6 @@ Miután rávilágítottak a hiba okára, egyből megoldást ajánlottak és fris
 Úgy sikerült kikerülni ezt a limitációt, hogy kettő darab értesítést kell küldeni.
 Az első csak magát az értesítést tartalmazza, a második pedig kizárólag az adatok küldéséért lesz felelős.
 Természetesen a második értesítésnek nem lesz vizális reprezentációja a kliens oldalon.
-
-% forrás https://docs.pusher.com/beams/reference/server-sdk-python
 
 \subsection{Docker}\label{docker}
 
@@ -430,7 +431,7 @@ Ezek olyan univerzális adatszerkezetek, amiket gyakorlatilag minden programozá
 	\label{json_example}
 \end{listing}
 
-Emberek számára is könnyen olvasható és írható, ahogy ez a \ref{json_example} példán is látszik. 
+Emberek számára is könnyen olvasható és írható, ahogy ez \aref{json_example}.~példán is látszik. 
 A szakdolgozatomban is fontos szerepet töltbe, ugyanis a klien-szerver kommunikáció teljes egészében erre alapul.
 Véleményem szerint sokkal átláthatóbb és egyszerűbb, mint például az XML társa.
 
@@ -534,12 +535,12 @@ Ezután az alkalmazás, ezeket a DAO-kat használja az entitások adatbázisból
 A megkapott entitásokat ért változtatásokat egyszerűen vissza tudjuk menteni az adatbázisba.
 Végül, az alkalmazás entitást használ, hogy lekérjen és beállítson értékeket a tábla megfelelő oszlopaiba az adatbázison belül.\cite{room}
 
-A \ref{room} kódrészletben kiemeltem egy DAO\footnote{Data Access Object} interfészt.
+\Aref{room}.~kódrészletben kiemeltem egy DAO\footnote{Data Access Object} interfészt.
 Lényegében, ez a DAO nyújtja a hozzáférést az adatbázis réteghez.
 Jól látható, hogy annotációkkal kell megjelölni a metódusokat, annak függvényében, hogy milyen utasítást szeretnénk végrehajtani.
 Ahol paraméterben SQL\footnote{Structured Query Language} utasítást látunk, az mind fordítási időben ellenőrizve van.
 Ez azért nagy segítség, mert nem kell aggódnunk szintaktikai hibákon, illetve azon, hogy az adott tábla nem létezik.
-A \ref{room} kódrészletben látható egy \emph{listNotifications(String username)} metódus, aminek a paramétere szerepel az SQL utasításban is egy kettőspont után.
+\Aref{room}.~kódrészletben látható egy \emph{listNotifications(String username)} metódus, aminek a paramétere szerepel az SQL utasításban is egy kettőspont után.
 A Room elvégzi ezeknek a paramétereknek az összehasonlítását és hibát dob, ha eltérést talál.
 Lehetőségünk van több paramétert is átadni, ezáltal robosztusabb lekérdezéseket valósíthatunk meg.
 
@@ -566,12 +567,16 @@ Ez biztosít több különböző témát szintaktikai kijelölésre és amit mé
 Így sokkal kényemesebb a használata, mert nem kellett kiterjesztés alapján megadni az adott nyelvet.
 Néhány funkció hiányzott ugyan, mint például a két ujjal való nagyítás, kicsinyítés és a kezdő betű méret beállítása.
 Ezeknek a támogatását sikerült viszonylag egyszerűen megoldani, hiszen a \emph{CodeView} a \emph{WebView} osztályból származik és rendelkezik a megfelelő metódusokkal.
-A \ref{codeviewimplementation} kódrészletben a \emph{CodeView} megvalósítása és kiegészítése látható, alatta pedig a \ref{codeview} képen látható a forráskód megjelenítése az alkalmazásban.
+\Aref{codeviewimplementation}.~kódrészletben a \emph{CodeView} megvalósítása és kiegészítése látható, alatta pedig \aref{codeview}.~képen látható a forráskód megjelenítése az alkalmazásban.
 
-A választott könyvtár elérhető: \url{https://github.com/Thereisnospon/CodeView}
+\inputminted[linenos, breaklines]{java}{./codes/codeview.java}
+\begin{listing}[H]
+    \caption{A CodeView könyvtár felhasználása és kiegésztése.}
+    \label{codeviewimplementation}
+\end{listing}
 
-\inputminted[linenos=true, breaklines]{java}{./codes/codeview.java}
-\captionof{listing}{A CodeView könyvtár felhasználása és kiegésztése.\label{codeviewimplementation}}
+%\inputminted[linenos=true, breaklines]{java}{./codes/codeview.java}
+%\captionof{listing}{A CodeView könyvtár felhasználása és kiegésztése.\label{codeviewimplementation}}
 
 \begin{figure}[!h]
 	\centering
@@ -601,13 +606,20 @@ Tegyünk fel, hogy a bejelentkezés folyamatára már készen van a teszt.
 Amikor Espresso-val tesztet veszünk fel, az alkalmazás tiszta állapotról indul.
 Ez az jelenti, hogy ha bármilyen bejelentkezés utáni interakciót szeretnénk felvenni, akkor a teszt a bejelentkezéssel együtt kezdődik.
 Az ilyen problémákat manuálisan kell kikerülni.
-A \ref{espressotest} kódrészletben megfigyelhető, hogy egy \emph{@Before} annotációval ellátott metódusban elmentettem egy teszt felhasználó nevet és jelszót.
+
+\Aref{espressotest}.~kódrészletben megfigyelhető, hogy egy \emph{@Before} annotációval ellátott metódusban elmentettem egy teszt felhasználó nevet és jelszót.
 Ezután pedig egyszerűen egy Intent segítségével elindítottam az Activity-t.
 Mindez nem volt elegendő ahhoz, hogy sikeresen tovább mehessek ugyanis bejelentkezés után történik a különböző engedélyek ellenőrzése.
 Az Espresso arra is nyújt megoldást, hogy ezeket az engedély kéréseket automatikusan elfogadjuk a tesztekben a \emph{GrantPermissionRule} osztály segítségével.
 
-\inputminted[linenos=true, breaklines]{java}{./codes/test.java}
-\captionof{listing}{Espresso UI teszt az adatok törléséhez.\label{espressotest}}
+\inputminted[linenos, breaklines]{java}{./codes/test.java}
+\begin{listing}[H]
+    \caption{Espresso UI teszt az adatok törléséhez.}
+    \label{espressotest}
+\end{listing}
+
+%\inputminted[linenos=true, breaklines]{java}{./codes/test.java}
+%\captionof{listing}{Espresso UI teszt az adatok törléséhez.\label{espressotest}}
 
 \subsection{Material Design 2.0}
 
@@ -619,7 +631,6 @@ A nevéből is ered, hogy az anyagokból kiindulva és azok egymásra pakolásá
 Kicsit pontosabban fogalmazva a Material Design irányelveket foglal össze, amiket nem fontos követni, de ajánlott. 
 A Material Design 2 nem hozott hatalmas eltéréseket elődjéhez képest, inkább csak letisztultabb lett, ami szimplán jobb vizuális élményt nyújt.
 Az Android platformot tekintve új komponensek érkeztek, ezek közé tartozik a \emph{BottomAppBar} és a \emph{Chip}.
-
 
 Miután az Android Studio-ban létrehozunk egy üres Android projektet az nem fogja támogatni a új Material Design 2.0 könyvtárat.
 Annak érdekében, hogy ezen a kisebb problémán túllépjek hozzá kellett adnom néhány függőséget a projekthez és át kellett refaktorálnom AndroidX kompatibilissá.
@@ -690,7 +701,7 @@ A következő listába szedtem össze néhány fontosabb sérülékenységet.
 \section{Regisztráció}
 
 A szolgáltatást nem akartam mindenki számára elérhetővé tenni, csak a regisztrált felhasználóknak.
-A \ref{registration} ábrán látható a regisztrációs felület.
+\Aref{registration}.~ábrán látható a regisztrációs felület.
 Igazából semmi különösebb mezőt nem tartalmaz, csak a szokásos adatokat kell megadnia annak, aki igénybe szeretné venni a szolgáltatást.
 Ha a regisztráció sikeresen befejeződött, akkor vissza irányítom a felhasználót a bejelentkezési felületre.
 A folyamatot próbáltam minél egyszerűbbre és magától értetődőre tervezni.
@@ -728,7 +739,7 @@ Szerver oldalon csak az \emph{Authorization Header} van ellenőrizve, ami azt je
 Ennek a kezelését úgy oldottam meg, hogy sikeres bejentkezés után \emph{SharedPreferences} használatával eltároltam a felhasználónevet és a jelszót.
 Amíg nem történik kijelentkezés, addig ezek az adatok mentve maradnak.
 
-A \ref{saving_sharedpref} kódrészleten láthatjuk, hogyan történik az adatok mentése.
+\Aref{saving_sharedpref}.~kódrészleten láthatjuk, hogyan történik az adatok mentése.
 A \emph{SharedPreferences} segítségével kulcs-érték párokat tárolhatunk biztonségos módon.
 A \emph{getSharedPreferences()} metódus 2 paramétert vár, az egyik a név, a másik a használni kívánt mód. 
 Névnek az alkalmazás csomag nevét választottam és privát módban hoztam létre, hogy csak az én alkalmazásom férhessen hozzá az adatokhoz.
@@ -739,7 +750,7 @@ Névnek az alkalmazás csomag nevét választottam és privát módban hoztam l�
 	\label{saving_sharedpref}
 \end{listing}
 
-A \ref{deleting_sharedpref} kódrészletben láthatód metódus nem sok eltérést mutat, viszont elengedhetetlen volt ahhoz, hogy töröljem az összes \emph{SharedPreferences}-be mentett adatot.
+\Aref{deleting_sharedpref}.~kódrészletben láthatód metódus nem sok eltérést mutat, viszont elengedhetetlen volt ahhoz, hogy töröljem az összes \emph{SharedPreferences}-be mentett adatot.
 
 \begin{listing}[ht]
 	\inputminted[linenos=true, breaklines]{java}{./codes/deleting_sharedprefs.java}
@@ -777,30 +788,52 @@ Példának okáért, a fájl kiválasztás egy ilyen művelet.
 Ez a típus természetesen a \emph{application/vnd.android.package-archive} volt, ami megfelel az Android telepítő fájloknak.
 Ebben az esetben nincs lehetőségünk más típusú fájlt kiválasztani csak a megadottat.
 
-A fájl kivlasztása után az \emph{onActivityResult} metódus \emph{Intent} típusú paraméterében kapjuk meg az URI\footnote{Uniform Resource Identifier}-t.
+A fájl kiválasztása után az \emph{onActivityResult} metódus \emph{Intent} típusú paraméterében kapjuk meg az URI\footnote{Uniform Resource Identifier}-t.
 Ezt az URI-t felhasználva elmentettem a fájlt az alkalmazás gyorsítótárába.
 Erre azért volt szükség, mert különben nem kaptam volna meg az abszolút elérési útvonalat.
 Eztán már csak service elindítása maradt hátra. 
 
 A \emph{startService(Intent service)} metódus egy \emph{Intent}-et vár, ami segítségével elindíthatjuk a háttér service-t.
 Fontos, hogy ez még így nem elég, hanem extraként hozzá kell adni a feltölteni kívánt fájlt.
-A \ref{uploads_notifications} ábra bal oldali képernyőképén látható a feltöltött fájlok listája.
+\Aref{uploads_notifications}.~ábra bal oldali képernyőképén látható a feltöltött fájlok listája.
 
 Miután kiválasztottuk a fájlt és sikeresen megkaptuk az abszolút elérési útvonalát elindítom a feltöltési háttér service-t.
-Nem akartam túl sok kódot bemutatni, de úgy gondolom, hogy talán a \ref{okhttp_example} a legfontosabb a hálózati kommunikációt tekintve.
+Nem akartam túl sok kódot bemutatni, de úgy gondolom, hogy talán \aref{okhttp_example}.~kódrészlet a legfontosabb a hálózati kommunikációt tekintve.
 Láthatjuk, hogy a szükséges típusokat Builder tervezési minta segítségével hozhatjuk létre.
-Némileg kikommenteztem a kódot, hogy értelmezhessük a felépítését.
+Némileg kikommenteztem a kódot, hogy jobban értelmezhessük annak felépítését.
 Először a \emph{RequestBody}-t építettem fel.
+Típusként megadtam, hogy \emph{form}-ot szeretnék küldeni, majd megadtam a kulcsot, magát a fájl nevét és a egy \emph{RequestBody}-t.
+Ez utóbbit a \emph{RequestBody.create()} segítségével készítettem, ami vár paraméterként egy média típust és magát a fájlt.
 
+A \emph{HttpUrl} résznél is felhasználtam a tervezési minta adta modularitást.
+Külön adtam meg a sémát, protokolt, host nevet és port számot.
+Az \emph{addDataPathSegment()} metódus használatával megtudjuk adni a pontos elérési utat paraméterként.
+Ezután a \emph{Request} felépítése következett. 
+URL-ként a előbb felépített \emph{httpUrl} példányt adtam át, valamint szükséges megadnunk az \emph{Authorization Header}-t, mert a szerver ezzel ellőrzni, hogy valóban regisztrált felhasználók vagyunk.
+Végül, a \emph{post()} metódusnak átadtam a \emph{formBody} példányt és ezzel minden elő lett készítve a hívás elküldéséhez.
+A \emph{okHttpClient.newCall(request).enqueue()} metódus egy úgynevezett \emph{Callback} interfészt vár.
+Ennek van két metódusa a \emph{onFailure} és \emph{onResponse}.
+Az előbbi akkor hívódik meg, ha hálózati vagy bármi egyéb hiba lépett fel a hívás közben.
+Az utóbbi akkor, ha sikeres HTTP válasz érkezett a szervertől.
+Itt nagyon fontos megemlíteni, hogy ez a hívás egy háttér szálon fut.
+Így nem akadályozzuk a UI szálat és jó felhasználói élményt tudunk nyújtani.
+Gondolnunk kell azonban arra, hogy ha valami frissíteni szeretnénk a felhasználói felületen, akkor azt a UI szálon kell megtennünk.
+Hasonlóan építettem fel a többi hálózati kérést is az alkalmazásomban, ezért tartottam fontosnak az \emph{OkHttp} könyvtár lehetőségeit bemutatni.
 
-\inputminted[linenos=true, breaklines]{java}{./codes/okhttp.java}
-\captionof{listing}{APK fájl feltöltése \emph{OkHttp} segítségével.\label{okhttp_example}}
+\inputminted[linenos, breaklines]{java}{./codes/okhttp.java}
+\begin{listing}[H]
+    \caption{APK fájl feltöltése \emph{OkHttp} segítségével.}
+    \label{okhttp_example}
+\end{listing}
+
+% \inputminted[linenos=true, breaklines]{java}{./codes/okhttp.java}
+% \captionof{listing}{APK fájl feltöltése \emph{OkHttp} segítségével.\label{okhttp_example}}
 
 \section{Fájl letöltés}
 
 A fájl letöltés is egy roppant fontos funkció, ugyanis csak így jut el a felhasználóhoz az elkészült projekt.
 A megvalósítását hozzákötöttem az értesítésekhez, mert a kliens abban kapja vissza a letöltendő fájl nevét.
-Megfigyelhetjük a \ref{uploads_notifications} ábra jobb oldali képernyőképén, hogy minden egyes értesítés kártyáján ott a letöltés gomb.
+Megfigyelhetjük \aref{uploads_notifications}.~ábra jobb oldali képernyőképén, hogy minden egyes értesítés kártyáján ott a letöltés gomb.
 Ha ezekre rákattintunk, akkor itt is minden egyes alkalommal egy újabb háttér service fog elindulni.
 Azt is megtehetjük, hogy akár többször is letöltjük ugyanazt a fájlt.
 Ha már lokálisan létezik egy ugyanolyan nevű projekt, mint amit éppen letöltünk akkor sem kell félnünk, hogy felül írjuk, mert egyedi nevet fog kapni.
@@ -848,7 +881,7 @@ Az elején úgy gondoltam, hogy egy egyszerű \emph{Toast} üzenet is elég a fe
 Aztán hamar rákellett jönnöm, hogy ez nem ad elég információt a felhasználó számára, ráadásul rossz felhasználói élményhez is vezet.
 Végül úgy döntöttem, hogy feltöltést is hasonlóan valósítom meg, mint a letöltést.
 
-A \ref{notifications} ábrán láthatóak az alkalmazásban használt értesítések.
+\Aref{notifications}.~ábrán láthatóak az alkalmazásban használt értesítések.
 Ez a három értesítés jól érzékelteti a három fő funkcióját az applikációnak.
 Ezeket össze is foglaltam a következő listában:
 
