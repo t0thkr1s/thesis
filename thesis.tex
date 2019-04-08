@@ -786,6 +786,16 @@ A \emph{startService(Intent service)} metódus egy \emph{Intent}-et vár, ami se
 Fontos, hogy ez még így nem elég, hanem extraként hozzá kell adni a feltölteni kívánt fájlt.
 A \ref{uploads_notifications} ábra bal oldali képernyőképén látható a feltöltött fájlok listája.
 
+Miután kiválasztottuk a fájlt és sikeresen megkaptuk az abszolút elérési útvonalát elindítom a feltöltési háttér service-t.
+Nem akartam túl sok kódot bemutatni, de úgy gondolom, hogy talán a \ref{okhttp_example} a legfontosabb a hálózati kommunikációt tekintve.
+Láthatjuk, hogy a szükséges típusokat Builder tervezési minta segítségével hozhatjuk létre.
+Némileg kikommenteztem a kódot, hogy értelmezhessük a felépítését.
+Először a \emph{RequestBody}-t építettem fel.
+
+
+\inputminted[linenos=true, breaklines]{java}{./codes/okhttp.java}
+\captionof{listing}{APK fájl feltöltése \emph{OkHttp} segítségével.\label{okhttp_example}}
+
 \section{Fájl letöltés}
 
 A fájl letöltés is egy roppant fontos funkció, ugyanis csak így jut el a felhasználóhoz az elkészült projekt.
