@@ -49,8 +49,8 @@ Véleményem szerint ha nem szentelnek elég figyelmet a behatolás tesztelésre
 
 A mobilos eszközöket célzó támadások száma hatalmas ütemben nő. Mindez azért lehetséges, mert figyelmen kívül marad a ,,secure coding''-nak nevezett gyakorlat.
 Egy alkalmazásnak a sebezhetőségét különböző támadási vektoron is ki lehet aknázni.
-Az elején, bennem többek között az a kérdés merült fel, hogy honnan tudható hogy egy alkalmazás sebezhető-e vagy sem.
-Honnann tudhatom, hogy egy adott alkalmazás sebezhető-e vagy sem és ha igen milyen súlyos a hiba.
+Az elején, bennem többek között az a kérdés merült fel, hogy honnan tudható egy alkalmazásról, hogy sebezhető-e vagy sem.
+Aztán azon is elgondolkoztam, hogy honnan lehet felismerni a sebezhetőségeket és hogy milyen súlyos hibák fordulhatnak elő.
 A leghatékonyabb módszer ha megpróbáljuk visszafejteni az alkalmazást forráskódra.
 Ezt angolul ,,reverse engineering''-nek nevezik.
 A visszaállított fájlok olvashatósága nem lesz tökéletes, főleg ha obfuszkált \footnote{Az obfuszkáció célja röviden, hogy megnehezítse a visszafejtett kód olvashatóságát.} kóddal állunk szemben, de egy tapasztalt szem így is kitudja szúrni a gyakori hibákat.
@@ -67,14 +67,17 @@ A projektet ,,Reverse Droid''-nak neveztem el.
 \section{Android Studio}
 
 Az Android Studio jelenleg az egyetlen jól támogatott és minőségi fejlesztői környezet Android fejlesztéshez.
-Régebben sok panaszt hallottam az emulátorára, hogy nagyon lassú és körülményes a használata.
+Régebben sok panaszt hallottam az emulátorára, hogy nagyon lassú és körülményes vele dolgozni.
 Mára már egy pillanat alatt lehet futtatni a programunk és abszolút kényelmes lett a használata.
-Az emulátor állapota menthető, ezáltal indításkor ott folytathatjuk ahol abba hagytuk. Azon kívül, hogy használatával több különböző eszközön tesztelhetjük az alkalmazásunk, lehetőséget ad a szenzorok, hálózati és GPS kapcsolat szimulálására. 
+Azt is megmerem kockáztatni, hogy már teljes egészében ki tuja váltani a fizikai eszközt.
+Az emulátor állapota menthető, ezáltal indításkor ott folytathatjuk, ahol abba hagytuk.
+Azon kívül, hogy segítségével több különböző eszközön tesztelhetjük az alkalmazásunk, lehetőséget ad még a szenzorok, hálózati és GPS kapcsolat szimulálására. 
 Rendelkezik APK elemzővel, vizuális felhasználó felület szerkesztővel és intelligens kód szerkesztővel is.
 
 Az egyik kedvenc funkcióm a valós idejű profilozó, ami segítségével megtudjuk nézni valós időben, milyen erőforrásokat használ az alkalmazásuk.
 Ez különösen hasznos, ha megakarunk találni egy memória szivárgást vagy egy olyan részt, ami a kelleténél jobban meríti az akkumulátorunk.
-Említésre méltó még a flexibilis build rendszere is, a Gradle. Használatával megtehetjük, hogy külön build típusokat hozzunk létre a különböző eszközökre.
+Említésre méltó még a flexibilis build rendszere is, a Gradle. 
+Az Android Studio-val megtehetjük, hogy külön build típusokat hozzunk létre a különböző eszközökre.
 Az \emph{instant run} funkció segítségével egyből tudjuk futtatni a kódban véghez vitt kisebb változtatásokat, anélkül hogy újraindítanánk az Activity~-t vagy újra buildelnénk az egész projektet és új APK~-t telepítenénk.
 \cite{androidstudio}
 
@@ -159,7 +162,7 @@ A mai napig úgy gondolom, hogy ebben a platformban van a legnagyobb potenciál 
 \section{Verzió kezelés}
 
 Egy verzó kezelő rendszer képes kezelni egy fájl vagy akár több fájl módosításait olyan módon, hogy lehetőségünk legyen időben ,,visszamenni'' és megnézni egy fájl bizonyos verzióját.
-A Linux kernel forráskódja óriási méretű és a Git verzió kezelőt használják a fejlesztéshez.
+A Linux kernel forráskódja hatalmas méretű és a Git verzió kezelőt használják a fejlesztéshez.
 Ez azért érdekes, mert nagyon sok ember dolgozik egy óriási kódbázissal és a Git mégis képes hatékonyan kezelni a változásokat.
 A alábbi listában látható, hogy miért bíznak meg benne egy ilyen nehéz feladat esetében és hogyan teljesíti a Git minden elvárásukat:
 
@@ -183,19 +186,19 @@ Lényegében egy központi szerverként szolgált számomra.
 
 \section{Folyamatos integrálás}
 
-A folyamatos integrálás egy szoftver fejlesztési gyakorlat, ahol a csapat tagjai sűrűn integrálják a munkájukat általában napi rendszerességgel. 
-Ez naponta több integrációhoz vezet. Pontosabban megfogalmazva a folyamatos integrálás egy extrém programozási gyakorlat.
-A folyamatos integrálás arról szól, hogy ha egy feladat elkészült akkor azt egyből beintegráljuk a rendszerbe.
-Minden integráció hitelesítve van egy automatikus build rendszer által (egység tesztekkel együtt) annak érdekében, hogy minél hamarabb észrevegyük az integrációs hibákat.
-A beintegrálás után természetesen minden egység tesztnek sikeresen le kell futnia.
-Sok csapat úgy gondolja, hogy ez a megközelítés jelentősen kevesebb integrációs problémához vezet és meggyorsítja a fejlesztés menetét.\cite{continuous_integration}
+A folyamatos integrálás egy szoftver fejlesztési gyakorlat, ahol a csapat tagjai sűrűn építik be munkájukat a kódbázisba.
+Pontosabban megfogalmazva ez egy extrém programozási gyakorlat és naponta több integrációhoz vezet.
+A technológia arról szól, hogy ha egy feladat elkészült akkor azt egyből beépítjük a rendszerbe.
+Minden integráció hitelesítve van egy automatikus build rendszer által (egység tesztekkel együtt) annak érdekében, hogy minél hamarabb észrevegyük az hibákat.
+Ezek után természetesen minden egység tesztnek sikeresen le kell futnia.
+Sok csapat úgy gondolja, hogy ez a megközelítés jelentősen kevesebb problémához vezet és meggyorsítja a fejlesztés menetét.\cite{continuous_integration}
 
 Több nagy cég is a CircleCi szolgáltatását használja a folyamatos integráláshoz, ilyen például a \emph{Facebook}, \emph{Spotify} és a \emph{GoPro}.
 A CircleCi összeköthető a Github-al, így kényelmesen tudjuk csatolni az ott tárolt projektjeinkket.
 A konfigurációs fájl létrehozása pedig végtelenül egyszerű, ha követjük a dokumentációt.
 \Aref{circleci}.~képen látható, hogy minden egyes változtatáskor lefutnak a tesztek.
 Ezek a tesztek minden alkalommal egy tiszta konténerben vagy virtuális gépen futnak.
-Jelen esetben az Android program egy Docker konténerben fut, aminek a neve \emph{circleci/android:api-28-alpha}.
+Jelen esetben az Android program egy ilyen Docker konténerben fut, aminek a neve \emph{circleci/android:api-28-alpha}.
 Az eredményről mindig értesítést kapunk, így egyből tudhatjuk azt is, ha egy build nem volt sikeres.
 
 \begin{figure}[!h]
@@ -214,7 +217,8 @@ Az eredményről mindig értesítést kapunk, így egyből tudhatjuk azt is, ha 
 A szervert a Flask webes mikro keretrendszer felhasználásával készítettem el.
 Attól, hogy mikro keretrendszer még nem jelenti azt, hogy kevesebb tud mit a többi keretrendszer.
 Erős alapot nyújt az alapvető szolgáltatásokkal, miközben a kiegészítők nyújtják a többit.
-Azzal a lehetőséggel, hogy kitudjuk választani magunknak a kiegészítő csomagokat, képesek vagyunk egy olyan programok felépíteni, ami pontosan azt tartalmazza amire szükségünk van és nem tartalmaz semmi fölöslegeset.
+Ezzel a lehetőséggel magunknak tudjuk kiválasztani a kiegészítő csomagokat.
+Ezáltal képesek vagyunk egy olyan programot felépíteni, ami pontosan azt tartalmazza amire szükségünk van és semmi fölöslegeset.
 
 A Flask nem támogatja natívan az adatbázis elérést, web formok validálását, felhasználói autentikációt és egyéb magas szintű feladatokat.
 Ezek és más egyéb kulcs szolgáltatások, amikre egy webes applikációnak szüksége van kiegészítőkön keresztül elérhető.
@@ -558,7 +562,7 @@ Ezt úgy értem, hogy a kijelölést nem lehet megoldani egy egyszerű \emph{Tex
 Mindenképpen kellett egy olyan könyvtár, ami megbízható és elegendő funkcionalitást és testreszabhatóságot nyújt.
 Jó pár könyvtárat végig kellett próbálnom, mire ráakadtam az igazira.
 Találkoztam olyannal, amelyik nem megfelelően töltötte be a kódot és nem is volt megbízható.
-Voltak olyanok is, amelyeket nagyon régóta nem voltak karban tartva és elavult kód bázissal rendelkeztek.
+Voltak olyanok is, amelyeket nagyon régóta nem voltak karbantartva és elavult kód bázissal rendelkeztek.
 Találtam aktív fejlesztés alatt lévőket is, de azok többnyire még kiforratlan állapotban voltak és nem rendelkezdtek elegendő funkcióval.
 
 A megvalósítást ezek a könyvtárak, úgy végezték el, hogy lényegében egy \emph{WebView} komponensbe töltötték be a forráskódot, amit aztán különböző JavaScript keretrendszerek segítségével színeztek ki.
@@ -574,9 +578,6 @@ Ezeknek a támogatását sikerült viszonylag egyszerűen megoldani, hiszen a \e
     \caption{A CodeView könyvtár felhasználása és kiegésztése.}
     \label{codeviewimplementation}
 \end{listing}
-
-%\inputminted[linenos=true, breaklines]{java}{./codes/codeview.java}
-%\captionof{listing}{A CodeView könyvtár felhasználása és kiegésztése.\label{codeviewimplementation}}
 
 \begin{figure}[!h]
 	\centering
@@ -601,8 +602,8 @@ Segít megbízható és tömör UI teszteket írni a felhasználói interakciór
 Ez a struktúra optimizálja a tesztek futási idejét. \cite{espresso}
 
 A projektem esetében nem volt ilyen egyszerű a helyzet.
-Mindenképpen segített, hogy feltudtam venni a teszteket, de vegyük a következő helyzetet.
-Tegyünk fel, hogy a bejelentkezés folyamatára már készen van a teszt.
+Mindenképpen segített, hogy fel tudtam venni a teszteket, de vegyük a következő helyzetet.
+Tegyük fel, hogy a bejelentkezés folyamatára már készen van a teszt.
 Amikor Espresso-val tesztet veszünk fel, az alkalmazás tiszta állapotról indul.
 Ez az jelenti, hogy ha bármilyen bejelentkezés utáni interakciót szeretnénk felvenni, akkor a teszt a bejelentkezéssel együtt kezdődik.
 Az ilyen problémákat manuálisan kell kikerülni.
@@ -617,9 +618,6 @@ Az Espresso arra is nyújt megoldást, hogy ezeket az engedély kéréseket auto
     \caption{Espresso UI teszt az adatok törléséhez.}
     \label{espressotest}
 \end{listing}
-
-%\inputminted[linenos=true, breaklines]{java}{./codes/test.java}
-%\captionof{listing}{Espresso UI teszt az adatok törléséhez.\label{espressotest}}
 
 \subsection{Material Design 2.0}
 
@@ -676,10 +674,10 @@ Kiváló tanulási eszköz lehet az Android alkalmazás fejlesztők, behatolás 
 
 \subsection{Sérülénységek}
 
-Kiszeretném emelni és egy picit jobban bemutatni a lista első elemét, vagyis a Diva applikációt.
-Ezáltal szó fog esni a különböző sérülékenységekről is, amik Android alkalmazásokat érintenek.
+Ki szeretném emelni és egy kicsit jobban bemutatni a lista első elemét, vagyis a Diva applikációt.
+Ezáltal szó fog esni különböző sérülékenységekről is, amelyek Android alkalmazásokat érintenek.
 Ezek mind statikus vizsgálattal felfedhetők, nem kell dinamikus analízist alkalmaznunk.
-A következő listába szedtem össze néhány fontosabb sérülékenységet.
+A következő listában szedtem össze néhány fontosabb sérülékenységet.
 
 \begin{enumerate}
 	\item
@@ -721,7 +719,7 @@ Lényegében az összes lényeges végpont bejelentkezéshez van kötve, ezért 
 A felület itt csak két mezőt tartalmaz, a felhasználó nevet és a jelszót.
 Mivel ez egy folyamatban lévő fejlesztés nem tartottam prioritásnak a jelszó visszaállítás funkció implementálását, ebben a korai verzióban.
 A jelszó mezőben bekapcsoltam egy úgynevezett jelszó kapcsolót, ami a mező jobb szélén látható.
-Segítségével a felhasználók láthatóvá tehetik a beírt jelszójukat és ellenőrizhetik annak helyességét.
+Segítségével a felhasználók láthatóvá tehetik a beírt jelszavukat és ellenőrizhetik annak helyességét.
 
 Alapvetően a \emph{MainActivity} indul az alkalmazás futtatásakor és az \emph{AuthenticationActivity} csak akkor indul, ha nincsen mentett felhasználónév és jelszó páros.
 Az \emph{AuthenticationActivity} tartalmazza mind a bejelentkezési, mind a regisztrációs fragment komponenst.
@@ -735,7 +733,7 @@ Az \emph{AuthenticationActivity} tartalmazza mind a bejelentkezési, mind a regi
 
 \section{Kijelentkezés}
 
-Szerver oldalon csak az \emph{Authorization Header} van ellenőrizve, ami azt jelenti, hogy minden egyes hálózati kérésben benne kell hogy legyen.
+Szerver oldalon csak az \emph{Authorization Header} van ellenőrizve, ami azt jelenti, hogy minden egyes hálózati kérésben benne kell lennie.
 Ennek a kezelését úgy oldottam meg, hogy sikeres bejentkezés után \emph{SharedPreferences} használatával eltároltam a felhasználónevet és a jelszót.
 Amíg nem történik kijelentkezés, addig ezek az adatok mentve maradnak.
 
@@ -778,9 +776,9 @@ Ebben a feltöltési listában jelenítem meg a feltöltött APK fájlok neveit 
 
 A feltöltéshez a felhasználónak egy jól látható \emph{FloatingActionButton} komponensre kell kattintania.
 A tervezési szakaszban úgy gondoltam, hogy hasznos lenne egy saját fájl kiválasztó felületet készíteni.
-Aztán hamar rájöttem, hogy teljesen felesleges újra feltalálni a spanyol viaszt és nem kellene haszontalan felületekkel bonyolítani az applikációt.
-Biztos találkoztunk már olyan alkalmazással, ami elindított egy külső alkalmazást csak hogy elvégezzel valamilyen feladatot.
-Én is egy ilyen megoldást alkalmaztam.
+Nem sokkal ezután rájöttem, hogy teljesen felesleges újra feltalálni a spanyolviaszt és nem kellene haszontalan felületekkel bonyolítani az applikációt.
+Biztos találkoztunk már olyan app-al, ami elindított egy külső alkalmazást csak azért, hogy elvégezzel valamilyen feladatot.
+Én is egy ilyen megoldásra hagyatkoztam.
 Nem csak \emph{Activity}-ket tudunk indítani \emph{Intent}-ek segítségével, hanem különböző műveleteket is elvégezhetünk.
 Az ilyen \emph{Intent}-eket \emph{Implicit Intent}-eknek nevezzük.
 Példának okáért, a fájl kiválasztás egy ilyen művelet.
@@ -826,9 +824,6 @@ Hasonlóan építettem fel a többi hálózati kérést is az alkalmazásomban, 
     \label{okhttp_example}
 \end{listing}
 
-% \inputminted[linenos=true, breaklines]{java}{./codes/okhttp.java}
-% \captionof{listing}{APK fájl feltöltése \emph{OkHttp} segítségével.\label{okhttp_example}}
-
 \section{Fájl letöltés}
 
 A fájl letöltés is egy roppant fontos funkció, ugyanis csak így jut el a felhasználóhoz az elkészült projekt.
@@ -856,11 +851,11 @@ Ennek megoldására megvalósítottam egy nagyon egyszerű fájl rendszer navig�
 Szóval a felhasználó nem tud a fájlrendszerben feljebb navigálni, csak a ,,Reverse Droid'' gyökér mappáig.
 Ezzel a funkcióval kitömörítés után egyszerűen és gyorsan elérhetővé válik a projekt a felhasználó számára.
 A mappák esetében megjelenítettem a módosítás dátumát és hogy hány fájlt/mappát tartlmaz.
-A fájlok részleteit tekintve a fájl nevét, módosítás dátumát és a fájl méretét is megjelenítettem.
-
-Ezeken felül hozzáadtam egy olyan funkciót, hogy ha hosszan kattintunk egy mappán, akkor lehetőséget kapunk annak törlésére.
+A fájlok részleteit tekintve a fájl nevét, módosítás dátumát és a fájl méretét is feltüntettem.
+Továbbá hozzáadtam egy olyan funkciót, hogy ha hosszan kattintunk egy mappán, akkor lehetőséget kapunk annak törlésére.
 Ha nem egy mappán kattintunk hosszan, hanem egy fájlon, akkor három opció közül is választhatunk.
 Az első triviális funkció itt is a fájl törlése volt, a második a fájl megosztása kompatibilis külső alkalmazással.
+
 Végül, de nem utolsó sorban a kód megtekintése menü pont kapott helyet.
 Ennek a működéséről és megvalósításáról már említést tettem a \nameref{code_view} alfejezetben, de nem említettem meg minden részletet.
 Kimaradt példul az, hogy csak bizonyos fájlkiterjesztéseket támogatok jelen helyzetben.
@@ -875,10 +870,10 @@ Emlékeim szerint több fájl kezelő is használta már ezt a megoldást és el
 
 \section{Értesítések}\label{ertesitesek}
 
-Az értesítések küldése és fogadása szintén egy kulcs fontosságú része az alkalmazásnak, ezt már többször is hangsúlyoztam.
+Az értesítések küldése és fogadása szintén egy kulcsfontosságú része az alkalmazásnak, ezt már többször is hangsúlyoztam.
 A fájlok letöltése és kitömörítése mérettől, valamint hálózati kapcsolattól függően időt vesz igénybe.
 Az elején úgy gondoltam, hogy egy egyszerű \emph{Toast} üzenet is elég a feltöltés állapotának visszajelzésére.
-Aztán hamar rákellett jönnöm, hogy ez nem ad elég információt a felhasználó számára, ráadásul rossz felhasználói élményhez is vezet.
+Aztán hamar rá kellett jönnöm, hogy ez nem ad elég információt a felhasználó számára, ráadásul rossz felhasználói élményhez is vezet.
 Végül úgy döntöttem, hogy feltöltést is hasonlóan valósítom meg, mint a letöltést.
 
 \Aref{notifications}.~ábrán láthatóak az alkalmazásban használt értesítések.
@@ -893,11 +888,11 @@ Ezeket össze is foglaltam a következő listában:
 
 A megvalósítást illetően az első és a harmadik funkció megvalósítása kliens oldalon történt teljes egészében.
 A harmadik természetesen a szerverről érkezik, ha befejeződött a fájl feldolgozása.
-Ezek mind az adott körülményektől függnek, ezért azzal is számolni kell, hogy jelentős időtartamot igényelnek.
+Ezek mind az adott körülményektől függenek és azzal is számolni kell, hogy jelentős időtartamot igényelnek.
 Azt is lehetővé szerettem volna tenni a felhasználó részére, hogy a műveletek között is elhagyhassa az applikációt.
 
 Itt is a háttér service volt az az applikáció komponens, amit ennek kivitelezésére felhasználtam.
-Segítségével hosszabb ideig tartó műveleteket tudunk végezni, anélkül hogy a felhasználó interakcióba lépnek az applikációval.
+Segítségével hosszabb ideig tartó műveleteket tudunk végezni, anélkül hogy a felhasználó interakcióba lépne az applikációval.
 
 \begin{figure}[!h]
 	\centering
@@ -921,7 +916,7 @@ A kód visszafejtése végén egy összegző report is hasznos lehetne a felhasz
 
 Egy forráskód elemző integrálása is jelentős előnnyel járhat a többi alkalmazással szemben. Hasonlóan a Google Play Protect-hez, jelezhetnénk a felhasználó számára, ha a feltöltött \emph{apk} malware.
 Találkoztam több webes \emph{apk} analizálóval, ahol csak az Android komponenseket emelték ki, de az elemzést már a felhasználóra bízták.
-Nyilván nem lenne célszerű mindent egy algoritmusra bízni, de mindenesetre könnyebbséget látok egy átfogó analízisben, ami esetlegesen mestersége intelligenciára alapul.
+Nyilván nem lenne célszerű mindent egy algoritmusra bízni, de mindenesetre könnyebbséget látok egy átfogó analízisben, ami esetlegesen mesterséges intelligenciára alapul.
 
 \chapter{Tapasztalatok}\label{tapasztalatok}
 
