@@ -5,8 +5,10 @@
 \PassOptionsToPackage{defaults=hu-min}{magyar.ldf}
 \usepackage[magyar]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage{listingsutf8,xcolor,caption,graphicx,amsmath,amssymb,amsthm, url, hulipsum, hyperref, minted}
+\usepackage{listingsutf8,xcolor,caption,graphicx,amsmath,amssymb,amsthm, url, hulipsum, hyperref}
 \footnotestyle{rule=fourth}
+
+\def\lstlistingname{kód}
 
 \graphicspath{{./pictures/}}
 
@@ -19,6 +21,69 @@
 \newtheorem{megjegyzes}[tetel]{Megjegyzés}
 \newtheorem*{megoldas}{Megoldás}
 
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10}
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}
+
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+\newcommand\pythonstyle{\lstset{
+language=Python,
+basicstyle=\ttm,
+otherkeywords={self},
+keywordstyle=\ttb\color{deepblue},
+emph={},
+emphstyle=\ttb\color{deepred},
+stringstyle=\color{deepgreen},
+frame=tb,
+showstringspaces=false,
+numbers=left,
+stepnumber=1,
+breaklines
+}}
+
+\newcommand\javastyle{\lstset{
+language=Java,
+basicstyle=\ttm,
+otherkeywords={this, class},
+keywordstyle=\ttb\color{deepblue},
+emph={@Test,@Rule, @Before, @LargeTest, @RunWith, @Query, @Dao, @Delete, @Insert, @Override, MODE_PRIVATE, USERNAME_KEY, PASSWORD_KEY, PROTOCOL, FORM, HOST, PORT, APK_MEDIA_TYPE},
+emphstyle=\ttb\color{deepred},
+stringstyle=\color{deepgreen},
+frame=tb,
+showstringspaces=false,
+numbers=left,
+stepnumber=1,
+breaklines
+}}
+
+\lstnewenvironment{python}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}
+
+\lstnewenvironment{java}[1][]
+{
+\javastyle
+\lstset{#1}
+}
+{}
+
+\newcommand\pythonexternal[2][]{{
+\pythonstyle
+\lstinputlisting[#1]{#2}}}
+
+\newcommand\javaexternal[2][]{{
+\javastyle
+\lstinputlisting[#1]{#2}}}
+
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+
+\newcommand\javainline[1]{{\javastyle\lstinline!#1!}}
+
 \begin{document}
 \logo{\includegraphics[width=8cm]{eke-logo.pdf}}
 \institute{Matematikai és Informatikai Intézet}
@@ -30,8 +95,8 @@
 \maketitle
 \tableofcontents
 \listoffigures
-\renewcommand\listoflistingscaption{Forráskódok jegyzéke}
-\listoflistings
+\def\lstlistlistingname{Forráskódok jegyzéke}
+\lstlistoflistings
 
 \chapter*{Bevezetés}
 \markboth{Bevezetés}{Bevezetés}
@@ -64,7 +129,7 @@ A projektet ,,Reverse Droid''-nak neveztem el.
 
 \chapter{Fejlesztői környezetek}\label{kornyezetek}
 
-\section{Android Studio}
+\section{Android Studio}\label{androi_studio}
 
 Az Android Studio jelenleg az egyetlen jól támogatott és minőségi fejlesztői környezet Android fejlesztéshez.
 Régebben sok panaszt hallottam az emulátorára, hogy nagyon lassú és körülményes vele dolgozni.
@@ -189,8 +254,8 @@ Lényegében egy központi szerverként szolgált számomra.
 A folyamatos integrálás egy szoftver fejlesztési gyakorlat, ahol a csapat tagjai sűrűn építik be munkájukat a kódbázisba.
 Pontosabban megfogalmazva ez egy extrém programozási gyakorlat és naponta több integrációhoz vezet.
 A technológia arról szól, hogy ha egy feladat elkészült akkor azt egyből beépítjük a rendszerbe.
-Minden integráció hitelesítve van egy automatikus build rendszer által (egység tesztekkel együtt) annak érdekében, hogy minél hamarabb észrevegyük az hibákat.
-Ezek után természetesen minden egység tesztnek sikeresen le kell futnia.
+Minden integráció hitelesítve van egy automatikus build rendszer által (egységtesztekkel együtt) annak érdekében, hogy minél hamarabb észrevegyük az hibákat.
+Ezek után természetesen minden egységtesztnek sikeresen le kell futnia.
 Sok csapat úgy gondolja, hogy ez a megközelítés jelentősen kevesebb problémához vezet és meggyorsítja a fejlesztés menetét.\cite{continuous_integration}
 
 Több nagy cég is a CircleCi szolgáltatását használja a folyamatos integráláshoz, ilyen például a \emph{Facebook}, \emph{Spotify} és a \emph{GoPro}.
@@ -214,7 +279,7 @@ Az eredményről mindig értesítést kapunk, így egyből tudhatjuk azt is, ha 
 
 \subsection{Flask}
 
-A szervert a Flask webes mikro keretrendszer felhasználásával készítettem el.
+A szervert a Flask webes mikro keretrendszer felhasználásával készítettem el, amit Python programozási nyelvben írtak.
 Attól, hogy mikro keretrendszer még nem jelenti azt, hogy kevesebb tud mit a többi keretrendszer.
 Erős alapot nyújt az alapvető szolgáltatásokkal, miközben a kiegészítők nyújtják a többit.
 Ezzel a lehetőséggel magunknak tudjuk kiválasztani a kiegészítő csomagokat.
@@ -230,10 +295,14 @@ Nekem csak kettő kiegészítőre volt szükségem, mivel a többi funkcionalit�
 
 \subsubsection{Flask-Testing}
 
-Az egyik ilyen a ,,Flask-Testing'' csomag, amire az egység tesztek miatt volt szükségem.
+Az egyik ilyen a ,,Flask-Testing'' csomag, amire az egységtesztek miatt volt szükségem.
 Segítségével rendkívül egyszerűen és hatékonyan tudjuk tesztelni az alkalmazásban található végpontokat.
-Használata számomra nagyon könnyű volt és a dokumentáció minden felhasználási esetre kitért és lehetővé tette, hogy kényelmesen teszteljem a JSON válaszokat.
-A dokumentáció azt ajánlja, hogy tegyünk minden tesztet egy nagy fájlba, mert így kényelmesen tudjuk egyszerre futtani őket.
+\Aref{flask_test}.~kódrészletnél megfigyelhetjük a sokoldalúságát és előnyeit.
+Külön függvényeket tudunk használni a HTTP státuszkódok tesztelésére és megfigyelhetjük, hogy a teljes kérés elküldése egy sorban megoldható.
+Használata számomra nagyon könnyű volt és a dokumentáció minden felhasználási esetre kitért és lehetővé tette, hogy kényelmesen teszteljem a JSON\footnote{Javascript Object Notation} válaszokat.
+A készítők azt ajánlják, hogy tegyünk minden tesztet egy nagy fájlba, mert így kényelmesen tudjuk egyszerre futtani őket.
+
+\pythonexternal[caption=Bejelentkezés tesztelése helyes adatokkal.,label=flask_test]{./codes/flask_test.py}
 
 \subsubsection{Flask-Bcrypt}
 
@@ -313,29 +382,29 @@ Szolgáltatás orientált architektúrára ösztönöz és azt ajánlja, hogy mi
 A konténereinket képfájlokból futtatjuk.
 Rétegezett formátumuk van, ami lépésről-lépésre épülnek fel egy sorozat parancs alapján.
 Tulajdonságaikat tekintve hordozhatóak, megoszthatóak, tárolhatóak és frissíthetők.
-A következő paranccsal tudunk képfájlt készíteni (feltéve, hogy a Dockerfile az aktuális könyvtárban van):
+A következő paranccsal tudunk képfájlt készí
 
-\begin{minted}{bash}
-	$ docker build .
-\end{minted}
+\begin{center}
+	\texttt{\$ docker build .}
+\end{center}
 
 Minden Docker képfájl rendelkezik egyedi azonosítóval.
 A példa kedvéért az én képfálom az ,,edd116d82f90''-es azonosítót kapta, de használatkor nem fontos az egészet kiírni.
 Megtehetjük azt is, hogy a 9898-as porton futú szolgáltatást a helyi 80-as portra publikáljuk és így futtatjuk.
 Ezt a következő paranccsal tehetjük meg:
 
-\begin{minted}{bash}
-	$ docker run -p 80:9898 edd11
-\end{minted}
+\begin{center}
+	\texttt{\$ docker run -p 80:9898 edd11}
+\end{center}
 
 \subsubsection{Konténerek}
 
 A konténerek lényegében a futó képfájlok példányai.
-Ha elíndítunk egy képfájt és megnyitunk egy új terminál ablakot, akkor az alábbi paranccsal megtekinthetjük a futó konténert.
+Ha elindítunk egy képfájt és megnyitunk egy új terminál ablakot, akkor az alábbi paranccsal megtekinthetjük a futó konténert.
 
-\begin{minted}{bash}
-	$ docker container ls
-\end{minted}
+\begin{center}
+	\texttt{\$ docker container ls}
+\end{center}
 
 A parancs kiírja többek között a publikált portot, a konténerben futó parancsot és a képfájl azonosítóját is.
 
@@ -429,11 +498,7 @@ Kettő struktúrára épül:
 Ezek olyan univerzális adatszerkezetek, amiket gyakorlatilag minden programozási nyelv támogat ilyen vagy olyan formában.
 Ésszerűnek tűnik tehát, hogy az az adatformátum, amelyet programozási nyelvek kommunikációjához kívánunk használni, szintén ezekre a szerkezetekre épüljön.\cite{json2}
 
-\begin{listing}[ht]
-	\inputminted[linenos=true]{json}{./codes/result.json}
-	\caption{Egy nagyon egyszerű példa a szervertől érkező JSON válaszra.}
-	\label{json_example}
-\end{listing}
+\javaexternal[caption=Egy nagyon egyszerű példa a szervertől érkező JSON válaszra., label=json_example]{./codes/result.json}
 
 Emberek számára is könnyen olvasható és írható, ahogy ez \aref{json_example}.~példán is látszik. 
 A szakdolgozatomban is fontos szerepet töltbe, ugyanis a klien-szerver kommunikáció teljes egészében erre alapul.
@@ -445,8 +510,8 @@ Véleményem szerint sokkal átláthatóbb és egyszerűbb, mint például az XM
 
 Az AndroidX egy nyílt forráskódú projekt, amit az Android fejlesztői csapata használ library-k fejlesztéshez, teszteléséhez és kiadásához a Jetpack-en belül.
 Az eredeti support library-hez képest az AndroidX egy jelentős fejlődés. Ahogy a support library-t is, az AndroidX-et is az Android operációs rendszertől függetlenül tudjuk használni és biztosítja a visszafelé kompatibilitást.
-Az AndroidX teljesen felváltja a support library-t azáltal, hogy azonos funkciókat biztosít és új könyvtárakat.
-Ezen felül az AndroidX a következő funkciókat tartalmazza:
+Az AndroidX teljesen felváltja a support library-t azáltal, hogy azonos funkciókat biztosít és új könyvtárakat.\cite{androidx}
+Ezen felül az AndroidX a következő funkciókat tartalmazza: 
 
 \begin{enumerate}
 	\item Minden csomag egy konzisztens névtérben van, ami ,,androidx''-el kezdődik.
@@ -454,20 +519,18 @@ Ezen felül az AndroidX a következő funkciókat tartalmazza:
 	\item Az összes új support library fejlesztés az AndroidX könyvtárban fog történni. Ez magába foglalja az eredeti support library fenntartását és az új Jetpack komponensek bevezetését.
 \end{enumerate}
 
-% forrás https://developer.android.com/jetpack/androidx
-
 \subsection{OkHttp}
 
 A modern alkalmazások a HTTP \footnote{HyperText Transfer Protocol} protokollal dolgoznak. 
 Segítségével adatokat tudunk küldeni és fogadni.
 Ha hatékonyan használjuk a HTTP protokolt, akkor gyorsabban tudjuk az adatokat betölteni és sávszélességet spórolhatunk meg. 
 
-Az OkHttp egy HTTP kliens, ami alapértelmezetten hatékony. Néhány tulajdonsága:
+Az OkHttp egy HTTP kliens, ami a kezdektől fogva hatékonyságra lett tervezve.
+Az alábbi lista tartalmazza két fontos tulajdonságát a sok közül:
 
 \begin{enumerate}
 	\item Az átlátszó GZIP csökkenti a letöltés méretét.
 	\item A válaszokat cache-ben tárolja, ezért ismétlődő kéréseknél elkerülhető a hálózat használata.
-	
 \end{enumerate}
 
 Akkor sem omlik össze, ha problémás a hálózat, valamint csendben helyreáll a gyakori kapcsolati problémák esetében is.
@@ -548,11 +611,7 @@ Ez azért nagy segítség, mert nem kell aggódnunk szintaktikai hibákon, illet
 A Room elvégzi ezeknek a paramétereknek az összehasonlítását és hibát dob, ha eltérést talál.
 Lehetőségünk van több paramétert is átadni, ezáltal robosztusabb lekérdezéseket valósíthatunk meg.
 
-\begin{listing}[ht]
-	\inputminted[linenos=true]{java}{./codes/NotificationDao.java}
-	\caption{A NotificationDao interfész.}
-	\label{room}
-\end{listing}
+\javaexternal[caption=A NotificationDao interfész.,label=room]{./codes/NotificationDao.java}
 
 \subsection{CodeView}\label{code_view}
 
@@ -573,11 +632,7 @@ Néhány funkció hiányzott ugyan, mint például a két ujjal való nagyítás
 Ezeknek a támogatását sikerült viszonylag egyszerűen megoldani, hiszen a \emph{CodeView} a \emph{WebView} osztályból származik és rendelkezik a megfelelő metódusokkal.
 \Aref{codeviewimplementation}.~kódrészletben a \emph{CodeView} megvalósítása és kiegészítése látható, alatta pedig \aref{codeview}.~képen látható a forráskód megjelenítése az alkalmazásban.
 
-\inputminted[linenos, breaklines]{java}{./codes/codeview.java}
-\begin{listing}[H]
-    \caption{A CodeView könyvtár felhasználása és kiegésztése.}
-    \label{codeviewimplementation}
-\end{listing}
+\javaexternal[caption=A CodeView könyvtár felhasználása és kiegésztése.,label=codeviewimplementation]{./codes/codeview.java}
 
 \begin{figure}[!h]
 	\centering
@@ -613,11 +668,7 @@ Ezután pedig egyszerűen egy Intent segítségével elindítottam az Activity-t
 Mindez nem volt elegendő ahhoz, hogy sikeresen tovább mehessek ugyanis bejelentkezés után történik a különböző engedélyek ellenőrzése.
 Az Espresso arra is nyújt megoldást, hogy ezeket az engedély kéréseket automatikusan elfogadjuk a tesztekben a \emph{GrantPermissionRule} osztály segítségével.
 
-\inputminted[linenos, breaklines]{java}{./codes/test.java}
-\begin{listing}[H]
-    \caption{Espresso UI teszt az adatok törléséhez.}
-    \label{espressotest}
-\end{listing}
+\javaexternal[caption=Espresso UI teszt az adatok törléséhez.,label=espressotest]{./codes/test.java}
 
 \subsection{Material Design 2.0}
 
@@ -636,14 +687,62 @@ Ezt nagyon egyszerűen megcsinálhatjuk, ugyanis az Android Studio fejlesztői k
 A Google csinált a lépésekről egy kiváló dokumentációt, ami elérhető a \mbox{\url{https://material.io/develop/android/docs/getting-started/}} oldalon.
 Ráadásul az oldalon találunk rengeteg hasznos információt a komponensekről és azok használatáról.
 
-\chapter{A visszafejtés teszteléséhez felhasznált programok}\label{teszteles}
+\chapter{Az Android applikáció tesztelése}
+
+\section{Unit tesztek}
+
+A Unit teszteket vagy másnéven egységteszteket a programozók írják programozóknak egy bizonyos programozási nyelven.
+Arra hivatottak, hogy a szoftver komponenseit izolálják és tesztelhetővé tegyék ismétlődő módon.
+A JUnit az elfogadott és alapértelmezett technológia egységtesztek írásához Android platformon.
+Egyszerű és nyílt forráskódú keretrendszer a unit tesztek automatizálására.
+Eredetileg Eric Gamma és Kent Beck készítette. \cite{android_testing}
+
+\Aref{unit_test}.~kódrészlet jól bemutatja, hogy épül fel egy egységteszt.
+Jelen esetben az email cím validására készített függvény tesztelését láthatjuk.
+
+\javaexternal[caption=Unit teszt részlet az email cím validálására.,label=unit_test]{./codes/unit_test.java}
+
+\section{Teljesítmény tesztek}
+
+A teljesítmény tesztelés segít megbízható, reszponzív és jó felhasználói élményt nyújtó alkalmazások elkészítésében.
+Ha megfigyeljük a Google Play áruházban néhány nem igazán elterjedt app értékelését, akkor biztosan találunk olyan megjegyzést, ami az adott termék sebességére vonatkozik.
+Fontos a felhasználók számára, hogy gyors legyen és hatékony a letöltött szoftver. 
+Ellenkező esetben az alkalmazásunk törlésre kerül és lecserélik egy hatékonyabban működő alternatívára.
+
+Az Android alkalmazás teljesítményének tesztelésére az Android Studio beépített profilozó eszközét használtam, amit már \aref{androi_studio} alfejezetben megemlítettem.
+Itt csak annyival szeretném kiegészíteni, hogy a hálózati aktivitást is rendkvül kényelmesen tudjuk tesztelni.
+Így egy átfogó képet kapunk az alkalmazásban zajló hálózati hívások időtartamáról, típusáról és a háttér szálakról is.
+Megtehetjük, hogy kijelölünk egy bizonyos időintervallumot és csak azt vizsgáljuk, ahogy ez \aref{network_performance}.~képen is megfigyelhető.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=15cm]{pictures/network_performance}
+	\caption{Hálózati kapcsolatok vizsgálása a profilozó segítségével.}
+	\label{network_performance}
+\end{figure}
+
+\section{Felhasználói tesztek}
+
+A felhasználói tesztek fontos szerepet játszottak abban, hogy megfelelő szoftver születhessen.
+Arra használják őket, hogy a termék készítés folyamatában gyors visszajelzést kapjanak a fejlesztők a programmal kapcsolatban.
+
+A célközönségem túlnyomó részének nem idegen a programozás és forráskód látványa, ezért én szakmai szemmel arra voltam kíváncsi, hogy egy informatikában jártas felhasználó hogyan tudja használni az applikációt.
+Természetesen én tisztában vagyok az alkalmazás részleteivel és használatával, de nem biztos, hogy mindenki számára érthető a folyamat.
+Ebben a szaktársaim óriási segítséget nyújtottak.
+Amikor kész lettem egy jelentősebb résszel, mindig odaadtam valakinek, hogy nézze meg mennyire érthető és hogy talál-e benne valamilyen hibát.
+Azt kell mondjam, hogy az esetek többségében találtak is.
+Egyszerűen nem lehet gondolni minden eshetőségre és felhasználói viselkedésre.
+Néha olyan megközelítést is említettek vagy mutattak, amire egyáltalán nem gondoltam volna.
+Kétségkívül hozzájárultak az alkalmazás minőségéhez.
+
+\chapter{A visszafordítás teszteléséhez felhasznált programok}\label{teszteles}
 
 \section{Sérülékeny Android alkalmazások}
 
-A teszteléshez keresnem kellett olyan sérülékeny alkalmazásokat, amelyeken jól lehet demonstrálni a visszafejtést.
+A teszteléshez keresnem kellett olyan sérülékeny alkalmazásokat, amelyeken jól lehet demonstrálni a visszafejtést/visszafordítást.
 Minden alkalmazás, amit itt megemlítek nyílt forráskódú és kimondottan erre a célra készítették őket.
-Ez azért is jó, mert a visszafejtett kódot össze lehet hasonlítani az eredetivel és megnézni mennyire volt hatékony a visszafejtési folyamat.
-A jogi következményei egy ilyen visszafejtésnek elég ködösek.
+Ez azért is jó, mert a visszafejtett kódot össze lehet hasonlítani az eredetivel és megnézni, hogy mennyire volt hatékony a folyamat.
+A jogi következményei egy ilyen visszafordításnak elég ködösek.
 Szerettem volna biztosra menni, ezért is választottam nyílt forráskódú, szabadon elérhető alkalmazásokat teszteléshez, mert így érezhetem magam a legnagyobb biztonságban.
 A következő lista tartalmazza a teszteléshez felhasznált szándékosan sérülékeny alkalmazásokat.
 
@@ -704,8 +803,8 @@ Igazából semmi különösebb mezőt nem tartalmaz, csak a szokásos adatokat k
 Ha a regisztráció sikeresen befejeződött, akkor vissza irányítom a felhasználót a bejelentkezési felületre.
 A folyamatot próbáltam minél egyszerűbbre és magától értetődőre tervezni.
 
-A mezőket tekintve \emph{TextInputLayout}-ba ágyazott \emph{TextInputEditText}-et használtam.
-A \emph{TextInputLayout} rendelkezik, olyan tulajdonságokkal, mint például a segítséget nyújtó szöveg és az animáció.
+A mezőket tekintve \texttt{TextInputLayout}-ba ágyazott \texttt{TextInputEditText}-et használtam.
+A \texttt{TextInputLayout} rendelkezik, olyan tulajdonságokkal, mint például a segítséget nyújtó szöveg és az animáció.
 Ez által még nyilvánvalóbb, hogy melyik mezőbe mit kell írni.
 
 Számításba vettem, hogy a felhasználó nem biztos, hogy álló helyzetben fogja tartani a telefonját, ezért külön layout fájlokat készítettem a fekvő nézethez.
@@ -721,8 +820,8 @@ Mivel ez egy folyamatban lévő fejlesztés nem tartottam prioritásnak a jelsz�
 A jelszó mezőben bekapcsoltam egy úgynevezett jelszó kapcsolót, ami a mező jobb szélén látható.
 Segítségével a felhasználók láthatóvá tehetik a beírt jelszavukat és ellenőrizhetik annak helyességét.
 
-Alapvetően a \emph{MainActivity} indul az alkalmazás futtatásakor és az \emph{AuthenticationActivity} csak akkor indul, ha nincsen mentett felhasználónév és jelszó páros.
-Az \emph{AuthenticationActivity} tartalmazza mind a bejelentkezési, mind a regisztrációs fragment komponenst.
+Alapvetően a \texttt{MainActivity} indul az alkalmazás futtatásakor és az \texttt{AuthenticationActivity} csak akkor indul, ha nincsen mentett felhasználónév és jelszó páros.
+Az \texttt{AuthenticationActivity} tartalmazza mind a bejelentkezési, mind a regisztrációs fragment komponenst.
 
 \begin{figure}[!h]
 	\centering
@@ -733,28 +832,20 @@ Az \emph{AuthenticationActivity} tartalmazza mind a bejelentkezési, mind a regi
 
 \section{Kijelentkezés}
 
-Szerver oldalon csak az \emph{Authorization Header} van ellenőrizve, ami azt jelenti, hogy minden egyes hálózati kérésben benne kell lennie.
-Ennek a kezelését úgy oldottam meg, hogy sikeres bejentkezés után \emph{SharedPreferences} használatával eltároltam a felhasználónevet és a jelszót.
+Szerver oldalon csak az \texttt{Authorization Header} van ellenőrizve, ami azt jelenti, hogy minden egyes hálózati kérésben benne kell lennie.
+Ennek a kezelését úgy oldottam meg, hogy sikeres bejentkezés után \texttt{SharedPreferences} használatával eltároltam a felhasználónevet és a jelszót.
 Amíg nem történik kijelentkezés, addig ezek az adatok mentve maradnak.
 
 \Aref{saving_sharedpref}.~kódrészleten láthatjuk, hogyan történik az adatok mentése.
-A \emph{SharedPreferences} segítségével kulcs-érték párokat tárolhatunk biztonségos módon.
-A \emph{getSharedPreferences()} metódus 2 paramétert vár, az egyik a név, a másik a használni kívánt mód. 
+A \texttt{SharedPreferences} segítségével kulcs-érték párokat tárolhatunk biztonségos módon.
+A \texttt{getSharedPreferences()} metódus 2 paramétert vár, az egyik a név, a másik a használni kívánt mód. 
 Névnek az alkalmazás csomag nevét választottam és privát módban hoztam létre, hogy csak az én alkalmazásom férhessen hozzá az adatokhoz.
 
-\begin{listing}[ht]
-	\inputminted[linenos=true, breaklines]{java}{./codes/saving_sharedpref.java}
-	\caption{Adatok mentése \emph{SharedPreferences} segítségével.}
-	\label{saving_sharedpref}
-\end{listing}
+\javaexternal[caption=Adatok mentése \texttt{SharedPreferences} segítségével.,label=saving_sharedpref]{./codes/saving_sharedpref.java}
 
-\Aref{deleting_sharedpref}.~kódrészletben láthatód metódus nem sok eltérést mutat, viszont elengedhetetlen volt ahhoz, hogy töröljem az összes \emph{SharedPreferences}-be mentett adatot.
+\Aref{deleting_sharedprefs}.~kódrészletben láthatód metódus nem sok eltérést mutat, viszont elengedhetetlen volt ahhoz, hogy töröljem az összes \texttt{SharedPreferences}~-be mentett adatot.
 
-\begin{listing}[ht]
-	\inputminted[linenos=true, breaklines]{java}{./codes/deleting_sharedprefs.java}
-	\caption{Az összes \emph{SharedPreferences}-be mentett adat törlése.}
-	\label{deleting_sharedpref}
-\end{listing}
+\javaexternal[caption=Az összes mentett adat törlése.,label=deleting_sharedprefs]{./codes/deleting_sharedprefs.java}
 
 \section{Adatok törlése}
 
@@ -774,7 +865,7 @@ Ezt a funkciót próbáltam a legkézenfekvőbb helyen elhelyezni, mert ezzel in
 Ezért lett a legeleső fragment a feltöltések listáját tartalmazó fragment.
 Ebben a feltöltési listában jelenítem meg a feltöltött APK fájlok neveit és a feltöltés dátumát.
 
-A feltöltéshez a felhasználónak egy jól látható \emph{FloatingActionButton} komponensre kell kattintania.
+A feltöltéshez a felhasználónak egy jól látható \texttt{FloatingActionButton} komponensre kell kattintania.
 A tervezési szakaszban úgy gondoltam, hogy hasznos lenne egy saját fájl kiválasztó felületet készíteni.
 Nem sokkal ezután rájöttem, hogy teljesen felesleges újra feltalálni azt, amire már van működő megoldás és nem kellene haszontalan felületekkel bonyolítani az applikációt.
 Biztos találkoztunk már olyan app-al, ami elindított egy külső alkalmazást csak azért, hogy elvégezzel valamilyen feladatot.
@@ -783,15 +874,15 @@ Nem csak \emph{Activity}-ket tudunk indítani \emph{Intent}-ek segítségével, 
 Az ilyen \emph{Intent}-eket \emph{Implicit Intent}-eknek nevezzük.
 Példának okáért, a fájl kiválasztás egy ilyen művelet.
 \emph{Implicit intent} használatával indítottam el a fájl kiválasztást, aminek többek között megadtam, hogy milyen típusú fájlokat szeretnék kiválasztani.
-Ez a típus természetesen a \emph{application/vnd.android.package-archive} volt, ami megfelel az Android telepítő fájloknak.
+Ez a típus természetesen a \texttt{application/vnd.android.package-archive} volt, ami megfelel az Android telepítő fájloknak.
 Ebben az esetben nincs lehetőségünk más típusú fájlt kiválasztani csak a megadottat.
 
-A fájl kiválasztása után az \emph{onActivityResult} metódus \emph{Intent} típusú paraméterében kapjuk meg az URI\footnote{Uniform Resource Identifier}-t.
+A fájl kiválasztása után az \texttt{onActivityResult} metódus \emph{Intent} típusú paraméterében kapjuk meg az URI\footnote{Uniform Resource Identifier}-t.
 Ezt az URI-t felhasználva elmentettem a fájlt az alkalmazás gyorsítótárába.
 Erre azért volt szükség, mert különben nem kaptam volna meg az abszolút elérési útvonalat.
 Eztán már csak service elindítása maradt hátra. 
 
-A \emph{startService(Intent service)} metódus egy \emph{Intent}-et vár, ami segítségével elindíthatjuk a háttér service-t.
+A \texttt{startService(Intent service)} metódus egy \emph{Intent}-et vár, ami segítségével elindíthatjuk a háttér service-t.
 Fontos, hogy ez még így nem elég, hanem extraként hozzá kell adni a feltölteni kívánt fájlt.
 \Aref{uploads_notifications}.~ábra bal oldali képernyőképén látható a feltöltött fájlok listája.
 
@@ -799,30 +890,26 @@ Miután kiválasztottuk a fájlt és sikeresen megkaptuk az abszolút elérési 
 Nem akartam túl sok kódot bemutatni, de úgy gondolom, hogy talán \aref{okhttp_example}.~kódrészlet a legfontosabb a hálózati kommunikációt tekintve.
 Láthatjuk, hogy a szükséges típusokat Builder tervezési minta segítségével hozhatjuk létre.
 Némileg kikommenteztem a kódot, hogy jobban értelmezhessük annak felépítését.
-Először a \emph{RequestBody}-t építettem fel.
-Típusként megadtam, hogy \emph{form}-ot szeretnék küldeni, majd megadtam a kulcsot, magát a fájl nevét és a egy \emph{RequestBody}-t.
-Ez utóbbit a \emph{RequestBody.create()} segítségével készítettem, ami vár paraméterként egy média típust és magát a fájlt.
+Először a \texttt{RequestBody}-t építettem fel.
+Típusként megadtam, hogy \texttt{form}-ot szeretnék küldeni, majd megadtam a kulcsot, magát a fájl nevét és a egy \texttt{RequestBody}-t.
+Ez utóbbit a \texttt{RequestBody.create()} segítségével készítettem, ami vár paraméterként egy média típust és magát a fájlt.
 
-A \emph{HttpUrl} résznél is felhasználtam a tervezési minta adta modularitást.
+A \texttt{HttpUrl} résznél is felhasználtam a tervezési minta adta modularitást.
 Külön adtam meg a sémát, protokolt, host nevet és port számot.
-Az \emph{addDataPathSegment()} metódus használatával megtudjuk adni a pontos elérési utat paraméterként.
-Ezután a \emph{Request} felépítése következett. 
-URL-ként a előbb felépített \emph{httpUrl} példányt adtam át, valamint szükséges megadnunk az \emph{Authorization Header}-t, mert a szerver ezzel ellőrzni, hogy valóban regisztrált felhasználók vagyunk.
-Végül, a \emph{post()} metódusnak átadtam a \emph{formBody} példányt és ezzel minden elő lett készítve a hívás elküldéséhez.
-A \emph{okHttpClient.newCall(request).enqueue()} metódus egy úgynevezett \emph{Callback} interfészt vár.
-Ennek van két metódusa a \emph{onFailure} és \emph{onResponse}.
+Az \texttt{addDataPathSegment()} metódus használatával megtudjuk adni a pontos elérési utat paraméterként.
+Ezután a \texttt{Request} felépítése következett. 
+URL-ként a előbb felépített \texttt{httpUrl} példányt adtam át, valamint szükséges megadnunk az \texttt{Authorization Header}-t, mert a szerver ezzel ellőrzni, hogy valóban regisztrált felhasználók vagyunk.
+Végül, a \texttt{post()} metódusnak átadtam a \texttt{formBody} példányt és ezzel minden elő lett készítve a hívás elküldéséhez.
+A \texttt{okHttpClient.newCall(request).enqueue()} metódus egy úgynevezett \texttt{Callback} interfészt vár.
+Ennek van két metódusa a \texttt{onFailure} és \texttt{onResponse}.
 Az előbbi akkor hívódik meg, ha hálózati vagy bármi egyéb hiba lépett fel a hívás közben.
 Az utóbbi akkor, ha sikeres HTTP válasz érkezett a szervertől.
 Itt nagyon fontos megemlíteni, hogy ez a hívás egy háttér szálon fut.
 Így nem akadályozzuk a UI szálat és jó felhasználói élményt tudunk nyújtani.
 Gondolnunk kell azonban arra, hogy ha valami frissíteni szeretnénk a felhasználói felületen, akkor azt a UI szálon kell megtennünk.
-Hasonlóan építettem fel a többi hálózati kérést is az alkalmazásomban, ezért tartottam fontosnak az \emph{OkHttp} könyvtár lehetőségeit bemutatni.
+Hasonlóan építettem fel a többi hálózati kérést is az alkalmazásomban, ezért tartottam fontosnak az \texttt{OkHttp} könyvtár lehetőségeit bemutatni.
 
-\inputminted[linenos, breaklines]{java}{./codes/okhttp.java}
-\begin{listing}[H]
-    \caption{APK fájl feltöltése \emph{OkHttp} segítségével.}
-    \label{okhttp_example}
-\end{listing}
+\javaexternal[caption=APK fájl feltöltése OkHttp segítségével.,label=okhttp_example]{./codes/okhttp.java}
 
 \section{Fájl letöltés}
 
@@ -830,6 +917,7 @@ A fájl letöltés is egy roppant fontos funkció, ugyanis csak így jut el a fe
 A megvalósítását hozzákötöttem az értesítésekhez, mert a kliens abban kapja vissza a letöltendő fájl nevét.
 Megfigyelhetjük \aref{uploads_notifications}.~ábra jobb oldali képernyőképén, hogy minden egyes értesítés kártyáján ott a letöltés gomb.
 Ha ezekre rákattintunk, akkor itt is minden egyes alkalommal egy újabb háttér service fog elindulni.
+
 Azt is megtehetjük, hogy akár többször is letöltjük ugyanazt a fájlt.
 Ha már lokálisan létezik egy ugyanolyan nevű projekt, mint amit éppen letöltünk akkor sem kell félnünk, hogy felül írjuk, mert egyedi nevet fog kapni.
 Ezt úgy valósítottam meg, hogy ha létezik már a projekt mappája, akkor hozzáfőzök egy számot és 0-tól kezdődően mindig növelem.
@@ -936,17 +1024,34 @@ Szerencsére nem sokszor futottam bele, de amikor igen, akkor pár napig álltam
 Még a problémáival együtt is úgy gondolom, hogy sikerült egy olyan szoftvert készítenem, ami egyedi és megállja a helyét a piacon. 
 
 \begin{thebibliography}{1}
-\bibitem{statista} \textsc{ONLINE}: Number of mobile phone users worldwide from 2015 to 2020, \url{https://www.statista.com/statistics/274774/forecast-of-mobile-phone-users-worldwide}
-\bibitem{androidstudio} \textsc{ONLINE}: Everything you need to build on Android \url{https://developer.android.com/studio/features.html}
-\bibitem{continuous_integration} \textsc{Fowler M, Foemmel M.} Continuous integration. Thought-Works 2006 May 1 \url{http://www.dccia.ua.es/dccia/inf/asignaturas/MADS/2013-14/lecturas/10_Fowler_Continuous_Integration.pdf}
-\bibitem{espresso} \textsc{ONLINE}: Create UI tests with Espresso Test Recorder \url{https://developer.android.com/studio/test/espresso-test-recorder}
-\bibitem{git} \textsc{Somasundaram R.} Git: Version control for everyone. Packt Publishing Ltd; 2013.
-\bibitem{flask} \textsc{Grinberg M.} Flask web development: developing web applications with python. " O'Reilly Media, Inc."; 2018 Mar 5.
-\bibitem{sqlite} \textsc{Kreibich J.} Using SQLite. " O'Reilly Media, Inc."; 2010 Aug 17.
-\bibitem{docker} \textsc{Turnbull J.} The Docker Book: Containerization is the new virtualization. James Turnbull; 2014 Jul 14
-\bibitem{pycharm} \textsc{ONLINE}: PyCharm Features \url{https://www.jetbrains.com/pycharm/features/}
-\bibitem{json1} \textsc{Bassett L.} Introduction to JavaScript Object Notation: A to-the-point Guide to JSON. " O'Reilly Media, Inc."; 2015 Aug 5.
-\bibitem{json2} \textsc{Crockford, Douglas} Introducing JSON. \url{json.org}, 2009 May 28.
-\bibitem{room} \textsc{ONLINE} Save data in a local database using Room \url{https://developer.android.com/training/data-storage/room/index.html}
+	\bibitem{git} \textsc{Somasundaram R.} Git: Version control for everyone. Packt Publishing Ltd; 2013.
+	\smallskip
+	\bibitem{flask} \textsc{Grinberg M.} Flask web development: developing web applications with python. O'Reilly Media, Inc.; 2018 Március 5.
+	\smallskip
+	\bibitem{sqlite} \textsc{Kreibich J.} Using SQLite. O'Reilly Media, Inc.; 2010 Augusztus 17.
+	\smallskip
+	\bibitem{docker} \textsc{Turnbull J.} The Docker Book: Containerization is the new virtualization. James Turnbull; 2014 Július 14.
+	\smallskip
+	\bibitem{android_testing} \textsc{Diego Torres}: Android application testing guide. Packt Publishing Ltd; 2011. Június 23.
+	\smallskip
+	\bibitem{json1} \textsc{Bassett L.} Introduction to JavaScript Object Notation: A to-the-point Guide to JSON. O'Reilly Media, Inc.; 2015 Augusztus 5.
+	\smallskip
+	\bibitem{continuous_integration} \textsc{Fowler M, Foemmel M.} Continuous integration. Thought-Works; 2006 Május 1. \url{http://www.dccia.ua.es/dccia/inf/asignaturas/MADS/2013-14/lecturas/10_Fowler_Continuous_Integration.pdf}
+	\smallskip
+	\bibitem{json2} \textsc{ONLINE: Crockford, Douglas} Introducing JSON. \url{https://www.json.org/}; 2009 Május 28.
+	\smallskip
+	\bibitem{statista} \textsc{ONLINE}: Number of mobile phone users worldwide from 2015 to 2020 \url{https://www.statista.com/statistics/274774/forecast-of-mobile-phone-users-worldwide}
+	\smallskip
+	\bibitem{androidstudio} \textsc{ONLINE}: Everything you need to build on Android \url{https://developer.android.com/studio/features.html}
+	\smallskip
+	\bibitem{espresso} \textsc{ONLINE}: Create UI tests with Espresso Test Recorder \url{https://developer.android.com/studio/test/espresso-test-recorder}
+	\smallskip
+	\bibitem{pycharm} \textsc{ONLINE}: PyCharm Features \url{https://www.jetbrains.com/pycharm/features}
+	\smallskip
+	\bibitem{androidx} \textsc{ONLINE}: AndroidX Overview \url{https://developer.android.com/jetpack/androidx}
+	\smallskip
+	\bibitem{room} \textsc{ONLINE} Save data in a local database using Room \url{https://developer.android.com/training/data-storage/room/index.html}
+	\smallskip
 \end{thebibliography}
+
 \end{document}
