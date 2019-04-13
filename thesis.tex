@@ -101,16 +101,16 @@ breaklines
 \chapter*{Bevezetés}
 \markboth{Bevezetés}{Bevezetés}
 
-A szoftver fejlesztés egy nagyon komplex folyamat és rengeteg részletre oda kell figyleni.
+A szoftver fejlesztés egy nagyon komplex folyamat és rengeteg részletre kell odafigyelni.
 Az elkészült programnak hatékonynak, hibamentesnek és gyorsnak kell lennie. Természetesen, mindezt határidőn belül kell teljesíteni.
-Sajnos a biztonság nem egy első számú szempont egy megrendelő szemében, csak akkor ha már valami baj történt.
+Sajnos a biztonság nem egy első számú szempont egy megrendelő szemében, csak abban az esetben ha már valami baj történt.
 Inkább a gyorsaságon és a folyamatok automatizálásán van a hangsúly, ezért nem  meglepő, hogy a fejlesztés életciklusának tervezési szakaszában kevés figyelem fordul a szoftver biztonságossá tételére.
 
-A statista.com \cite{statista} kutatása szerint 2020-ra több mint 4.78 billió telefon lesz használatban.
+A statista.com \cite{statista} kutatása szerint 2020~-ra több mint 4.78 billió telefon lesz használatban.
 Ezzel a cégek is tisztában vannak és tudják, hogy ha még több emberhez szeretnék eljuttatni a szolgáltatásukat, akkor rendelkezniük kell saját mobilos applikációval.
 A kérdés az, hogy ezt a hatalmas keresletet mennyire tudják a fejlesztők kielégíteni és még ha ki is tudják, milyen minőségű kódot tudnak előállítani.
 A fejlesztőkkel szemben nagyon sok elvárást támasztanak a megrendelők és ahogy előbb is említettem a biztonság csak ritkán elvárás.
-Véleményem szerint ha nem szentelnek elég figyelmet a behatolás tesztelésre és magára a biztonságra általánosságban, akkor annak elég súlyos következményei lehetnek.
+Véleményem szerint ha nem szentelnek elég figyelmet a sérülékenységek tesztelésére és magára a biztonságra általánosságban, akkor annak elég súlyos következményei lehetnek.
 
 A mobilos eszközöket célzó támadások száma hatalmas ütemben nő. Mindez azért lehetséges, mert figyelmen kívül marad a ,,secure coding''-nak nevezett gyakorlat.
 Egy alkalmazásnak a sebezhetőségét különböző támadási vektoron is ki lehet aknázni.
@@ -120,7 +120,7 @@ A leghatékonyabb módszer ha megpróbáljuk visszafejteni az alkalmazást forr�
 Ezt angolul ,,reverse engineering''-nek nevezik.
 A visszaállított fájlok olvashatósága nem lesz tökéletes, főleg ha obfuszkált \footnote{Az obfuszkáció célja röviden, hogy megnehezítse a visszafejtett kód olvashatóságát.} kóddal állunk szemben, de egy tapasztalt szem így is kitudja szúrni a gyakori hibákat.
 
-A szakdolgozatomban Android platformra készült alkalmazások forrás fájlokká való visszaállításáról írok, valamint bemutatom hogyan valósítható meg a kliens-szerver kommunikáció egy Python programozási nyelvben írt REST\footnote{Representational State Transfer} API és egy Android platforma készült kliens segítségével.
+A szakdolgozatomban Android platformra készült alkalmazások forráskódjának visszaállításáról is írok, valamint bemutatom hogyan valósítható meg a kliens-szerver kommunikáció egy Python programozási nyelvben írt REST\footnote{Representational State Transfer} API és egy Android platforma készült kliens segítségével.
 Szó lesz arról, hogy hogyan tudunk fájlokat feltölteni, valamint letölteni a szerverről és értesítésekkel operálni.
 A felhasználó egy egyszerű autentikáció után képes lesz \emph{.apk} fájlok feltöltésére, letöltésére és az elkészült projektben való navigálásra.
 Hosszabb ideig tartó folyamatok állapotáról és elkészültéről értesítést kap a felhasználó és lehetősége lesz a forráskód alkalmazáson belüli megtekintésére és megosztására.
@@ -134,14 +134,14 @@ A projektet ,,Reverse Droid''-nak neveztem el.
 Az Android Studio jelenleg az egyetlen jól támogatott és minőségi fejlesztői környezet Android fejlesztéshez.
 Régebben sok panaszt hallottam az emulátorára, hogy nagyon lassú és körülményes vele dolgozni.
 Mára már egy pillanat alatt lehet futtatni a programunk és abszolút kényelmes lett a használata.
-Azt is megmerem kockáztatni, hogy már teljes egészében ki tuja váltani a fizikai eszközt.
+Azt is megmerem kockáztatni, hogy már teljes egészében ki tudja váltani a fizikai eszközt.
 Az emulátor állapota menthető, ezáltal indításkor ott folytathatjuk, ahol abba hagytuk.
 Azon kívül, hogy segítségével több különböző eszközön tesztelhetjük az alkalmazásunk, lehetőséget ad még a szenzorok, hálózati és GPS kapcsolat szimulálására. 
-Rendelkezik APK elemzővel, vizuális felhasználó felület szerkesztővel és intelligens kód szerkesztővel is.
+Rendelkezik APK elemzővel, vizuális felhasználó felület alkotóval és intelligens kódszerkesztővel is.
 
-Az egyik kedvenc funkcióm a valós idejű profilozó, ami segítségével megtudjuk nézni valós időben, milyen erőforrásokat használ az alkalmazásuk.
-Ez különösen hasznos, ha megakarunk találni egy memória szivárgást vagy egy olyan részt, ami a kelleténél jobban meríti az akkumulátorunk.
-Említésre méltó még a flexibilis build rendszere is, a Gradle. 
+Az egyik kedvenc funkcióm a valós idejű profilozó, aminek a segítségével megtudjuk nézni, hogy milyen erőforrásokat használ az alkalmazásunk az adott pillanatban.
+Ez különösen hasznos, ha megakarunk találni egy memóriaszivárgást vagy egy olyan részt, ami a kelleténél jobban meríti az akkumulátorunkat.
+Említésre méltó még a flexibilis build rendszere is, a \emph{Gradle}. 
 Az Android Studio-val megtehetjük, hogy külön build típusokat hozzunk létre a különböző eszközökre.
 Az \emph{instant run} funkció segítségével egyből tudjuk futtatni a kódban véghez vitt kisebb változtatásokat, anélkül hogy újraindítanánk az Activity~-t vagy újra buildelnénk az egész projektet és új APK~-t telepítenénk.
 \cite{androidstudio}
@@ -154,8 +154,10 @@ A Pycharm mögött is a \emph{Jetbrains} cég áll. Ezt azért fontos megemlíte
 Véleményem szerint ez sikerült is nekik. Az Android Studio-n és a Pycharm-on  is látszik, hogy minőségi termékek és rengeteget segítenek a fejlesztők mindennapjaiban.
 Én a \emph{PyCharm Professional Edition}-t használtam, amihez a diákok ingyenesen hozzájuthatnak.
 Mivel adatbázissal is dolgoznok, ezért a \emph{Community Edition} nem lett volna megfelelő.
-Nem csak az adatbázis támogatást nyújt, hanem webes keretrendszer támogatást és profilozót is.
-A távoli fejlesztés funkció is rendkívül praktikus. A fejlesztés közben egyszerűen tudtam feltölteni a szerverre a változtatásaimat.
+Nem csak adatbázist támogat, hanem webes keretrendszereket is.
+A PyCharm szintén magába foglalja a profilozót.
+A távoli fejlesztés funkció ugyancsak rendkívül praktikus.
+A fejlesztés közben egyszerűen tudtam feltölteni a változtatásaimat.
 A verzió kezelőknek is egyesített felületet nyújt, amivel jelentős időt spórolhatunk meg.\cite{pycharm}
 Ez a lehetőség mindkettő fejlesztői környezetben elérhető.
 
@@ -165,13 +167,13 @@ Jelenleg a Postman a legnépszerűbb API\footnote{Application Programming Interf
 A Postman kollekciók futtatható leírásai egy API-nak és sarok kövei a Postman beépített eszközeinek.
 Ezeknek a beépített eszközöknek köszönhetően futtathatunk hálózati kéréseket, teszteket, debuggolhatunk és csinálhatunk mock szervereket is.
 Ráadásul automatizáltan futtathatjuk a teszteket és egyszerűen elkészíthetjük és publikálhatjuk az API dokumentációját.
-
-Én kizárólag dokumentáció készítésre és a végpontok tesztelésére használtam. Ettől természetesen sokkal több lehetőség rejlik benne.
-Segítségével egyszeren publikálhattam az API dokumentációját, így lehetővé téve a felhasználást mások számára is.
+Én kizárólag ennek az elkészítésére és a végpontok tesztelésére használtam.
+Ettől természetesen sokkal több lehetőség rejlik benne.
+Segítségével egyszerűen publikálhattam az API dokumentációját, így lehetővé téve a felhasználást mások számára.
 A Postman a \url{https://documenter.getpostman.com/view/5052599/S11RKayE} oldalon található leírást készítette el számomra.
-Különösen hasznos, hogy nem csak a végpontokat mutatja be hanem a kéréshez szükséges fejléceket, paramétereket és még a törzs típusát is.
-A weboldalon ezeken felül kiválaszthatjuk, hogy milyen programozási nyelvben kívánjuk megírni a saját kliensünk.
-Miután ezt megtettük, az oldal jobb oldalán megjelennek a kérésekhez tartozó nyelv specifikus példák.
+Különösen hasznos, hogy nem csak a végpontokat mutatja be, hanem a kéréshez szükséges fejléceket, paramétereket és még a törzs típusát is.
+A weboldalon kiválaszthatjuk, hogy milyen programozási nyelvben kívánjuk megírni a saját kliensünket.
+Miután ezt megtettük, jobb oldalon megjelennek a kérésekhez tartozó nyelv specifikus példák.
 Úgy gondolom, ez a funkció hatalmas segítséget nyújt a dokumentációt felhasználók számára.
 
 \chapter{Platformok}\label{platformok}
@@ -179,24 +181,26 @@ Miután ezt megtettük, az oldal jobb oldalán megjelennek a kérésekhez tartoz
 \section{A szerver kiválasztása és felépítése}
 
 Olyan szerverre volt szükségem, ami nem túl költséges, de mégis megfelelően testreszabható és gyors tárhelyet biztosít.
-A választásom a Digitial Ocean felhő szolgáltatására esett. Az oldal felületén lehetőségünk van több, úgynevezett \emph{droplet}-et létrehozni, amik nem mások mint virtuális szerverek. 
-Megadhatjuk milyen disztribúciót szeretnénk telepíteni, jelen esetben én az Ubuntu Linux 18.10-es verzióját választottam.
+A választásom a Digitial Ocean felhő szolgáltatására esett.
+Az oldal felületén lehetőségünk van több, úgynevezett \emph{droplet}-et létrehozni, amik nem mások, mint virtuális szerverek. 
+Megadhatjuk, milyen disztribúciót szeretnénk telepíteni, jelen esetben én az Ubuntu Linux 18.10-es verzióját választottam.
 
-Szerencsére nem kellett új domain nevet vásárolnom, mert már rendelkeztem egyel.
+Szerencsére nem kellett új domain nevet vásárolnom, mert ezt már megtettem korábban.
 A domain egyébként a \emph{Namecheap} oldalon van beregisztrálva.
 Annyi volt a dolgom, hogy egy új aldomaint kellett készítenem a projekt számára.
 Miután feltelepült a Droplet hozzárendeltem az IP\footnote{Internet Protocol} címét az előbb elkészített aldomainhez.
 Ezzel biztosítottam, hogy domain név alapján is elérhető legyen a szerver.
-Körülnéztem a konkurens cégek által nyújtott szolgáltatások között is, de én úgy láttam, hogy egyik se éri el azt az ár-érték arányt, amit a \emph{Namecheap} nyújt. 
+Körülnéztem a konkurens cégek által nyújtott szolgáltatások között is, de én úgy láttam, hogy egyik sem éri el azt az ár-érték arányt, amit a \emph{Namecheap} nyújt. 
 
-Habár nagyon egyszerű volt a folyamat, az elkészült projektben mégsem ezt a folyamatot választottam, hanem a Digital Ocean által nyújtott ,,one-click apps'' menüben egyszerűen kiválasztottam a Docker alkalmazást és az elkészült képfájlt ezen futtattam. 
-Így automatizálva a szerver telepítésének folyamatát és megspórolva a Docker telepítését és konfigurálását.
+Habár nagyon egyszerű volt a folyamat, az elkészült projektben mégsem ez mellett döntöttem, hanem a Digital Ocean által nyújtott ,,one-click apps'' menüben egyszerűen kiválasztottam a Docker alkalmazást és az elkészült képfájlt ezen futtattam. 
+Így automatizálva a szerver installációjának menetét és megspórolva a Docker telepítését és konfigurálását.
 Erről még a \nameref{szerveren_hasznalt_technologiak} fejezet \nameref{docker} alfejezetében bővebben írok.
 
 \section{Mobil platform választása}
 
-A mobilos operációs rendszerek közül az Androidot választottam. Bevallom őszintén, nem volt nehéz a döntés. 
-Android platform rengeteg olyan lehetőséget biztosít, amivel a többi platform nem szállhat versenybe.
+A mobilos operációs rendszerek közül az Androidot választottam.
+Bevallom őszintén, nem volt nehéz a döntés. 
+Az Android rengeteg olyan lehetőséget biztosít, amivel a többi platform nem szállhat versenybe.
 Itt gondolok az egyszeri és nem megújuló fizetésre a fejlesztői fiókért, valamint az iOS-el ellentétben a fejlesztői környezete elérhető mind a három fő operációs rendszerre (Linux, macOS, Windows).
 Számomra ezek elég nyomós érvek voltak, ezért döntöttem úgy, hogy Android platformra fog először elkészülni a program.
 A Windows Phone a Microsoft cégnek volt egy próbálkozása, ami végül kudarcba fulladt, ezért ez az opció nem jöhetett szóba.
@@ -207,26 +211,27 @@ Az iOS ezzel ellentétben arról híres, hogy egyszerű és megbízható a haszn
 Viszont jelen vannak olyan megkötések, amik mind a végfelhasználókat és mind a fejlesztőket limitálják.
 Gondolok itt a minimális testre szabhatóságra és a nagy részt zárt forráskódra.
 Itt most nyilván nem szeretném részletezni, hogy melyik operációs rendszer a jobb vagy éppen rosszabb, mert mindegyik rendszernek megvan az előnye, illetve a hátránya.
-Inkább csak a személyem érveimet és tapasztalataimat sorakoztatom fel, amik alapján platformot választottam.
+Inkább csak a személyes érveimet és tapasztalataimat sorakoztatom fel, amelyek alapján platformot választottam.
 
 Fontos megemlíteni, hogy az Android rendszer nem csak mobil telefonokban terjedt el.
 Jelen van az okos televíziókban (Android TV), autókban (Android Auto), okos órákban (Wear OS) és IoT\footnote{Internet of Things}-ben is (Android Things).
-Ezek az Android által úgymond eredmények annak is köszönhetőek, hogy a Google felvásárolta az Android céget és azóta ők tartják karban.
+Ezek az Android által úgymond eredmények annak is köszönhetőek, hogy a Google felvásárolta az Android céget és azóta ők felelősek érte.
 
 Természetesen nem csak jó tulajdonságokkal rendelkezik, hanem bizony van néhány hátránya is.
-Ide tartozik például a gyártóktól függő frissítések. Tegyünk fel, hogy új biztonsági rést fedeztek fel az Android operációs rendszerben.
+Ide tartozik például a gyártóktól függő frissítések.
+Tegyünk fel, hogy új biztonsági rést fedeztek fel az Android operációs rendszerben.
 A Google általában ezekre meglehetősen gyorsan reagál és néhány napon belül frissítést ad ki az eszközeire (Nexus, Pixel).
-Azoknak a gyártóknak akiknek saját testre szabott rendszerük van, jóval tovább tart orvosolni a hibát.
+Azoknak a gyártóknak, akiknek saját testreszabott rendszerük van, jóval tovább tart orvosolni a hibát.
 Ez az időtartam a mai napig hónapokban mérhető, de persze ez függ az adott cégtől és a hiba súlyosságától. 
 
 Számomra ezek voltak a legnyomósabb érvek a rendszer kiválasztásában.
-A mai napig úgy gondolom, hogy ebben a platformban van a legnagyobb potenciál a fejlesztők és felhasználók számára egyaránt.
+Megítélésem szerint ebben a platformban van a legnagyobb potenciál a fejlesztők és felhasználók számára egyaránt.
 
 \chapter{Felhasznált technológiák}\label{technologiak}
 
 \section{Verzió kezelés}
 
-Egy verzó kezelő rendszer képes kezelni egy fájl vagy akár több fájl módosításait olyan módon, hogy lehetőségünk legyen időben ,,visszamenni'' és megnézni egy fájl bizonyos verzióját.
+Egy verzó kezelő rendszer képes kezelni egy fájl vagy akár több fájl módosításait olyan módon, hogy lehetőségünk legyen időben ,,visszamenni'' és megnézni bizonyos verziót.
 A Linux kernel forráskódja hatalmas méretű és a Git verzió kezelőt használják a fejlesztéshez.
 Ez azért érdekes, mert nagyon sok ember dolgozik egy óriási kódbázissal és a Git mégis képes hatékonyan kezelni a változásokat.
 A alábbi listában látható, hogy miért bíznak meg benne egy ilyen nehéz feladat esetében és hogyan teljesíti a Git minden elvárásukat:
@@ -246,14 +251,14 @@ A Git egy ingyenes és nyílt-forráskódú elosztott verzió kezelő rendszer. 
 Már a project kezdetekor készítettem egy privát Github repository-t, hogy nyomon tudjam követni a változtatásaimat és esetleges hiba esetén visszaállítani egy korábbi verzióra.
 
 A Github nem összetévesztendő a Git-el, mert a Git a forráskód változtatásainak kezelésére szolgál (lokálisan), a Github pedig egy tárhelyet nyúlt a verzió kezelt könyvtárak és fájlok tárolására.
-A projekt fejlesztése alatt több gépről dolgoztam és Github a segítségével biztosítani tudtam, hogy mindenhol elérjen a projektek legfrissebb változtatásait.
+A projekt fejlesztése alatt több gépről dolgoztam és a Github segítségével biztosítani tudtam, hogy mindenhol elérjen legfrissebb változtatásaimat.
 Lényegében egy központi szerverként szolgált számomra.
 
 \section{Folyamatos integrálás}
 
 A folyamatos integrálás egy szoftver fejlesztési gyakorlat, ahol a csapat tagjai sűrűn építik be munkájukat a kódbázisba.
 Pontosabban megfogalmazva ez egy extrém programozási gyakorlat és naponta több integrációhoz vezet.
-A technológia arról szól, hogy ha egy feladat elkészült akkor azt egyből beépítjük a rendszerbe.
+A technológia arról szól, hogy ha egy feladat elkészült, akkor azt egyből beépítjük a rendszerbe.
 Minden integráció hitelesítve van egy automatikus build rendszer által (egységtesztekkel együtt) annak érdekében, hogy minél hamarabb észrevegyük az hibákat.
 Ezek után természetesen minden egységtesztnek sikeresen le kell futnia.
 Sok csapat úgy gondolja, hogy ez a megközelítés jelentősen kevesebb problémához vezet és meggyorsítja a fejlesztés menetét.\cite{continuous_integration}
@@ -280,9 +285,9 @@ Az eredményről mindig értesítést kapunk, így egyből tudhatjuk azt is, ha 
 \subsection{Flask}
 
 A szervert a Flask webes mikro keretrendszer felhasználásával készítettem el, amit Python programozási nyelvben írtak.
-Attól, hogy mikro keretrendszer még nem jelenti azt, hogy kevesebb tud mit a többi keretrendszer.
+Attól, hogy mikro keretrendszer még nem jelenti azt, hogy kevesebbet tud, mint a többi keretrendszer.
 Erős alapot nyújt az alapvető szolgáltatásokkal, miközben a kiegészítők nyújtják a többit.
-Ezzel a lehetőséggel magunknak tudjuk kiválasztani a kiegészítő csomagokat.
+Ezzel a lehetőséggel magunknak tudjuk kiválasztani ezeket a csomagokat.
 Ezáltal képesek vagyunk egy olyan programot felépíteni, ami pontosan azt tartalmazza amire szükségünk van és semmi fölöslegeset.
 
 A Flask nem támogatja natívan az adatbázis elérést, web formok validálását, felhasználói autentikációt és egyéb magas szintű feladatokat.
@@ -360,7 +365,7 @@ Ha kimondottan a szerver oldali python dokumentációt szeretnénk elolvasni, az
 A szerver és kliens is oldal implementációja is nagyon egyszerű és jól dokumentált, de ha mégis problémánk támadna az online ügyfélszolgálatuk is végtelenül segítőkész.
 
 Bevallom, amikor implementáltam a szerverről való üzenetküldést nem ment minden simán.
-Az volt a probléma, hogy csak azt az értesítést kaptam meg amelyik nem tartalmazott plussz adatot az értesítés címén és leírásán kívül.
+Az a probléma merült fel, hogy csak azt az értesítést kaptam meg amelyik nem tartalmazott plussz adatot az értesítés címén és leírásán kívül.
 Fel kellett keresnem őket, mert hiába követtem a dokumentációkat nem értettem a hiba okát.
 Az üzenetemre kifejezetten gyorsan (egy napon belül) válaszoltak és kérték, hogy küldjek több információt.
 Hamar kiderült, hogy a problémát az FCM\footnote{Firebase Cloud Messaging} okozza, ami nem engedi, hogy egyszerre küldjünk értesítést és adatot.
@@ -381,8 +386,8 @@ Szolgáltatás orientált architektúrára ösztönöz és azt ajánlja, hogy mi
 
 A konténereinket képfájlokból futtatjuk.
 Rétegezett formátumuk van, ami lépésről-lépésre épülnek fel egy sorozat parancs alapján.
-Tulajdonságaikat tekintve hordozhatóak, megoszthatóak, tárolhatóak és frissíthetők.
-A következő paranccsal tudunk képfájlt készí
+Tulajdonságaikat tekintve hordozhatóak, megoszthatóak, tárolhatóak és frissíthetőek.
+A következő paranccsal tudunk képfájlt készíteni:
 
 \begin{center}
 	\texttt{\$ docker build .}
@@ -411,7 +416,7 @@ A parancs kiírja többek között a publikált portot, a konténerben futó par
 \subsubsection{Dockerfile}
 
 A szakdolgozatom szempontjából fontos említést tenni a Dockerfile-ról is.
-A Dockerfile egy DSL\footnote{Domain Specific Language} nyelvet használ útasításokkal, ami segítségével képfájlokat tudunk készíteni.
+A Dockerfile egy DSL\footnote{Domain Specific Language} nyelvet használ utasításokkal, ami segítségével képfájlokat tudunk készíteni.
 Valójában ez a szöveges dokumentum tartalmazza azokat a parancsokat, amik egy képfájl felépítéséhez/elkészítéséhez szükségesek.
 Segítségével bárki automatikusan készíthet egy Docker képfájlt, amit aztán egyszerűen lehet futtatni.
 
@@ -437,8 +442,8 @@ Az alkalmazás megtekinthető a \url{https://hub.docker.com/r/tothkris/reversedr
 Az Apktool egy olyan eszköz, aminek a segítségével vissza tudjuk fejteni a harmadik féltől származó, zárt forrású, bináris Android alkalmazásokat.
 Majdnem eredeti az állapotukba tudja dekódolni a forrásokat és akár újra is tudja buildelni az alkalmazást néhány módosítással.
 Ezek a tulajdonságok vonzák mind a jó és rossz szándékkal rendelkező személyeket.
-A rossz számdékkal rendelkezőket természetesen azért, mert ezt a technológiát lehet kalózkodásra és egyéb illegális tevékenységre használni.
-A jó számdékkal rendelkezőeket pedig azért, hogy analizálják és megakadályozzák az elterjedését ezeknek a kártékony és illegális szoftvereknek.
+A rossz szándékkal rendelkezőket természetesen azért, mert ezt a technológiát lehet kalózkodásra és egyéb illegális tevékenységre használni.
+A jó szándékkal rendelkezőeket pedig azért, hogy analizálják és megakadályozzák az elterjedését ezeknek a kártékony és illegális szoftvereknek.
 
 Az alábbi tulajdonságokkal rendelkezik:
 
@@ -466,19 +471,19 @@ A visszefejtéshez kötődik még a \emph{jd-cmd} elnevezésű program.
 Vannak olyan helyzetek, amikor nem mindig áll rendelkezésünkre GUI\footnote{Graphical User Interface (grafikus felhasználói felület)}.
 A szerveren például nincs lehetőségünk ilyet használni, ott csak a parancssorra hagyatkozhatunk.
 
-A \emph{jd-cmd} egy Java decompiler, ami .class fájlokat alakít vissza .java forrásfájlokká.
-Már ahogy a bevezetésben is leírtam, ezeknek a forrásoknak a visszaállítása nem mindig megfelelő.
-A visszaállítás sok tényezőtől függ, de ez itt most nem lényeges.
+A \emph{jd-cmd} egy Java decompiler, ami \emph{.class} fájlokat alakít vissza \emph{.java} forrásfájlokká.
+A bevezetésben is leírtam, hogy ezeknek a forrásoknak a visszaállítása nem mindig megfelelő mértékű és minőségű.
+A visszaállítás sok tényezőtől függ, de ez itt most nem érdemel kifejtést.
 
 A \url{https://github.com/kwart/jd-cmd} oldalon megtekinthetjük és letölthetjük a programot.
 A használatához szükségünk van a Java 6-os verziójára vagy attól újabbra.
 Viszonylag sok paramétert adhatunk át, amik segítségével testreszabhatjuk a kimenetet.
-Ilyenre példa a \emph{--displayLineNumbers}, ami a sorszámokat jeleníti meg a visszafejtett osztályokban.
+Ilyenre példa a \texttt{-{}-displayLineNumbers}, ami a sorszámokat jeleníti meg a visszafejtett osztályokban.
 
 \subsection{JSON}
 
 A JSON egy platformok közötti adatátvitelre szolgáló formátum.
-Az adatátviteli formátum egy olyan szöveges formátum, amit különböző platformok közötti adat cserére használnak.
+Az adatátviteli formátum egy olyan szöveges formátum, amit különböző platformok közötti adatcserére használnak.
 Egy másik széles körben használt adatátviteli formátum az XML\footnote{Extensible Markup Language}.
 Ezek biztosítják a nagyon eltérő rendszerek közötti adatváltást.
 A JSON egy olyan formátum, amin megegyeztek ezek a rendszerek adat kommunikáció céljából. \cite{json1}
@@ -495,13 +500,13 @@ Kettő struktúrára épül:
 	\end{description}
 \end{enumerate}
 
-Ezek olyan univerzális adatszerkezetek, amiket gyakorlatilag minden programozási nyelv támogat ilyen vagy olyan formában.
+Ezek olyan univerzális adatszerkezetek, amiket gyakorlatilag minden programozási nyelv támogat, ilyen vagy olyan formában.
 Ésszerűnek tűnik tehát, hogy az az adatformátum, amelyet programozási nyelvek kommunikációjához kívánunk használni, szintén ezekre a szerkezetekre épüljön.\cite{json2}
 
 \javaexternal[caption=Egy nagyon egyszerű példa a szervertől érkező JSON válaszra., label=json_example]{./codes/result.json}
 
 Emberek számára is könnyen olvasható és írható, ahogy ez \aref{json_example}.~példán is látszik. 
-A szakdolgozatomban is fontos szerepet töltbe, ugyanis a klien-szerver kommunikáció teljes egészében erre alapul.
+A szakdolgozatomban is fontos szerepet tölt be, ugyanis a klien-szerver kommunikáció teljes egészében erre alapul.
 Véleményem szerint sokkal átláthatóbb és egyszerűbb, mint például az XML társa.
 
 \section{Androidon használt technológiák}
@@ -535,7 +540,7 @@ Az alábbi lista tartalmazza két fontos tulajdonságát a sok közül:
 
 Akkor sem omlik össze, ha problémás a hálózat, valamint csendben helyreáll a gyakori kapcsolati problémák esetében is.
 Ha a szolgáltatásunknak több IP címe lenne, akkor az alternatív IP címekkel próbálkozna kapcsolati hiba esetén.
-Ez szükséges IPv4+IPv6 használatakor és olyan szolgáltatások esetében, amik redundáns adat központokban vannak.
+Ez szükséges IPv4 \texttt{+} IPv6 használatakor és olyan szolgáltatások esetében, amik redundáns adatközpontokban vannak.
 Támogatja a modern TLS funkciókat, ami a biztonságos adatátvitelért felelős.
 
 Az OkHttp használata egyszerű. A kérés/válasz API-ja builder tervezési mintára épült, amit nagyon könnyű használni.
@@ -570,8 +575,8 @@ Ebből is látszik, hogy nagy mértékben erre a szolgáltatásra épül a szoft
 
 \subsection{Room}
 
-A Room egy absztrakciós réteget nyújt az SQLite adatbázishoz, ezzel lehetővé téve az egyszerűbb és hatékonyabb adatbázis elérést.
-Segítségével sokkal egyszerűbben tudtam kezelni az SQLite adatbázist, mert nem kellett adatbázist leíró osztályt és hosszú lekérdezéseket írnom.
+A Room egy absztrakciós réteget nyújt az SQLite adatbázishoz, ezzel lehetővé téve az egyszerűbb és hatékonyabb elérést.
+Segítségével sokkal egyszerűbben tudtam kezelni az SQLite-ot, mert nem kellett adatbázist leíró osztályt és hosszú lekérdezéseket írnom.
 Ami külön tetszett benne, hogy az SQL utasításokat fordítási időben ellenőrzi. 
 A Room használatakor annotációk segítségével tudjuk összekötni a Java POJO\footnote{Plain Old Java Object} osztályokat az SQLite adatbázist.
 
@@ -597,12 +602,12 @@ A Room használatakor annotációk segítségével tudjuk összekötni a Java PO
 	\end{description}
 \end{enumerate}
 
-Az alkalmazás a Room adatbázist használja, hogy megkapja az adatbázishoz társított DAO-kat.
+Az alkalmazás a Room-ot használja, hogy megkapja az adatbázishoz társított DAO\footnote{Data Access Object}-kat.
 Ezután az alkalmazás, ezeket a DAO-kat használja az entitások adatbázisból való eléréséhez.
 A megkapott entitásokat ért változtatásokat egyszerűen vissza tudjuk menteni az adatbázisba.
 Végül, az alkalmazás entitást használ, hogy lekérjen és beállítson értékeket a tábla megfelelő oszlopaiba az adatbázison belül.\cite{room}
 
-\Aref{room}.~kódrészletben kiemeltem egy DAO\footnote{Data Access Object} interfészt.
+\Aref{room}.~kódrészletben kiemeltem egy DAO interfészt.
 Lényegében, ez a DAO nyújtja a hozzáférést az adatbázis réteghez.
 Jól látható, hogy annotációkkal kell megjelölni a metódusokat, annak függvényében, hogy milyen utasítást szeretnénk végrehajtani.
 Ahol paraméterben SQL\footnote{Structured Query Language} utasítást látunk, az mind fordítási időben ellenőrizve van.
@@ -621,7 +626,7 @@ Ezt úgy értem, hogy a kijelölést nem lehet megoldani egy egyszerű \emph{Tex
 Mindenképpen kellett egy olyan könyvtár, ami megbízható és elegendő funkcionalitást és testreszabhatóságot nyújt.
 Jó pár könyvtárat végig kellett próbálnom, mire ráakadtam az igazira.
 Találkoztam olyannal, amelyik nem megfelelően töltötte be a kódot és nem is volt megbízható.
-Voltak olyanok is, amelyeket nagyon régóta nem voltak karbantartva és elavult kód bázissal rendelkeztek.
+Voltak olyanok is, amelyeket nagyon régóta nem voltak karbantartva és elavult kódbázissal rendelkeztek.
 Találtam aktív fejlesztés alatt lévőket is, de azok többnyire még kiforratlan állapotban voltak és nem rendelkezdtek elegendő funkcióval.
 
 A megvalósítást ezek a könyvtárak, úgy végezték el, hogy lényegében egy \emph{WebView} komponensbe töltötték be a forráskódot, amit aztán különböző JavaScript keretrendszerek segítségével színeztek ki.
@@ -646,14 +651,14 @@ Ezeknek a támogatását sikerült viszonylag egyszerűen megoldani, hiszen a \e
 \subsection{Espresso}
 
 Az Android Studio rendelkezik jó pár funkcióval, amikről már tettem említést.
-Amit szándékosan kihagytam, az a UI\footnote{User Interface} tesztek felvétele.
+Amit szándékosan kihagytam, az a UI\footnote{User Interface (felhasználói felület)} tesztek felvétele.
 Az Espresso Test Recorder funkció által megtehetjük, hogy nem kézzel írjuk a teszteket, hanem felvesszük őket.
 Feltudjuk venni az interakcióinkat az alkalmazással és ellenőrizni tudjuk az elemeket a felhasználói felületen, valamint biztosítani tudjuk az adott pillant kép helyességét.
 Az Espresso Test Recorder veszi az elmentett teszt felvételt és automatikusan generál egy hozzátartozó UI tesztet, amit aztán futtatni tudunk az alkalmazásunk tesztelése érdekében.
 
 Espresso Test Recorder az Espresso Testing keretrendszer alapján írja a teszteket, ami egy API az AndroidX Test-ben.
 Segít megbízható és tömör UI teszteket írni a felhasználói interakcióra alapozva.
-Állíthatunk elvárásokat és interakciókat anélkül, hogy hozzáférnénk az alkalmazás nézeteihez és activity-jeihez.
+Állíthatunk elvárásokat és interakciókat anélkül, hogy hozzáférnénk az alkalmazás nézeteihez és \texttt{Activity}-jeihez.
 Ez a struktúra optimizálja a tesztek futási idejét. \cite{espresso}
 
 A projektem esetében nem volt ilyen egyszerű a helyzet.
@@ -663,10 +668,10 @@ Amikor Espresso-val tesztet veszünk fel, az alkalmazás tiszta állapotról ind
 Ez az jelenti, hogy ha bármilyen bejelentkezés utáni interakciót szeretnénk felvenni, akkor a teszt a bejelentkezéssel együtt kezdődik.
 Az ilyen problémákat manuálisan kell kikerülni.
 
-\Aref{espressotest}.~kódrészletben megfigyelhető, hogy egy \emph{@Before} annotációval ellátott metódusban elmentettem egy teszt felhasználó nevet és jelszót.
-Ezután pedig egyszerűen egy Intent segítségével elindítottam az Activity-t.
-Mindez nem volt elegendő ahhoz, hogy sikeresen tovább mehessek ugyanis bejelentkezés után történik a különböző engedélyek ellenőrzése.
-Az Espresso arra is nyújt megoldást, hogy ezeket az engedély kéréseket automatikusan elfogadjuk a tesztekben a \emph{GrantPermissionRule} osztály segítségével.
+\Aref{espressotest}.~kódrészletben megfigyelhető, hogy egy \texttt{@Before} annotációval ellátott metódusban elmentettem egy teszt felhasználó nevet és jelszót.
+Ezután pedig egyszerűen egy \texttt{Intent} segítségével elindítottam az \texttt{Activity}-t.
+Mindez nem volt elegendő ahhoz, hogy sikeresen tovább mehessek, ugyanis bejelentkezés után történik a különböző engedélyek ellenőrzése.
+Az Espresso arra is nyújt megoldást, hogy ezeket az engedély kéréseket automatikusan elfogadjuk a tesztekben a \texttt{GrantPermissionRule} osztály segítségével.
 
 \javaexternal[caption=Espresso UI teszt az adatok törléséhez.,label=espressotest]{./codes/test.java}
 
@@ -679,7 +684,7 @@ Sok embernek tetszettek az élénk színek és a vetett árnyákok, amik meghat�
 A nevéből is ered, hogy az anyagokból kiindulva és azok egymásra pakolásával született meg a dizájn. 
 Kicsit pontosabban fogalmazva a Material Design irányelveket foglal össze, amiket nem fontos követni, de ajánlott. 
 A Material Design 2 nem hozott hatalmas eltéréseket elődjéhez képest, inkább csak letisztultabb lett, ami szimplán jobb vizuális élményt nyújt.
-Az Android platformot tekintve új komponensek érkeztek, ezek közé tartozik a \emph{BottomAppBar} és a \emph{Chip}.
+Az Android platformot tekintve új komponensek érkeztek, ezek közé tartozik a \texttt{BottomAppBar} és a \texttt{Chip}.
 
 Miután az Android Studio-ban létrehozunk egy üres Android projektet az nem fogja támogatni a új Material Design 2.0 könyvtárat.
 Annak érdekében, hogy ezen a kisebb problémán túllépjek hozzá kellett adnom néhány függőséget a projekthez és át kellett refaktorálnom AndroidX kompatibilissá.
@@ -785,7 +790,7 @@ A következő listában szedtem össze néhány fontosabb sérülékenységet.
 	\end{description}
 	\item
 	\begin{description}
-		\item [Beégetett titkosítási/API kulcsok] Ezek több helyen is előfordulnak, angolul ,,hardcoded strings'-nek hívják. Elég súlyos hibának tekinthető, mivel egyszerűen kiolvasható a visszafejtett forráskódból.
+		\item [Beégetett titkosítási/API kulcsok] Ezek több helyen is előfordulnak, angolul ,,hardcoded strings''-nek hívják. Elég súlyos hibának tekinthető, mivel egyszerűen kiolvasható a visszafejtett forráskódból.
 	\end{description}
 	\item
 	\begin{description}
@@ -856,7 +861,7 @@ Ide tartozik a gyorsítótárba másolt feltöltött alkalmazások, amik egy id�
 Nem beszélve arról, hogy az adatbázisban lévő összes tábla adatát ürítem.
 Lehetséges, hogy kényelmesebb lett volna, ha a felhasználó maga választja ki mit szeretne törölni.
 Sajnos ez a korai verzió csak az együttes törlést biztosítja.
-Jól jöhet ez a funkció akkor is ha a telefon esetleg nem rendelkezik elég tárhellyel vagy egyszerűen csak helyet szeretnénk felszabadítani.
+Jól jöhet ez a funkció akkor is, ha a telefon esetleg nem rendelkezik elég tárhellyel vagy egyszerűen csak helyet szeretnénk felszabadítani.
 
 \section{Fájl feltöltés}
 
@@ -870,19 +875,19 @@ A tervezési szakaszban úgy gondoltam, hogy hasznos lenne egy saját fájl kiv�
 Nem sokkal ezután rájöttem, hogy teljesen felesleges újra feltalálni azt, amire már van működő megoldás és nem kellene haszontalan felületekkel bonyolítani az applikációt.
 Biztos találkoztunk már olyan app-al, ami elindított egy külső alkalmazást csak azért, hogy elvégezzel valamilyen feladatot.
 Én is egy ilyen megoldásra hagyatkoztam.
-Nem csak \emph{Activity}-ket tudunk indítani \emph{Intent}-ek segítségével, hanem különböző műveleteket is elvégezhetünk.
-Az ilyen \emph{Intent}-eket \emph{Implicit Intent}-eknek nevezzük.
+Nem csak \texttt{Activity}-ket tudunk indítani \texttt{Intent}-ek segítségével, hanem különböző műveleteket is elvégezhetünk.
+Az ilyen \texttt{Intent}-eket \emph{Implicit Intent}-eknek nevezzük.
 Példának okáért, a fájl kiválasztás egy ilyen művelet.
-\emph{Implicit intent} használatával indítottam el a fájl kiválasztást, aminek többek között megadtam, hogy milyen típusú fájlokat szeretnék kiválasztani.
+\emph{Implicit intent} használatával indítottam el, aminek többek között megadtam, hogy milyen típusú fájlokat szeretnék kiválasztani.
 Ez a típus természetesen a \texttt{application/vnd.android.package-archive} volt, ami megfelel az Android telepítő fájloknak.
 Ebben az esetben nincs lehetőségünk más típusú fájlt kiválasztani csak a megadottat.
 
-A fájl kiválasztása után az \texttt{onActivityResult} metódus \emph{Intent} típusú paraméterében kapjuk meg az URI\footnote{Uniform Resource Identifier}-t.
+A fájl kiválasztása után az \texttt{onActivityResult} metódus \texttt{Intent} típusú paraméterében kapjuk meg az URI\footnote{Uniform Resource Identifier}-t.
 Ezt az URI-t felhasználva elmentettem a fájlt az alkalmazás gyorsítótárába.
 Erre azért volt szükség, mert különben nem kaptam volna meg az abszolút elérési útvonalat.
 Eztán már csak service elindítása maradt hátra. 
 
-A \texttt{startService(Intent service)} metódus egy \emph{Intent}-et vár, ami segítségével elindíthatjuk a háttér service-t.
+A \texttt{startService(Intent service)} metódus egy \texttt{Intent}-et vár, ami segítségével elindíthatjuk a háttér service-t.
 Fontos, hogy ez még így nem elég, hanem extraként hozzá kell adni a feltölteni kívánt fájlt.
 \Aref{uploads_notifications}.~ábra bal oldali képernyőképén látható a feltöltött fájlok listája.
 
@@ -949,18 +954,18 @@ Ennek a működéséről és megvalósításáról már említést tettem a \nam
 Kimaradt példul az, hogy csak bizonyos fájlkiterjesztéseket támogatok jelen helyzetben.
 Mivel a forráskód tartalmazza az igazán érdekes dolgokat, ezért arra koncetráltam, hogy legalább az Android projektekre jellemző szöveges fájlkiterjesztéseket támogassam.
 A különböző képek és speciális fájlok megjelenítése egyenlőre nincsen támogatva, de ez is egy olyan funkció, amit megszeretnék valósítani a jövőre nézve.
-A támogatott kiterjesztéseket jelenleg az is befolyásolja, hogy maga a \emph{CodeView} miket támogat.
+A támogatott kiterjesztéseket jelenleg az is befolyásolja, hogy maga a \texttt{CodeView} miket támogat.
 
 A visszalépés megvalósítása okozott egy kisebb fejtörést.
 A vissza gomb megnyomására túlságosan is bonyodalmas lett volna megvalóstani a visszalépést, ezért úgy döntöttem, hogy egy külön elemmel fogom ezt kivitelezni.
-Ez az elem úgymond egy speciális lista elem, amit akkor jelenítek meg ha nem az alkalmazás mappájában tartózkodunk.
+Ez az elem úgymond egy speciális lista elem, amit akkor jelenítek meg, ha nem az alkalmazás mappájában tartózkodunk.
 Emlékeim szerint több fájl kezelő is használta már ezt a megoldást és elég hatékonynak tűnt ez a fajta visszalépési technika.
 
 \section{Értesítések}\label{ertesitesek}
 
 Az értesítések küldése és fogadása szintén egy kulcsfontosságú része az alkalmazásnak, ezt már többször is hangsúlyoztam.
 A fájlok letöltése és kitömörítése mérettől, valamint hálózati kapcsolattól függően időt vesz igénybe.
-Az elején úgy gondoltam, hogy egy egyszerű \emph{Toast} üzenet is elég a feltöltés állapotának visszajelzésére.
+Az elején úgy gondoltam, hogy egy egyszerű \texttt{Toast} üzenet is elég a feltöltés állapotának visszajelzésére.
 Aztán hamar rá kellett jönnöm, hogy ez nem ad elég információt a felhasználó számára, ráadásul rossz felhasználói élményhez is vezet.
 Végül úgy döntöttem, hogy feltöltést is hasonlóan valósítom meg, mint a letöltést.
 
@@ -996,7 +1001,7 @@ A jövőben is szeretném folytatni a fejlesztést és esetlegesen nyílt forrá
 
 Szeretnék több figyelmet fordítani a biztonságra és hatékonyságra. 
 Gondolok itt a biztonságos kommunikációra TLS-es keresztül és a harmadik féltől származó könyvtárak csökkentésére.
-Azért lenne érdemes minimalizálni a harmadik féltől származó könyvtárakat, mert nem mindig tudjuk milyen kódot tartalmaznak és mennyire tartják karban a kód bázist.
+Azért lenne érdemes minimalizálni a harmadik féltől származó könyvtárakat, mert nem mindig tudjuk milyen kódot tartalmaznak és mennyire tartják karban a kódbázist.
 
 Jelenleg csak a forráskódok megjelentését támogatja az alkalmazás, de jó lenne ha különböző fájl típusokat is megtudna jeleníteni.
 Például a képek vagy adatbázisok megtekintése is kritikus lehet egy Android alkalmazás elemzésekor.
@@ -1018,10 +1023,10 @@ Számomra, ha valami nem sikerült az mindig ösztönzőleg hatott és motivált
 Sikerült az idegen technológiák iránt érzett kíváncsiságom is kielégíteni.
 A ,,reverse engineering'' világába is betekintést nyertem, ami különösen érdekelt engem. 
 
-A fejlesztésnél csak egyetlen kellemetlen dologgal találkoztam. Szerintem sok fejlesztő egyet ért ha azt mondom, hogy a hiányos vagy éppen félre vezető dokumentáció a legnagyobb ellensége.
-Szerencsére nem sokszor futottam bele, de amikor igen, akkor pár napig álltam a fejlesztéssel. Végül az oldalon egy rendkívül türelmes és segítőkész fiatalember segített a helyes irányba. 
-
-Még a problémáival együtt is úgy gondolom, hogy sikerült egy olyan szoftvert készítenem, ami egyedi és megállja a helyét a piacon. 
+A fejlesztésnél csak egyetlen kellemetlen dologgal találkoztam. 
+Szerintem sok fejlesztő egyetért azzal, ha azt mondom, hogy a hiányos vagy éppen félrevezető dokumentáció a legnagyobb ellensége.
+Mindenképpen örülök, mert rengeteg hasznos tapasztalattal gyarapodtam, amiket később is kamatoztatni tudok.
+Még a szoftver problémáival és limitációival együtt is úgy gondolom, hogy sikerült egy olyan szoftvert készítenem, ami egyedi és megállja a helyét a piacon. 
 
 \begin{thebibliography}{1}
 	\bibitem{git} \textsc{Somasundaram R.} Git: Version control for everyone. Packt Publishing Ltd; 2013.
